@@ -88,6 +88,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void userInput(int regYear, int engineSize, int co2, int fuelType) {
+
+        RequestParams params = new RequestParams();
+        params.put("", regYear);
+        params.put("", engineSize);
+        params.put("", co2);
+        params.put("", fuelType);
+        createNetworking(params);
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

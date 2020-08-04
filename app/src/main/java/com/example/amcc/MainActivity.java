@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
     //For debugging purposes
     public void networkStatus() {
@@ -115,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
         params.put("", carDetails.getFuelType());
         createNetworking(params);
     }
-
 
     @Override
     protected void onResume() {

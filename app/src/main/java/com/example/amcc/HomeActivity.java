@@ -1,18 +1,20 @@
 package com.example.amcc;
 
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 
 public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
 
         // Find the toolbar view inside the activity layout
@@ -50,5 +52,6 @@ public class HomeActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.app_menu, menu);
         return true;
     }
+
 
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/iShare"
+        android:icon="@drawable/share_icon"
+        app:showAsAction="ifRoom"
+        android:title="@string/share">
+    </item>
+    <item
+        android:id="@+id/iHome"
+        android:icon="@drawable/home_icon"
+        app:showAsAction="ifRoom|withText"
+        android:title="@string/home">
+    </item>
+    <item
+        android:id="@+id/iSet"
+        android:icon="@drawable/gear_setting"
+        app:showAsAction="ifRoom|withText"
+        android:title="@string/setting">
+    </item>
+
+</menu>

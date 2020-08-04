@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.amcc.model.CarDetails;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -34,13 +36,18 @@ public class MainActivity extends AppCompatActivity {
         boolean isMobileConn = false;
         for (Network network : connectivityManager.getAllNetworks()) {
             NetworkInfo networkInfo = connectivityManager.getNetworkInfo(network);
-            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-                isWifiConn |= networkInfo.isConnected();
-            }
-            if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
-                isMobileConn |= networkInfo.isConnected();
-            }
 
+            if (networkInfo != null) {
+                if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                    isWifiConn |= networkInfo.isConnected();
+                }
+                if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                    isMobileConn |= networkInfo.isConnected();
+                }
+
+            } else {
+                // not connected to the internet
+            }
         }
         Log.d(DEBUG_TAG, "Wifi connected: " + isWifiConn);
         Log.d(DEBUG_TAG, "Mobile connected: " + isMobileConn);
@@ -87,6 +94,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    private void editUserInput(int regYear, int engineSize, int co2, int fuelType) {
+
+        RequestParams params = new RequestParams();
+        params.put("", regYear);
+        params.put("", engineSize);
+        params.put("", co2);
+        params.put("", fuelType);
+        createNetworking(params);
+
+    }
+
+    private void userInputData(CarDetails carDetails) {
+
+        RequestParams params = new RequestParams();
+        params.put("", carDetails.getRegYear());
+        params.put("", carDetails.getEngineSize());
+        params.put("", carDetails.getCo2Em());
+        params.put("", carDetails.getFuelType());
+        createNetworking(params);
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -105,5 +135,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
     }
 }

@@ -6,8 +6,14 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 
+
+import android.view.Menu;
+import android.view.MenuItem;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -17,6 +23,9 @@ public class HomeActivity extends AppCompatActivity {
     Integer[] imgListArrayID = {R.drawable.car_ins, R.drawable.car_go};
     //Create list View
     private ListView listView;
+
+public class HomeActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +59,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
         // Create Custom Adapter here
         CustomListAdapter homeListAdapter = new CustomListAdapter(this, nameListArray, infoListArray, imgListArrayID);
         // Link listView to our CustomListAdapter
         listView = (ListView) findViewById(R.id.homelistViewID);
         listView.setAdapter(homeListAdapter);
+
     }
 
     // Menu icons are inflated just as they were with actionbar

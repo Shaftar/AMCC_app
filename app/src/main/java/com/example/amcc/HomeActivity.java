@@ -3,12 +3,20 @@ package com.example.amcc;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class HomeActivity extends AppCompatActivity {
+
+    // References to feed our custom List Adapter object
+    String[] nameListArray = {"First Function", "Second Function"};
+    String[] infoListArray = {"info about first function.", "info about second function."};
+    Integer[] imgListArrayID = {R.drawable.car_ins, R.drawable.car_go};
+    //Create list View
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,12 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        // Create Custom Adapter here
+        CustomListAdapter homeListAdapter = new CustomListAdapter(this, nameListArray, infoListArray, imgListArrayID);
+        // Link listView to our CustomListAdapter
+        listView = (ListView) findViewById(R.id.homelistViewID);
+        listView.setAdapter(homeListAdapter);
     }
 
     // Menu icons are inflated just as they were with actionbar

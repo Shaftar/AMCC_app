@@ -8,18 +8,19 @@
 
     <!-- Load the toolbar here -->
     <include
+        android:id="@+id/include"
         layout="@layout/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <!-- Rest of content for the activity -->
 
     <ListView
-        android:id="@+id/listViewID"
+        android:id="@+id/homelistViewID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 </androidx.constraintlayout.widget.ConstraintLayout>

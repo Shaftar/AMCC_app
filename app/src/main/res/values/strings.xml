@@ -3,4 +3,8 @@
     <string name="setting">Setting</string>
     <string name="home">Home</string>
     <string name="share">Share</string>
+
+    <string name="the_first_function_name">The first function</string>
+    <string name="the_second_function_name">Info about this function</string>
+
 </resources>

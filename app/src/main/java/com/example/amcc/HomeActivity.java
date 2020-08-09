@@ -1,24 +1,33 @@
 package com.example.amcc;
 
 import android.os.Bundle;
-
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import adapter.CustomListAdapter;
+
 
 public class HomeActivity extends AppCompatActivity {
+
+    // References to feed our custom List Adapter object
+    String[] nameListArray = {"First Function", "Second Function"};
+    String[] infoListArray = {"info about first function.", "info about second function."};
+    Integer[] imgListArrayID = {R.drawable.car_ins, R.drawable.car_go};
+    //Create list View
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_home);
 
         // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
@@ -32,17 +41,24 @@ public class HomeActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.iHome:
                         // Do something
-                        break;
+                        return true;
                     case R.id.iShare:
                         // Do something
-                        break;
+                        return true;
                     case R.id.iSet:
                         // Do something
-                        break;
+                        return true;
+                    default:
+                        return HomeActivity.super.onOptionsItemSelected(item);
                 }
-                return false;
             }
         });
+
+        // Create Custom Adapter here
+        CustomListAdapter homeListAdapter = new CustomListAdapter(this, nameListArray, infoListArray, imgListArrayID);
+        // Link listView to our CustomListAdapter
+        listView = (ListView) findViewById(R.id.homelistViewID);
+        listView.setAdapter(homeListAdapter);
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -52,6 +68,5 @@ public class HomeActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.app_menu, menu);
         return true;
     }
-
 
 }

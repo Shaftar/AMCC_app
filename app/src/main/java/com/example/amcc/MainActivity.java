@@ -10,14 +10,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.amcc.model.CarDetails;
-
+import model.ApiDataModel;
+import model.CarDetails;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import util.HttpHandling;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         boolean isMobileConn = false;
         for (Network network : connectivityManager.getAllNetworks()) {
             NetworkInfo networkInfo = connectivityManager.getNetworkInfo(network);
-
             if (networkInfo != null) {
                 if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
                     isWifiConn |= networkInfo.isConnected();
@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void editUserInput(int regYear, int engineSize, int co2, int fuelType) {
 
         RequestParams params = new RequestParams();
@@ -135,6 +134,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
     }
 }

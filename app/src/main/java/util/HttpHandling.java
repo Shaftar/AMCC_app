@@ -1,4 +1,4 @@
-package com.example.amcc;
+package util;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -6,7 +6,7 @@ import com.loopj.android.http.RequestParams;
 
 public class HttpHandling {
 
-    static final String API_URL = "http://api";
+    public static final String API_URL = "http://api";
     // App ID to use OpenWeather data
     static final String API_ID = "";
     static String LANGUEG_OUT = "";

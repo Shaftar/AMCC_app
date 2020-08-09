@@ -3,7 +3,10 @@ package com.example.amcc;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,6 +62,13 @@ public class HomeActivity extends AppCompatActivity {
         // Link listView to our CustomListAdapter
         listView = (ListView) findViewById(R.id.homelistViewID);
         listView.setAdapter(homeListAdapter);
+        //Trigger list item by setting itemclickListener
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                parent.getItemAtPosition(position);
+            }
+        });
     }
 
     // Menu icons are inflated just as they were with actionbar

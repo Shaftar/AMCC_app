@@ -1,5 +1,6 @@
 package com.example.amcc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 
 import adapter.CustomListAdapter;
 
@@ -47,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
                     case R.id.iShare:
                         // Do something
+                        shareIt();
                         return true;
                     case R.id.iSet:
                         // Do something
@@ -58,15 +61,24 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         // Create Custom Adapter here
-        CustomListAdapter homeListAdapter = new CustomListAdapter(this, nameListArray, infoListArray, imgListArrayID);
+        final CustomListAdapter homeListAdapter = new CustomListAdapter(this, nameListArray, infoListArray, imgListArrayID);
         // Link listView to our CustomListAdapter
         listView = (ListView) findViewById(R.id.homelistViewID);
         listView.setAdapter(homeListAdapter);
-        //Trigger list item by setting itemclickListener
+        // Create EventListener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                parent.getItemAtPosition(position);
+
+                switch (position) {
+                    case 0:
+                        Toast.makeText(getApplicationContext(), "First Function", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+
+                        Toast.makeText(getApplicationContext(), "Second Function", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         });
     }
@@ -77,6 +89,17 @@ public class HomeActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.app_menu, menu);
         return true;
+    }
+
+    private void shareIt() {
+    //sharing implementation here
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "Thank you for sharing our App.";
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Share it");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, null));
+
     }
 
 }

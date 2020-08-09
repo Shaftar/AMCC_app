@@ -1,5 +1,6 @@
 package com.example.amcc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
                     case R.id.iShare:
                         // Do something
+                        shareIt();
                         return true;
                     case R.id.iSet:
                         // Do something
@@ -87,6 +89,17 @@ public class HomeActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.app_menu, menu);
         return true;
+    }
+
+    private void shareIt() {
+    //sharing implementation here
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "Thank you for sharing our App.";
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Share it");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, null));
+
     }
 
 }

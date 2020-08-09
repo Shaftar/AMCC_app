@@ -1,4 +1,4 @@
-package com.example.amcc;
+package util;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;

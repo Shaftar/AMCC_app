@@ -9,6 +9,9 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import adapter.CustomListAdapter;
+
+
 public class HomeActivity extends AppCompatActivity {
 
     // References to feed our custom List Adapter object
@@ -24,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
@@ -38,15 +41,16 @@ public class HomeActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.iHome:
                         // Do something
-                        break;
+                        return true;
                     case R.id.iShare:
                         // Do something
-                        break;
+                        return true;
                     case R.id.iSet:
                         // Do something
-                        break;
+                        return true;
+                    default:
+                        return HomeActivity.super.onOptionsItemSelected(item);
                 }
-                return false;
             }
         });
 

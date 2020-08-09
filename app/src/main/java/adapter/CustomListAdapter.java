@@ -1,4 +1,4 @@
-package com.example.amcc;
+package adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,7 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
+import com.example.amcc.R;
 
 import java.util.List;
 
@@ -37,11 +38,11 @@ public class CustomListAdapter extends ArrayAdapter {
         this.infoArray=infoArray;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @Override @NonNull
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
         LayoutInflater inflater = context.getLayoutInflater();
-        @SuppressLint("ViewHolder") View rowView = inflater.inflate(R.layout.listview_row, null, true);
+        @SuppressLint("ViewHolder") View rowView = inflater.inflate(R.layout.listview_row, parent, false);
 
         //this code gets references to objects in the listview_row.xml file
         TextView nameTextField = (TextView) rowView.findViewById(R.id.listRowtextViewTitleID);

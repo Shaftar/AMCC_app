@@ -1,4 +1,4 @@
-package com.example.amcc.model;
+package model;
 
 public class CarDetails {
 

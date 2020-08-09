@@ -1,5 +1,6 @@
 package com.example.amcc;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -40,7 +41,7 @@ public class CustomListAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView = inflater.inflate(R.layout.listview_row, null, true);
+        @SuppressLint("ViewHolder") View rowView = inflater.inflate(R.layout.listview_row, null, true);
 
         //this code gets references to objects in the listview_row.xml file
         TextView nameTextField = (TextView) rowView.findViewById(R.id.listRowtextViewTitleID);

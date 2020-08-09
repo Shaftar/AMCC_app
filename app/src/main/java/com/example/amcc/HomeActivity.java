@@ -53,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
                     case R.id.iSet:
                         // Do something
+                        setupSetting();
                         return true;
                     default:
                         return HomeActivity.super.onOptionsItemSelected(item);
@@ -92,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void shareIt() {
-    //sharing implementation here
+        //sharing implementation here
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         String shareBody = "Thank you for sharing our App.";
@@ -100,6 +101,12 @@ public class HomeActivity extends AppCompatActivity {
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, null));
 
+    }
+
+    private void setupSetting() {
+        // set up Settings activity
+        Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
+        startActivity(settingsIntent);
     }
 
 }

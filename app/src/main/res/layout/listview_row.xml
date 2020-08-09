@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/homeListRowID"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorAccent">
+
+    <ImageView
+        android:id="@+id/listImgVID"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/car_go" />
+
+    <LinearLayout
+        android:id="@+id/lidtTxtRowID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/listRowtextViewTitleID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/the_first_function_name"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/infoListTxtViewRowID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/the_second_function_name"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+</LinearLayout>

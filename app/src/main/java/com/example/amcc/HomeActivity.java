@@ -67,14 +67,15 @@ public class HomeActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (parent.getItemAtPosition(position) == 0) {
 
-                    Toast.makeText(getApplicationContext(), "First Function clicked", Toast.LENGTH_SHORT).show();
+                switch (position) {
+                    case 0:
+                        Toast.makeText(getApplicationContext(), "First Function", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
 
-                } else if (parent.getItemAtPosition(position) == 1) {
-
-                    Toast.makeText(getApplicationContext(), "Second Function clicked", Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(getApplicationContext(), "Second Function", Toast.LENGTH_SHORT).show();
+                        break;
                 }
             }
         });

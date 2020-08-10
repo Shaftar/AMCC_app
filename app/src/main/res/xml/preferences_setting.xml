@@ -4,8 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreferenceCompat
+        android:id="@+id/set_contentID"
         app:key="notifications"
-        app:title="Enable message notifications"/>
+        app:title="Enable message notifications" />
 
     <Preference
         app:key="feedback"

@@ -2,61 +2,73 @@ package model;
 
 public class CarDetails {
 
-    private int regYear, engineSize, co2Em, driDisIny;
-    private double avgCons, fuelType;
+    private int first_register_date, avg_consum, emission, mileage_per_year;
+    private double  engine_size, fuel_type;
+    private String city;
 
-    public CarDetails(int regYear, int engineSize, int co2Em, double fuelType) {
-        this.regYear = regYear;
-        this.engineSize = engineSize;
-        this.co2Em = co2Em;
-        this.fuelType = fuelType;
+    public CarDetails(String city, int first_register_date, double engine_size, int avg_consum, int mileage_per_year, int emission, double fuel_type) {
+        this.city = city;
+        this.first_register_date = first_register_date;
+        this.engine_size = engine_size;
+        this.avg_consum = avg_consum;
+        this.mileage_per_year = mileage_per_year;
+        this.emission = emission;
+        this.fuel_type = fuel_type;
     }
 
-    public int getRegYear() {
-        return regYear;
+    public int getFirst_register_date() {
+        return first_register_date;
     }
 
-    public void setRegYear(int regYear) {
-        this.regYear = regYear;
+    public void setFirst_register_date(int first_register_date) {
+        this.first_register_date = first_register_date;
     }
 
-    public int getEngineSize() {
-        return engineSize;
+    public int getAvg_consum() {
+        return avg_consum;
     }
 
-    public void setEngineSize(int engineSize) {
-        this.engineSize = engineSize;
+    public void setAvg_consum(int avg_consum) {
+        this.avg_consum = avg_consum;
     }
 
-    public int getCo2Em() {
-        return co2Em;
+    public int getEmission() {
+        return emission;
     }
 
-    public void setCo2Em(int co2Em) {
-        this.co2Em = co2Em;
+    public void setEmission(int emission) {
+        this.emission = emission;
     }
 
-    public int getDriDisIny() {
-        return driDisIny;
+    public int getMileage_per_year() {
+        return mileage_per_year;
     }
 
-    public void setDriDisIny(int driDisIny) {
-        this.driDisIny = driDisIny;
+    public void setMileage_per_year(int mileage_per_year) {
+        this.mileage_per_year = mileage_per_year;
     }
 
-    public double getAvgCons() {
-        return avgCons;
+    public double getEngine_size() {
+        return engine_size;
     }
 
-    public void setAvgCons(double avgCons) {
-        this.avgCons = avgCons;
+    public void setEngine_size(double engine_size) {
+        this.engine_size = engine_size;
     }
 
-    public double getFuelType() {
-        return fuelType;
+    public double getFuel_type() {
+        return fuel_type;
     }
 
-    public void setFuelType(double fuelType) {
-        this.fuelType = fuelType;
+    public void setFuel_type(double fuel_type) {
+        this.fuel_type = fuel_type;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

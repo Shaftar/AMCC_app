@@ -1,19 +1,30 @@
 package model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class CarDetails {
 
     private int first_register_date, avg_consum, emission, mileage_per_year;
     private double  engine_size, fuel_type;
     private String city;
 
-    public CarDetails(String city, int first_register_date, double engine_size, int avg_consum, int mileage_per_year, int emission, double fuel_type) {
-        this.city = city;
-        this.first_register_date = first_register_date;
-        this.engine_size = engine_size;
-        this.avg_consum = avg_consum;
-        this.mileage_per_year = mileage_per_year;
-        this.emission = emission;
-        this.fuel_type = fuel_type;
+    public static CarDetails fromJason(JSONObject jsonObject) {
+
+        CarDetails carDetails = new CarDetails();
+        try {
+            carDetails.city = jsonObject.getJSONObject("city").getString("name");
+            carDetails.first_register_date = jsonObject.getJSONObject("year").getInt("date");
+            carDetails.mileage_per_year = jsonObject.getJSONObject("mile").getInt("distance");
+            carDetails.emission = jsonObject.getJSONObject("co2").getInt("emission");
+            carDetails.avg_consum = jsonObject.getJSONObject("consum").getInt("consum");
+            carDetails.engine_size = jsonObject.getJSONObject("size").getDouble("engine");
+            carDetails.fuel_type = jsonObject.getJSONObject("fuel").getDouble("fuel");
+        } catch (JSONException e) {
+            e.getMessage();
+        }
+
+        return carDetails;
     }
 
     public int getFirst_register_date() {

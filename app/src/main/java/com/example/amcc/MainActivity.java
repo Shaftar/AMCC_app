@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     super.onSuccess(statusCode, headers, response);
                     Log.d("App: CreateNetworking", "OnSuccess- has response!");
                     ApiDataModel apiDataModel = ApiDataModel.fromJson(response);
+                    CarDetails carDetails = CarDetails.fromJason(response);
                 }
 
                 @Override
@@ -95,7 +96,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void editUserInput(int regYear, int engineSize, int co2, int fuelType) {
+    // Values input user edit activity
+    private void getFromUserEdit(int regYear, int engineSize, int co2, int fuelType) {
 
         RequestParams params = new RequestParams();
         params.put("", regYear);
@@ -106,13 +108,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void userInputData(CarDetails carDetails) {
+    //User Input values activity
+    private void getFromUserInput(CarDetails carDetails) {
 
         RequestParams params = new RequestParams();
-        params.put("", carDetails.getRegYear());
-        params.put("", carDetails.getEngineSize());
-        params.put("", carDetails.getCo2Em());
-        params.put("", carDetails.getFuelType());
+        params.put("", carDetails.getCity());
+        params.put("", carDetails.getFirst_register_date());
+        params.put("", carDetails.getEmission());
+        params.put("", carDetails.getFuel_type());
         createNetworking(params);
     }
 

@@ -32,34 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
-
-        // Trigger a menu item by setting item clickListener
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.iHome:
-                        // Do something
-                        return true;
-                    case R.id.iShare:
-                        // Do something
-                        shareIt();
-                        return true;
-                    case R.id.iSet:
-                        // Do something
-                        setupSetting();
-                        return true;
-                    default:
-                        return HomeActivity.super.onOptionsItemSelected(item);
-                }
-            }
-        });
+        createToolBar();
 
         // Create Custom Adapter here
         final CustomListAdapter homeListAdapter = new CustomListAdapter(this, nameListArray, infoListArray, imgListArrayID);
@@ -74,6 +47,8 @@ public class HomeActivity extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         Toast.makeText(getApplicationContext(), "First Function", Toast.LENGTH_SHORT).show();
+                        Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
+                        startActivity(mainActivity);
                         break;
                     case 1:
 
@@ -107,6 +82,39 @@ public class HomeActivity extends AppCompatActivity {
         // set up Settings activity
         Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
         startActivity(settingsIntent);
+    }
+
+    public void createToolBar() {
+
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
+
+        // Trigger a menu item by setting item clickListener
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.iHome:
+                        // Do something
+                        return true;
+                    case R.id.iShare:
+                        // Do something
+                        shareIt();
+                        return true;
+                    case R.id.iSet:
+                        // Do something
+                        setupSetting();
+                        return true;
+                    default:
+                        return HomeActivity.super.onOptionsItemSelected(item);
+                }
+            }
+        });
     }
 
 }

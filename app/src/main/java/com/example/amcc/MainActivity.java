@@ -1,13 +1,22 @@
 package com.example.amcc;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import model.ApiDataModel;
@@ -17,19 +26,46 @@ import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 import util.HttpHandling;
 
 public class MainActivity extends AppCompatActivity {
 
+    // City List tools
+    private ArrayAdapter spinnerAdapter;
+    private Spinner spinner;
+    private ArrayList cityNameArray;
+    private TextView cityName;
     private static final String DEBUG_TAG = "NetworkStatus: ";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_input_interface);
+
+        // Create the Toolbar
+        createToolBar();
+
+        //Create City Name List
+        setUpCityNamesList();
+
+        // Get Date Input
+        getDateInput();
+
 
     }
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.app_menu, menu);
+        return true;
+    }
+
+
     //For debugging purposes
     public void networkStatus() {
         ConnectivityManager connectivityManager =
@@ -117,6 +153,84 @@ public class MainActivity extends AppCompatActivity {
         params.put("", carDetails.getEmission());
         params.put("", carDetails.getFuel_type());
         createNetworking(params);
+    }
+    private void setUpCityNamesList() {
+
+        spinner = (Spinner) findViewById(R.id.spinnerCityHolderID);
+        cityNameArray = new ArrayList();
+        cityNameArray.add("Bremen");
+        cityNameArray.add("Berlin");
+        cityNameArray.add("Hamburg");
+        cityNameArray.add("Bayern");
+        spinnerAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, cityNameArray);
+        spinner.setAdapter(spinnerAdapter);
+    }
+
+    public void createToolBar() {
+
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
+
+        // Trigger a menu item by setting item clickListener
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.iHome:
+                        // Do something
+                        Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(homeActivity);
+                        return true;
+                    case R.id.iShare:
+                        // Do something
+                        shareIt();
+                        return true;
+                    case R.id.iSet:
+                        // Do something
+                        setupSetting();
+                        return true;
+                    default:
+                        return MainActivity.super.onOptionsItemSelected(item);
+                }
+            }
+        });
+    }
+
+    private void shareIt() {
+        //sharing implementation here
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "Thank you for sharing our App.";
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Share it");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, null));
+
+    }
+
+    private void setupSetting() {
+        // set up Settings activity
+        Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(settingsIntent);
+    }
+
+    private void getDateInput() {
+
+        CalendarView calendarView = (CalendarView) findViewById(R.id.calendarViewID);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String days, months, years;
+                days = String.valueOf(dayOfMonth);
+                months = String.valueOf(month);
+                years = String.valueOf(year);
+                Toast.makeText(getApplicationContext(), ""+days+"-"+months+"-"+years, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

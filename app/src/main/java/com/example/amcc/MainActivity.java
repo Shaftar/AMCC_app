@@ -13,8 +13,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter spinnerAdapter;
     private Spinner spinner;
     private ArrayList cityNameArray;
-    private TextView cityName;
+    private EditText cityName;
+    private String citySelected, days, months, years;
     private static final String DEBUG_TAG = "NetworkStatus: ";
 
 
@@ -164,6 +168,20 @@ public class MainActivity extends AppCompatActivity {
         cityNameArray.add("Bayern");
         spinnerAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, cityNameArray);
         spinner.setAdapter(spinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                citySelected = spinner.getSelectedItem().toString();
+                Toast.makeText(getApplicationContext(), "City: "+citySelected, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
     public void createToolBar() {
@@ -224,13 +242,42 @@ public class MainActivity extends AppCompatActivity {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String days, months, years;
+
                 days = String.valueOf(dayOfMonth);
                 months = String.valueOf(month);
                 years = String.valueOf(year);
                 Toast.makeText(getApplicationContext(), ""+days+"-"+months+"-"+years, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void moveEnteredValueToResultActivity() {
+
+        EditText emissionNum = (EditText) findViewById(R.id.edtNumEmissionID);
+        int emNum = Integer.parseInt(emissionNum.getText().toString());
+        EditText engSizeNum = (EditText) findViewById(R.id.edtNumEngSizeID);
+        int engSiNum = Integer.parseInt(engSizeNum.getText().toString());
+        EditText avgConNum = (EditText) findViewById(R.id.edtNumConsumeID);
+        int avgCon = Integer.parseInt(avgConNum.getText().toString());
+        EditText mileNum = (EditText) findViewById(R.id.edtNumMileAgeYearID);
+        int milePerYear = Integer.parseInt(mileNum.getText().toString());
+
+        Intent userInputIntentData = new Intent(MainActivity.this, ResultActivity.class);
+        userInputIntentData.putExtra("City", citySelected);
+        String regDate = days+"-"+months+"-"+years;
+        userInputIntentData.putExtra("First Register Date", regDate);
+        userInputIntentData.putExtra("Emission", emNum);
+        userInputIntentData.putExtra("Engine Size", engSiNum);
+        userInputIntentData.putExtra("Average Consume", avgCon);
+        userInputIntentData.putExtra("Mileage Per Year", milePerYear);
+        startActivity(userInputIntentData);
+    }
+
+    public void getResult(View view) {
+
+        // Start Result Activity
+        moveEnteredValueToResultActivity();
+
     }
 
     @Override
@@ -252,4 +299,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
     }
+
+
 }

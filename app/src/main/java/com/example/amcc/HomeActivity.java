@@ -25,38 +25,14 @@ public class HomeActivity extends AppCompatActivity {
     Integer[] imgListArrayID = {R.drawable.car_ins, R.drawable.car_go};
     //Create list View
     private ListView listView;
+    private CustomListAdapter homeListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Find the toolbar view inside the activity layout
-        createToolBar();
 
-        // Create Custom Adapter here
-        final CustomListAdapter homeListAdapter = new CustomListAdapter(this, nameListArray, infoListArray, imgListArrayID);
-        // Link listView to our CustomListAdapter
-        listView = (ListView) findViewById(R.id.homelistViewID);
-        listView.setAdapter(homeListAdapter);
-        // Create EventListener
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                switch (position) {
-                    case 0:
-                        Toast.makeText(getApplicationContext(), "First Function", Toast.LENGTH_SHORT).show();
-                        Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
-                        startActivity(mainActivity);
-                        break;
-                    case 1:
-
-                        Toast.makeText(getApplicationContext(), "Second Function", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        });
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -117,4 +93,44 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    private void setListHomeAdapter() {
+
+        // Create Custom Adapter here
+        homeListAdapter = new CustomListAdapter(this, nameListArray, infoListArray, imgListArrayID);
+        // Link listView to our CustomListAdapter
+        listView = (ListView) findViewById(R.id.homelistViewID);
+        listView.setAdapter(homeListAdapter);
+        // Create EventListener
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                switch (position) {
+                    case 0:
+                        Toast.makeText(getApplicationContext(), "First Function", Toast.LENGTH_SHORT).show();
+                        Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
+                        startActivity(mainActivity);
+                        break;
+                    case 1:
+
+                        Toast.makeText(getApplicationContext(), "Second Function", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Set List Adapter
+        setListHomeAdapter();
+        // Find the toolbar view inside the activity layout
+        createToolBar();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 }

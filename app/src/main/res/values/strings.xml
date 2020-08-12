@@ -16,7 +16,8 @@
     <string name="average_consume_per_100_km">average consume per 100/km</string>
     <string name="mileage_per_year">Mileage per Year</string>
     <string name="_000_km">.000 km</string>
-    <string name="enter_from_1_20">enter from 1 - 20</string>
+    <string name="enter_from_1_20">enter from 1 – 20</string>
     <string name="get_result">Get Result</string>
+    <string name="error_field_required">This field is required</string>
 
 </resources>

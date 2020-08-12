@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,11 +37,8 @@ import util.HttpHandling;
 
 public class MainActivity extends AppCompatActivity {
 
-    // City List tools
-    private ArrayAdapter spinnerAdapter;
     private Spinner spinner;
-    private ArrayList cityNameArray;
-    private EditText cityName;
+    private EditText cityName, emissionEdtField, engineSizeField, avgConField, milePerYField;
     private String citySelected, days, months, years;
     private static final String DEBUG_TAG = "NetworkStatus: ";
 
@@ -51,10 +49,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_input_interface);
 
         // Create the Toolbar
-        createToolBar();
+        //createToolBar();
 
         //Create City Name List
         setUpCityNamesList();
+
+        //Initial Fields
+        initialEditField();
 
         // Get Date Input
         getDateInput();
@@ -161,19 +162,20 @@ public class MainActivity extends AppCompatActivity {
     private void setUpCityNamesList() {
 
         spinner = (Spinner) findViewById(R.id.spinnerCityHolderID);
-        cityNameArray = new ArrayList();
+        ArrayList cityNameArray = new ArrayList();
         cityNameArray.add("Bremen");
         cityNameArray.add("Berlin");
         cityNameArray.add("Hamburg");
         cityNameArray.add("Bayern");
-        spinnerAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, cityNameArray);
+        // City List tools
+        ArrayAdapter spinnerAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, cityNameArray);
         spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 citySelected = spinner.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), "City: "+citySelected, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "City: "+citySelected, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -275,8 +277,65 @@ public class MainActivity extends AppCompatActivity {
 
     public void getResult(View view) {
 
-        // Start Result Activity
-        moveEnteredValueToResultActivity();
+        // Check user Input and get result
+        checkUserInput();
+    }
+
+    private void checkUserInput() {
+
+        // Reset errors displayed in the form.
+        emissionEdtField.setError(null);
+        engineSizeField.setError(null);
+        avgConField.setError(null);
+        milePerYField.setError(null);
+
+        // Store values at the time of the entered vlaues
+        String emission = emissionEdtField.getText().toString();
+        String engSize = engineSizeField.getText().toString();
+        String avgCon = avgConField.getText().toString();
+        String milePerY = milePerYField.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid password, if the user entered one.
+        if (TextUtils.isEmpty(emission)) {
+            emissionEdtField.setError(getString(R.string.error_field_required));
+            focusView = emissionEdtField;
+            cancel = true;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(milePerY)) {
+            milePerYField.setError(getString(R.string.error_field_required));
+            focusView = milePerYField;
+            cancel = true;
+        } if (TextUtils.isEmpty(engSize)) {
+            engineSizeField.setError(getString(R.string.error_field_required));
+            focusView = engineSizeField;
+            cancel = true;
+        } if (TextUtils.isEmpty(avgCon)) {
+            avgConField.setError(getString(R.string.error_field_required));
+            focusView = avgConField;
+            cancel = true;
+        }
+        if (cancel) {
+            // There was an error; don't get Result and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+
+            // Start Result Activity
+            moveEnteredValueToResultActivity();
+        }
+    }
+
+    private void initialEditField() {
+
+        emissionEdtField = (EditText) findViewById(R.id.edtNumEmissionID);
+        avgConField = (EditText) findViewById(R.id.edtNumConsumeID);
+        engineSizeField = (EditText) findViewById(R.id.edtNumEngSizeID);
+        milePerYField = (EditText) findViewById(R.id.edtNumMileAgeYearID);
 
     }
 
@@ -288,6 +347,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        // Create the Toolbar
+        createToolBar();
     }
 
     @Override

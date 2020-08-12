@@ -29,6 +29,9 @@
         <activity android:name=".MainActivity"
             android:label="MainFunction">
         </activity>
+        <activity android:name=".ResultActivity"
+            android:label="GetResult">
+        </activity>
     </application>
 
 </manifest>

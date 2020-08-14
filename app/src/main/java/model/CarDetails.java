@@ -1,46 +1,23 @@
 package model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.Date;
 
 public class CarDetails {
 
-    private int first_register_date, avg_consum, emission, mileage_per_year;
-    private double  engine_size, fuel_type;
+    private int  emission, yearlyMileage, engineSize;
+    private Date regDate;
+    private double  avgConsume;
+    private FuelType fuelType;
     private String city;
 
-    public static CarDetails fromJason(JSONObject jsonObject) {
-
-        CarDetails carDetails = new CarDetails();
-        try {
-            carDetails.city = jsonObject.getJSONObject("city").getString("name");
-            carDetails.first_register_date = jsonObject.getJSONObject("year").getInt("date");
-            carDetails.mileage_per_year = jsonObject.getJSONObject("mile").getInt("distance");
-            carDetails.emission = jsonObject.getJSONObject("co2").getInt("emission");
-            carDetails.avg_consum = jsonObject.getJSONObject("consum").getInt("consum");
-            carDetails.engine_size = jsonObject.getJSONObject("size").getDouble("engine");
-            carDetails.fuel_type = jsonObject.getJSONObject("fuel").getDouble("fuel");
-        } catch (JSONException e) {
-            e.getMessage();
-        }
-
-        return carDetails;
-    }
-
-    public int getFirst_register_date() {
-        return first_register_date;
-    }
-
-    public void setFirst_register_date(int first_register_date) {
-        this.first_register_date = first_register_date;
-    }
-
-    public int getAvg_consum() {
-        return avg_consum;
-    }
-
-    public void setAvg_consum(int avg_consum) {
-        this.avg_consum = avg_consum;
+    public CarDetails(int emission, int yearlyMileage, int engineSize, Date regDate, double avgConsume, FuelType fuelType, String city) {
+        this.emission = emission;
+        this.yearlyMileage = yearlyMileage;
+        this.engineSize = engineSize;
+        this.regDate = regDate;
+        this.avgConsume = avgConsume;
+        this.fuelType = fuelType;
+        this.city = city;
     }
 
     public int getEmission() {
@@ -51,28 +28,44 @@ public class CarDetails {
         this.emission = emission;
     }
 
-    public int getMileage_per_year() {
-        return mileage_per_year;
+    public int getYearlyMileage() {
+        return yearlyMileage;
     }
 
-    public void setMileage_per_year(int mileage_per_year) {
-        this.mileage_per_year = mileage_per_year;
+    public void setYearlyMileage(int yearlyMileage) {
+        this.yearlyMileage = yearlyMileage;
     }
 
-    public double getEngine_size() {
-        return engine_size;
+    public int getEngineSize() {
+        return engineSize;
     }
 
-    public void setEngine_size(double engine_size) {
-        this.engine_size = engine_size;
+    public void setEngineSize(int engineSize) {
+        this.engineSize = engineSize;
     }
 
-    public double getFuel_type() {
-        return fuel_type;
+    public Date getRegDate() {
+        return regDate;
     }
 
-    public void setFuel_type(double fuel_type) {
-        this.fuel_type = fuel_type;
+    public void setRegDate(Date regDate) {
+        this.regDate = regDate;
+    }
+
+    public double getAvgConsume() {
+        return avgConsume;
+    }
+
+    public void setAvgConsume(double avgConsume) {
+        this.avgConsume = avgConsume;
+    }
+
+    public FuelType getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(FuelType fuelType) {
+        this.fuelType = fuelType;
     }
 
     public String getCity() {

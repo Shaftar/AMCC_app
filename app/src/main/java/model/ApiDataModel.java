@@ -10,17 +10,18 @@ public class ApiDataModel {
 
     // Get Data from Api jason object
     public static ApiDataModel fromJson(JSONObject jsonObject){
-        int val1, val2, val3;
+        int annualTax, yearlyFuelPrice;
+        double fuelPrice;
         ApiDataModel apiDataModel = new ApiDataModel();
         try {
             // Fetch Data from json Api
-            val1 = apiDataModel.taxVal = jsonObject.getJSONArray("value1_name").getJSONObject(0).getInt("id");
-            val2 = apiDataModel.costVal = jsonObject.getJSONArray("value2_name").getJSONObject(0).getInt("id");
-            val3 = apiDataModel.typeVal = jsonObject.getJSONArray("value3_name").getJSONObject(0).getInt("id");
+            annualTax = apiDataModel.taxVal = jsonObject.getJSONArray("value1_name").getJSONObject(0).getInt("id");
+            fuelPrice = apiDataModel.costVal = jsonObject.getJSONArray("value2_name").getJSONObject(0).getInt("id");
+            yearlyFuelPrice = apiDataModel.typeVal = jsonObject.getJSONArray("value3_name").getJSONObject(0).getInt("id");
             // To String
-            apiDataModel.StrVal1 = Integer.toString(val1);
-            apiDataModel.StrVal2 = Integer.toString(val2);
-            apiDataModel.StrVal3 = Integer.toString(val3);
+            apiDataModel.StrVal1 = Integer.toString(annualTax);
+            apiDataModel.StrVal2 = Double.toString(fuelPrice);
+            apiDataModel.StrVal3 = Integer.toString(yearlyFuelPrice);
             return apiDataModel;
         } catch (JSONException e){
             e.printStackTrace();

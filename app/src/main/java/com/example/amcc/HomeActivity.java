@@ -2,6 +2,7 @@ package com.example.amcc;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,16 +10,22 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-
 import adapter.CustomListAdapter;
+import model.ApiDataModel;
+import model.CarDetails;
+import model.FuelType;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofitApi.RetrofitClient;
 
 
 public class HomeActivity extends AppCompatActivity {
 
+    private static final String TAG = "Debug";
     // References to feed our custom List Adapter object
     String[] nameListArray = {"First Function", "Second Function"};
     String[] infoListArray = {"info about first function.", "info about second function."};
@@ -104,7 +111,8 @@ public class HomeActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                CarDetails car = new CarDetails("bremen", 1211, 122, FuelType.e5,
+                        "15.07.2010", 5.5, 6);
                 switch (position) {
                     case 0:
                         Toast.makeText(getApplicationContext(), "First Function", Toast.LENGTH_SHORT).show();
@@ -112,8 +120,7 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(mainActivity);
                         break;
                     case 1:
-
-                        Toast.makeText(getApplicationContext(), "Second Function", Toast.LENGTH_SHORT).show();
+                        getCosts(car);
                         break;
                 }
             }
@@ -132,5 +139,23 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    public void getCosts(CarDetails car) {
+
+        RetrofitClient client = RetrofitClient.getINSTANCE();
+        client.getCosts(car).enqueue(new Callback<ApiDataModel>() {
+            @Override
+            public void onResponse(Call<ApiDataModel> call, Response<ApiDataModel> response) {
+                if (response.code() == 200)
+                    Log.d(TAG, "object: " + response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<ApiDataModel> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailure: " + t.getMessage());
+            }
+        });
     }
 }

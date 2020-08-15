@@ -1,43 +1,43 @@
 package model;
 
-import  org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.annotations.SerializedName;
 
 public class ApiDataModel {
+    @SerializedName("error_message")
+    private String error;
 
-    private int taxVal, costVal, typeVal;
-    private String StrVal1, StrVal2, StrVal3;
+    @SerializedName("annual_tax")
+    private int annualTax;
 
-    // Get Data from Api jason object
-    public static ApiDataModel fromJson(JSONObject jsonObject){
-        int annualTax, yearlyFuelPrice;
-        double fuelPrice;
-        ApiDataModel apiDataModel = new ApiDataModel();
-        try {
-            // Fetch Data from json Api
-            annualTax = apiDataModel.taxVal = jsonObject.getJSONArray("value1_name").getJSONObject(0).getInt("id");
-            fuelPrice = apiDataModel.costVal = jsonObject.getJSONArray("value2_name").getJSONObject(0).getInt("id");
-            yearlyFuelPrice = apiDataModel.typeVal = jsonObject.getJSONArray("value3_name").getJSONObject(0).getInt("id");
-            // To String
-            apiDataModel.StrVal1 = Integer.toString(annualTax);
-            apiDataModel.StrVal2 = Double.toString(fuelPrice);
-            apiDataModel.StrVal3 = Integer.toString(yearlyFuelPrice);
-            return apiDataModel;
-        } catch (JSONException e){
-            e.printStackTrace();
-            return null;
-        }
+    @SerializedName("fuel_price")
+    private double fuelPrice;
+
+    @SerializedName("annual_fuel_price")
+    private int annualFuelCosts;
+
+    public String getError() {
+        return error;
     }
 
-    public String getStrVal1() {
-        return StrVal1;
+    public int getAnnualTax() {
+        return annualTax;
     }
 
-    public String getStrVal2() {
-        return StrVal2;
+    public double getFuelPrice() {
+        return fuelPrice;
     }
 
-    public String getStrVal3() {
-        return StrVal3;
+    public int getAnnualFuelCosts() {
+        return annualFuelCosts;
+    }
+
+    @Override
+    public String toString() {
+        return "ApiDataModel{" +
+                "error='" + error + '\'' +
+                ", annualTax=" + annualTax +
+                ", fuelPrice=" + fuelPrice +
+                ", annualFuelCosts=" + annualFuelCosts +
+                '}';
     }
 }

@@ -1,9 +1,5 @@
 package com.example.amcc;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -20,11 +16,12 @@ import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import model.ApiDataModel;
-import model.CarDetails;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -33,6 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+import model.CarDetails;
 import util.HttpHandling;
 
 public class MainActivity extends AppCompatActivity {
@@ -120,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     Log.d("App: CreateNetworking", "OnSuccess- has response!");
-                    ApiDataModel apiDataModel = ApiDataModel.fromJson(response);
-                    CarDetails carDetails = CarDetails.fromJason(response);
+                    //    ApiDataModel apiDataModel = ApiDataModel.fromJson(response);
+                    //   CarDetails carDetails = CarDetails.fromJason(response);
                 }
 
                 @Override
@@ -154,9 +152,9 @@ public class MainActivity extends AppCompatActivity {
 
         RequestParams params = new RequestParams();
         params.put("", carDetails.getCity());
-        params.put("", carDetails.getFirst_register_date());
+        params.put("", carDetails.getRegDate());
         params.put("", carDetails.getEmission());
-        params.put("", carDetails.getFuel_type());
+        params.put("", carDetails.getFuelType());
         createNetworking(params);
     }
     private void setUpCityNamesList() {

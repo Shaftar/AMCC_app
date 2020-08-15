@@ -1,6 +1,6 @@
-package retrofitApi;
+package com.example.amcc.retrofitApi;
 
-import model.ApiDataModel;
+import com.example.amcc.model.ApiDataModel;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

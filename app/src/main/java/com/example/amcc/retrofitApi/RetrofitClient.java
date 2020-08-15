@@ -1,7 +1,7 @@
-package retrofitApi;
+package com.example.amcc.retrofitApi;
 
-import model.ApiDataModel;
-import model.CarDetails;
+import com.example.amcc.model.ApiDataModel;
+import com.example.amcc.model.CarDetails;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

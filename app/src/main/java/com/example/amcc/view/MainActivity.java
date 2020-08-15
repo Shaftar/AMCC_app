@@ -1,4 +1,4 @@
-package com.example.amcc;
+package com.example.amcc.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.amcc.R;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -30,8 +31,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
-import model.CarDetails;
-import util.HttpHandling;
+import com.example.amcc.model.CarDetails;
+import com.example.amcc.util.HttpHandling;
 
 public class MainActivity extends AppCompatActivity {
 

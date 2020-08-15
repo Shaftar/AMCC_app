@@ -1,4 +1,4 @@
-package com.example.amcc;
+package com.example.amcc.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,14 +13,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import adapter.CustomListAdapter;
-import model.ApiDataModel;
-import model.CarDetails;
-import model.FuelType;
+import com.example.amcc.R;
+import com.example.amcc.adapter.CustomListAdapter;
+import com.example.amcc.model.ApiDataModel;
+import com.example.amcc.model.CarDetails;
+import com.example.amcc.model.FuelType;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofitApi.RetrofitClient;
+import com.example.amcc.retrofitApi.RetrofitClient;
 
 
 public class HomeActivity extends AppCompatActivity {

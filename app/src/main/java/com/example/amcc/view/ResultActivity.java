@@ -1,4 +1,4 @@
-package com.example.amcc;
+package com.example.amcc.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.amcc.R;
 
 
 public class ResultActivity extends AppCompatActivity {

@@ -11,11 +11,13 @@
     <item
         android:id="@+id/iHome"
         app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/home_icon"
         android:title="@string/home">
     </item>
     <item
         android:id="@+id/iSet"
         app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/gear_setting"
         android:title="@string/setting">
     </item>
 

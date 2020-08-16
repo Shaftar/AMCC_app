@@ -3,25 +3,21 @@ package com.example.amcc.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.example.amcc.R;
 import com.example.amcc.adapter.CustomListAdapter;
 import com.example.amcc.model.ApiDataModel;
 import com.example.amcc.model.CarDetails;
 import com.example.amcc.model.FuelType;
+import com.example.amcc.retrofitApi.RetrofitClient;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import com.example.amcc.retrofitApi.RetrofitClient;
 
 
 public class HomeActivity extends BaseActivity {
@@ -48,13 +44,13 @@ public class HomeActivity extends BaseActivity {
         // Create Custom Adapter here
         homeListAdapter = new CustomListAdapter(this, nameListArray, infoListArray, imgListArrayID);
         // Link listView to our CustomListAdapter
-        listView = (ListView) findViewById(R.id.homelistViewID);
+        listView = findViewById(R.id.homelistViewID);
         listView.setAdapter(homeListAdapter);
         // Create EventListener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CarDetails car = new CarDetails("bremen", 1211, 122, FuelType.e5,
+                CarDetails car = new CarDetails("bremen", 1211, 122, FuelType.diesel,
                         "15.07.2010", 5.5, 6);
                 switch (position) {
                     case 0:
@@ -74,11 +70,6 @@ public class HomeActivity extends BaseActivity {
         super.onStart();
         // Set List Adapter
         setListHomeAdapter();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     public void getCosts(CarDetails car) {

@@ -8,8 +8,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,20 +17,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.example.amcc.R;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import cz.msebera.android.httpclient.Header;
-import com.example.amcc.model.CarDetails;
-import com.example.amcc.util.HttpHandling;
 
 public class MainActivity extends BaseActivity {
 
@@ -99,57 +87,11 @@ public class MainActivity extends BaseActivity {
         }
         return false;
     }
-    // Send Request to server and fetch the data
-    private void createNetworking(RequestParams params) {
-        if (checkNetwork()) {
-            Log.d("App: CreateNetworking", "Network is working- Internet connected!");
-            HttpHandling.get(HttpHandling.API_URL, params, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-                    Log.d("App: CreateNetworking", "OnSuccess- has response!");
-                    //    ApiDataModel apiDataModel = ApiDataModel.fromJson(response);
-                    //   CarDetails carDetails = CarDetails.fromJason(response);
-                }
 
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
-                    // If the response is JSONObject Failed
-                    Log.d("App: onFailure", "---------------- No response! : " +
-                            errorResponse.toString());
-                    Toast.makeText(MainActivity.this,
-                            "Request Failed", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
 
-    // Values input user edit activity
-    private void getFromUserEdit(int regYear, int engineSize, int co2, int fuelType) {
-
-        RequestParams params = new RequestParams();
-        params.put("", regYear);
-        params.put("", engineSize);
-        params.put("", co2);
-        params.put("", fuelType);
-        createNetworking(params);
-
-    }
-
-    //User Input values activity
-    private void getFromUserInput(CarDetails carDetails) {
-
-        RequestParams params = new RequestParams();
-        params.put("", carDetails.getCity());
-        params.put("", carDetails.getRegDate());
-        params.put("", carDetails.getEmission());
-        params.put("", carDetails.getFuelType());
-        createNetworking(params);
-    }
     private void setUpCityNamesList() {
 
-        spinner = (Spinner) findViewById(R.id.spinnerCityHolderID);
+        spinner = findViewById(R.id.spinnerCityHolderID);
         ArrayList cityNameArray = new ArrayList();
         cityNameArray.add("Bremen");
         cityNameArray.add("Berlin");
@@ -176,7 +118,7 @@ public class MainActivity extends BaseActivity {
 
     private void getDateInput() {
 
-        CalendarView calendarView = (CalendarView) findViewById(R.id.calendarViewID);
+        CalendarView calendarView = findViewById(R.id.calendarViewID);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -191,13 +133,13 @@ public class MainActivity extends BaseActivity {
 
     private void moveEnteredValueToResultActivity() {
 
-        EditText emissionNum = (EditText) findViewById(R.id.edtNumEmissionID);
+        EditText emissionNum = findViewById(R.id.edtNumEmissionID);
         int emNum = Integer.parseInt(emissionNum.getText().toString());
-        EditText engSizeNum = (EditText) findViewById(R.id.edtNumEngSizeID);
+        EditText engSizeNum = findViewById(R.id.edtNumEngSizeID);
         int engSiNum = Integer.parseInt(engSizeNum.getText().toString());
-        EditText avgConNum = (EditText) findViewById(R.id.edtNumConsumeID);
+        EditText avgConNum = findViewById(R.id.edtNumConsumeID);
         int avgCon = Integer.parseInt(avgConNum.getText().toString());
-        EditText mileNum = (EditText) findViewById(R.id.edtNumMileAgeYearID);
+        EditText mileNum = findViewById(R.id.edtNumMileAgeYearID);
         int milePerYear = Integer.parseInt(mileNum.getText().toString());
 
         Intent userInputIntentData = new Intent(MainActivity.this, ResultActivity.class);
@@ -268,10 +210,10 @@ public class MainActivity extends BaseActivity {
 
     private void initialEditField() {
 
-        emissionEdtField = (EditText) findViewById(R.id.edtNumEmissionID);
-        avgConField = (EditText) findViewById(R.id.edtNumConsumeID);
-        engineSizeField = (EditText) findViewById(R.id.edtNumEngSizeID);
-        milePerYField = (EditText) findViewById(R.id.edtNumMileAgeYearID);
+        emissionEdtField = findViewById(R.id.edtNumEmissionID);
+        avgConField = findViewById(R.id.edtNumConsumeID);
+        engineSizeField = findViewById(R.id.edtNumEngSizeID);
+        milePerYField = findViewById(R.id.edtNumMileAgeYearID);
 
     }
 

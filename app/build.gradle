@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.11'
     implementation "androidx.preference:preference"
     implementation 'com.takisoft.preferencex:preferencex:1.1.0'
+    //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 

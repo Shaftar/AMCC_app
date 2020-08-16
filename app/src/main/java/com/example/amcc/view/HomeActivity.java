@@ -24,7 +24,7 @@ import retrofit2.Response;
 import com.example.amcc.retrofitApi.RetrofitClient;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     private static final String TAG = "Debug";
     // References to feed our custom List Adapter object
@@ -43,64 +43,6 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    // Menu icons are inflated just as they were with actionbar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.app_menu, menu);
-        return true;
-    }
-
-    private void shareIt() {
-        //sharing implementation here
-        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        String shareBody = "Thank you for sharing our App.";
-        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Share it");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(sharingIntent, null));
-
-    }
-
-    private void setupSetting() {
-        // set up Settings activity
-        Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
-        startActivity(settingsIntent);
-    }
-
-    public void createToolBar() {
-
-        // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
-
-        // Trigger a menu item by setting item clickListener
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.iHome:
-                        // Do something
-                        return true;
-                    case R.id.iShare:
-                        // Do something
-                        shareIt();
-                        return true;
-                    case R.id.iSet:
-                        // Do something
-                        setupSetting();
-                        return true;
-                    default:
-                        return HomeActivity.super.onOptionsItemSelected(item);
-                }
-            }
-        });
-    }
-
     private void setListHomeAdapter() {
 
         // Create Custom Adapter here
@@ -116,7 +58,6 @@ public class HomeActivity extends AppCompatActivity {
                         "15.07.2010", 5.5, 6);
                 switch (position) {
                     case 0:
-                        Toast.makeText(getApplicationContext(), "First Function", Toast.LENGTH_SHORT).show();
                         Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
                         startActivity(mainActivity);
                         break;
@@ -133,8 +74,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onStart();
         // Set List Adapter
         setListHomeAdapter();
-        // Find the toolbar view inside the activity layout
-        createToolBar();
     }
 
     @Override

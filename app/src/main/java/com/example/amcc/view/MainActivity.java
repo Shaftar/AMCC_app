@@ -34,7 +34,7 @@ import cz.msebera.android.httpclient.Header;
 import com.example.amcc.model.CarDetails;
 import com.example.amcc.util.HttpHandling;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private Spinner spinner;
     private EditText cityName, emissionEdtField, engineSizeField, avgConField, milePerYField;
@@ -47,10 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_interface);
 
-        // Create the Toolbar
-        //createToolBar();
-
-        //Create City Name List
+         //Create City Name List
         setUpCityNamesList();
 
         //Initial Fields
@@ -61,14 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    // Menu icons are inflated just as they were with actionbar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.app_menu, menu);
-        return true;
-    }
-
 
     //For debugging purposes
     public void networkStatus() {
@@ -185,58 +174,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void createToolBar() {
-
-        // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
-
-        // Trigger a menu item by setting item clickListener
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.iHome:
-                        // Do something
-                        Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
-                        startActivity(homeActivity);
-                        return true;
-                    case R.id.iShare:
-                        // Do something
-                        shareIt();
-                        return true;
-                    case R.id.iSet:
-                        // Do something
-                        setupSetting();
-                        return true;
-                    default:
-                        return MainActivity.super.onOptionsItemSelected(item);
-                }
-            }
-        });
-    }
-
-    private void shareIt() {
-        //sharing implementation here
-        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        String shareBody = "Thank you for sharing our App.";
-        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Share it");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(sharingIntent, null));
-
-    }
-
-    private void setupSetting() {
-        // set up Settings activity
-        Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-        startActivity(settingsIntent);
-    }
-
     private void getDateInput() {
 
         CalendarView calendarView = (CalendarView) findViewById(R.id.calendarViewID);
@@ -337,28 +274,5 @@ public class MainActivity extends AppCompatActivity {
         milePerYField = (EditText) findViewById(R.id.edtNumMileAgeYearID);
 
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Create the Toolbar
-        createToolBar();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
 
 }

@@ -1,11 +1,12 @@
-package com.example.amcc;
+package com.example.amcc.view;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import util.SettingsFragment;
+import com.example.amcc.R;
+import com.example.amcc.util.SettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {
 

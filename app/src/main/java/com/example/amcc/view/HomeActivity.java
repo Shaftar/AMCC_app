@@ -14,6 +14,7 @@ import com.example.amcc.model.ApiDataModel;
 import com.example.amcc.model.CarDetails;
 import com.example.amcc.model.FuelType;
 import com.example.amcc.retrofitApi.RetrofitClient;
+import com.example.amcc.util.ApiController;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,7 +23,7 @@ import retrofit2.Response;
 
 public class HomeActivity extends BaseActivity {
 
-    private static final String TAG = "Debug";
+
     // References to feed our custom List Adapter object
     String[] nameListArray = {"First Function", "Second Function"};
     String[] infoListArray = {"info about first function.", "info about second function."};
@@ -50,15 +51,14 @@ public class HomeActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CarDetails car = new CarDetails("bremen", 1211, 122, FuelType.diesel,
-                        "15.07.2010", 5.5, 6);
+
                 switch (position) {
                     case 0:
                         Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
                         startActivity(mainActivity);
                         break;
                     case 1:
-                        getCosts(car);
+                        getCosts();
                         break;
                 }
             }
@@ -72,21 +72,9 @@ public class HomeActivity extends BaseActivity {
         setListHomeAdapter();
     }
 
-    public void getCosts(CarDetails car) {
+    public void getCosts() {
 
-        RetrofitClient client = RetrofitClient.getINSTANCE();
-        client.getCosts(car).enqueue(new Callback<ApiDataModel>() {
-            @Override
-            public void onResponse(Call<ApiDataModel> call, Response<ApiDataModel> response) {
-                if (response.code() == 200)
-                    Log.d(TAG, "object: " + response.body().toString());
-            }
-
-            @Override
-            public void onFailure(Call<ApiDataModel> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+        //Create Api controller to fetch data
+        ApiController controller = new ApiController(this);
     }
 }

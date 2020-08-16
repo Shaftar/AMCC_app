@@ -1,5 +1,6 @@
 package com.example.amcc.view;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,9 +27,10 @@ import java.util.ArrayList;
 public class MainActivity extends BaseActivity {
 
     private Spinner spinner;
-    private EditText cityName, emissionEdtField, engineSizeField, avgConField, milePerYField;
+    private EditText dateField, emissionEdtField, engineSizeField, avgConField, milePerYField;
     private String citySelected, days, months, years;
     private static final String DEBUG_TAG = "NetworkStatus: ";
+    private ImageView dateImageView;
 
 
     @Override
@@ -42,7 +45,7 @@ public class MainActivity extends BaseActivity {
         initialEditField();
 
         // Get Date Input
-        getDateInput();
+        getClaenderByClick();
 
 
     }
@@ -118,7 +121,11 @@ public class MainActivity extends BaseActivity {
 
     private void getDateInput() {
 
-        CalendarView calendarView = findViewById(R.id.calendarViewID);
+        dateField = findViewById(R.id.edtDateID);
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.calender_view);
+        CalendarView calendarView = dialog.findViewById(R.id.calendarViewID);
+        dialog.setTitle("Date");
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -126,9 +133,13 @@ public class MainActivity extends BaseActivity {
                 days = String.valueOf(dayOfMonth);
                 months = String.valueOf(month);
                 years = String.valueOf(year);
-                Toast.makeText(getApplicationContext(), ""+days+"-"+months+"-"+years, Toast.LENGTH_SHORT).show();
+                String dateFormat = "" + days + "-" + months + "-" + years;
+                Toast.makeText(getApplicationContext(), dateFormat, Toast.LENGTH_SHORT).show();
+                dateField.setText(dateFormat);
             }
         });
+        dialog.show();
+        dialog.setCancelable(true);
     }
 
     private void moveEnteredValueToResultActivity() {
@@ -215,6 +226,18 @@ public class MainActivity extends BaseActivity {
         engineSizeField = findViewById(R.id.edtNumEngSizeID);
         milePerYField = findViewById(R.id.edtNumMileAgeYearID);
 
+    }
+
+    private void getClaenderByClick() {
+
+
+        dateImageView = findViewById(R.id.dateIconID);
+        dateImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDateInput();
+            }
+        });
     }
 
 }

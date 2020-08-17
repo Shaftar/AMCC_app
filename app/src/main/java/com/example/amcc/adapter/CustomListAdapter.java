@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.example.amcc.R;
 
-public class CustomListAdapter extends ArrayAdapter {
+public class CustomListAdapter extends ArrayAdapter<String> {
 
     //to reference the Activity
     private final Activity context;
@@ -38,10 +38,16 @@ public class CustomListAdapter extends ArrayAdapter {
     @Override @NonNull
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
-        LayoutInflater inflater = context.getLayoutInflater();
-        @SuppressLint("ViewHolder") View rowView = inflater.inflate(R.layout.listview_row, parent, false);
+        @SuppressLint("ViewHolder") View rowView;
+        LayoutInflater inflater;
+        if (convertView == null) {
+            inflater = context.getLayoutInflater();
+            rowView = inflater.inflate(R.layout.listview_row, parent, false);
+        } else {
+            rowView = convertView;
+        }
 
-        //this code gets references to objects in the listview_row.xml file
+        //this code gets references to objects in the listView_row.xml file
         TextView nameTextField = (TextView) rowView.findViewById(R.id.listRowtextViewTitleID);
         TextView infoTextField = (TextView) rowView.findViewById(R.id.infoListTxtViewRowID);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.listImgVID);

@@ -23,13 +23,13 @@ import androidx.annotation.NonNull;
 import com.example.amcc.R;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class MainActivity extends BaseActivity {
 
     private Spinner spinner;
     private EditText dateField, emissionEdtField, engineSizeField, avgConField, milePerYField;
     private String citySelected, days, months, years;
-    private static final String DEBUG_TAG = "NetworkStatus: ";
     private ImageView dateImageView;
 
 
@@ -50,29 +50,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    //For debugging purposes
-    public void networkStatus() {
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        boolean isWifiConn = false;
-        boolean isMobileConn = false;
-        for (Network network : connectivityManager.getAllNetworks()) {
-            NetworkInfo networkInfo = connectivityManager.getNetworkInfo(network);
-            if (networkInfo != null) {
-                if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-                    isWifiConn |= networkInfo.isConnected();
-                }
-                if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
-                    isMobileConn |= networkInfo.isConnected();
-                }
-
-            } else {
-                // not connected to the internet
-            }
-        }
-        Log.d(DEBUG_TAG, "Wifi connected: " + isWifiConn);
-        Log.d(DEBUG_TAG, "Mobile connected: " + isMobileConn);
-    }
     // For check the Network Connection before
     // we request data
     public boolean checkNetwork() {
@@ -101,7 +78,7 @@ public class MainActivity extends BaseActivity {
         cityNameArray.add("Hamburg");
         cityNameArray.add("Bayern");
         // City List tools
-        ArrayAdapter spinnerAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, cityNameArray);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, cityNameArray);
         spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

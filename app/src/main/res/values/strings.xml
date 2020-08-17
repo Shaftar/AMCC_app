@@ -8,7 +8,7 @@
     <string name="the_second_function_name">Info about this function</string>
     <string name="city">City</string>
     <string name="first_register_date">First Register Date</string>
-    <string name="emission">Emission</string>
+    <string name="emission">Emission Co2 value</string>
     <string name="enter_emission_number">Enter Emission number</string>
     <string name="engine_size">Engine Size</string>
     <string name="enter_the_size_of_engine">Enter the size of engine</string>
@@ -21,5 +21,9 @@
     <string name="error_field_required">This field is required</string>
     <string name="dd_mm_yy">dd-mm-yy</string>
     <string name="date_icon">Date Icon</string>
+    <string name="diesel">Diesel</string>
+    <string name="e5">e5</string>
+    <string name="e10">e10</string>
+    <string name="euro4_higher">Euro 4 or higher</string>
 
 </resources>

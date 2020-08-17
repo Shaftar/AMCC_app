@@ -51,7 +51,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = new ViewModelProvider(getActivity()).get(ShardViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(ShardViewModel.class);
 
     }
 
@@ -73,7 +73,7 @@ public class MainFragment extends Fragment {
         navController = Navigation.findNavController(view);
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
             CarDetails car = new CarDetails(citySelected, Integer.parseInt(engineSizeField.getText().toString()), Integer.parseInt(emissionEdtField.getText().toString()), FuelType.e5, regDate, Integer.parseInt(avgConField.getText().toString()), Integer.parseInt(milePerYField.getText().toString()));
-            viewModel.setCar(car);
+            viewModel.setApiData(car);
             navController.navigate(R.id.resultFragment);
         });
     }
@@ -86,12 +86,11 @@ public class MainFragment extends Fragment {
         cityNameArray.add("Hamburg");
         cityNameArray.add("Bayern");
         // City List tools
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, cityNameArray);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, cityNameArray);
         spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 citySelected = spinner.getSelectedItem().toString();
             }
 

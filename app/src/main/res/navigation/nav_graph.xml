@@ -18,8 +18,5 @@
         android:name="com.example.amcc.view.ResultFragment"
         android:label="fragment_result"
         tools:layout="@layout/fragment_result">
-        <argument
-            android:name="car"
-            app:argType="com.example.amcc.model.CarDetails" />
     </fragment>
 </navigation>

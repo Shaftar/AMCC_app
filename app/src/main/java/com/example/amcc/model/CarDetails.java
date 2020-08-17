@@ -1,10 +1,6 @@
 package com.example.amcc.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-
-public class CarDetails implements Parcelable {
+public class CarDetails {
 
     private int emission, yearlyMileage, engineSize;
     private String regDate;
@@ -22,28 +18,6 @@ public class CarDetails implements Parcelable {
         this.fuelType = fuelType.toString();
         this.city = city;
     }
-
-    protected CarDetails(Parcel in) {
-        emission = in.readInt();
-        yearlyMileage = in.readInt();
-        engineSize = in.readInt();
-        regDate = in.readString();
-        avgConsume = in.readDouble();
-        fuelType = in.readString();
-        city = in.readString();
-    }
-
-    public static final Creator<CarDetails> CREATOR = new Creator<CarDetails>() {
-        @Override
-        public CarDetails createFromParcel(Parcel in) {
-            return new CarDetails(in);
-        }
-
-        @Override
-        public CarDetails[] newArray(int size) {
-            return new CarDetails[size];
-        }
-    };
 
     public int getEmission() {
         return emission;
@@ -73,19 +47,4 @@ public class CarDetails implements Parcelable {
         return city;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(emission);
-        dest.writeInt(yearlyMileage);
-        dest.writeInt(engineSize);
-        dest.writeString(regDate);
-        dest.writeDouble(avgConsume);
-        dest.writeString(fuelType);
-        dest.writeString(city);
-    }
 }

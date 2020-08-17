@@ -19,25 +19,20 @@ public class ShardViewModel extends ViewModel {
     MutableLiveData<CarDetails> mCar = new MutableLiveData<>();
     MutableLiveData<ApiDataModel> mApiData = new MutableLiveData<>();
 
-    public void setApiData(MutableLiveData<CarDetails> mCar) {
-
-    }
 
     public LiveData<ApiDataModel> getApiData() {
         return mApiData;
     }
 
-    public void setCar(CarDetails car) {
-        mCar.setValue(car);
-
+    public void setApiData(CarDetails car) {
         RetrofitClient client = RetrofitClient.getINSTANCE();
-        client.getCosts(this.mCar.getValue()).enqueue(new Callback<ApiDataModel>() {
+        client.getCosts(car).enqueue(new Callback<ApiDataModel>() {
             @Override
             public void onResponse(Call<ApiDataModel> call, Response<ApiDataModel> response) {
                 if (response.code() == 200) {
                     Log.d(TAG, "setApiData: received response" + response.body().toString());
                     mApiData.setValue(response.body());
-                    Log.d(TAG, "onResponse: " + response.raw());
+
                 }
             }
 

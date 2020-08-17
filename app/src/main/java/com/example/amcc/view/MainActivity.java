@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity {
     private void setUpCityNamesList() {
 
         spinner = findViewById(R.id.spinnerCityHolderID);
-        ArrayList cityNameArray = new ArrayList();
+        ArrayList<String> cityNameArray = new ArrayList<>();
         cityNameArray.add("Bremen");
         cityNameArray.add("Berlin");
         cityNameArray.add("Hamburg");

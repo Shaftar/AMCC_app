@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -104,5 +105,8 @@ public class HomeActivity extends BaseActivity {
         networkStatus();
         //Create Api controller to fetch data
         ApiController controller = new ApiController(this);
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra("apiModel", controller.getApiDataModel());
+        startActivity(intent);
     }
 }

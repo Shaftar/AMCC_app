@@ -2,13 +2,14 @@ package com.example.amcc.retrofitApi;
 
 import com.example.amcc.model.ApiDataModel;
 import com.example.amcc.model.CarDetails;
+
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static RetrofitClient INSTANCE;
-    private final String BASE_Url = "https://amcosts.azurewebsites.net/";
+    private final String BASE_Url = "http://jdroubi.heliohost.org/amcc_api/";
     private AmccApi amccApi;
     private Retrofit retrofit;
 

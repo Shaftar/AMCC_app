@@ -39,11 +39,20 @@ public class MainFragment extends Fragment {
 
     NavController navController;
 
+    ShardViewModel viewModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel = new ViewModelProvider(getActivity()).get(ShardViewModel.class);
+
     }
 
     @Override
@@ -60,7 +69,6 @@ public class MainFragment extends Fragment {
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> regDate = "" + dayOfMonth + "." + (month + 1) + "." + year);
         //Create City Name List
         setUpCityNamesList();
-        ShardViewModel viewModel = new ViewModelProvider(requireActivity()).get(ShardViewModel.class);
 
         navController = Navigation.findNavController(view);
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {

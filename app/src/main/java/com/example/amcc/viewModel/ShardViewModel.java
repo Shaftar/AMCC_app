@@ -2,6 +2,7 @@ package com.example.amcc.viewModel;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -22,34 +23,28 @@ public class ShardViewModel extends ViewModel {
 
     }
 
-    public ApiDataModel getApiData() {
-        return mApiData.getValue();
-
+    public LiveData<ApiDataModel> getApiData() {
+        return mApiData;
     }
 
     public void setCar(CarDetails car) {
         mCar.setValue(car);
-        Log.d(TAG, "setApiData: " + mCar.getValue().toString());
 
         RetrofitClient client = RetrofitClient.getINSTANCE();
         client.getCosts(this.mCar.getValue()).enqueue(new Callback<ApiDataModel>() {
             @Override
             public void onResponse(Call<ApiDataModel> call, Response<ApiDataModel> response) {
-                Log.d(TAG, "setApiData: " + response.body().toString());
-                mApiData.setValue(response.body());
+                if (response.code() == 200) {
+                    Log.d(TAG, "setApiData: received response" + response.body().toString());
+                    mApiData.setValue(response.body());
+                    Log.d(TAG, "onResponse: " + response.raw());
+                }
             }
 
             @Override
             public void onFailure(Call<ApiDataModel> call, Throwable t) {
-
+                Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
     }
-
-
-    public CarDetails getCar() {
-        return mCar.getValue();
-
-    }
-
 }

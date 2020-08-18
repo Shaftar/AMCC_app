@@ -192,6 +192,7 @@ public class MainActivity extends BaseActivity {
                 getViewByDate(dateFormUser);
                 Toast.makeText(getApplicationContext(), dateFormUser, Toast.LENGTH_SHORT).show();
                 dateField.setText(dateFormUser);
+                dialog.dismiss();
             }
         });
         dialog.setTitle("Date");

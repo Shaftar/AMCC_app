@@ -25,7 +25,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.amcc.R;
-import com.example.amcc.util.DateController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -52,20 +51,11 @@ public class MainActivity extends BaseActivity {
         //Create City Name List
         setUpCityNamesList();
 
-        //Initial Fields
         initialField();
-
-        // Get Date Input
-        // getInputDate
-
-        getCalenderByClick();
-
-        //Set Item Invisible
         setItemInvisible();
-
-
-        //getEditTextDate
+        getCalenderByClick();
         getEditInputDate();
+        getFuelType();
 
 
     }
@@ -83,8 +73,11 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         } catch (Exception e) {
-            if (e.getMessage() != null)
+            if (e.getMessage() != null) {
                 Log.e("Connectivity Exception", e.getMessage());
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
         }
         return false;
     }
@@ -116,70 +109,6 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void getEditInputDate() {
-
-        dateField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                String dateFromEdtField = dateField.getText().toString();
-                getViewByDate(dateFromEdtField);
-                Toast.makeText(getApplicationContext(), dateFromEdtField, Toast.LENGTH_SHORT).show();
-                dateField.setText(dateFromEdtField);
-            }
-        });
-    }
-
-
-    private void getInputDate() {
-
-
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String days = String.valueOf(dayOfMonth);
-                String months = String.valueOf(month);
-                String years = String.valueOf(year);
-                String dateFormUser = days + "-" + months + "-" + years;
-                dateField.setText(dateFormUser);
-                getViewByDate(dateFormUser);
-                Toast.makeText(getApplicationContext(), dateFormUser, Toast.LENGTH_SHORT).show();
-                dateField.setText(dateFormUser);
-            }
-        });
-        dialog.setTitle("Date");
-        dialog.setCancelable(true);
-        dialog.show();
-    }
-
-    public void getResult(View view) {
-        // Check user Input and get result
-        checkUserInput();
-    }
-
-
-    private void getCalenderByClick() {
-
-        ImageView dateImageView = findViewById(R.id.dateIconID);
-        dateImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getInputDate();
-            }
-        });
-    }
-
-
     @SuppressLint("SimpleDateFormat")
     private void initialField() {
 
@@ -207,24 +136,67 @@ public class MainActivity extends BaseActivity {
         radioGroup = findViewById(R.id.BtnGroupID);
     }
 
-    private void setItemInvisible() {
+    public void getResult(View view) {
+        // Check user Input and get result
+        checkUserInput();
+    }
 
-        //EditText
-        emissionEdtField.setVisibility(View.GONE);
-        avgConField.setVisibility(View.GONE);
-        engineSizeField.setVisibility(View.GONE);
-        milePerYField.setVisibility(View.GONE);
+    private void getCalenderByClick() {
 
-        //TextView
-        euro4TxtView.setVisibility(View.GONE);
-        emissionTxtView.setVisibility(View.GONE);
-        avgConTxtView.setVisibility(View.GONE);
-        engSizeTxtView.setVisibility(View.GONE);
-        mileTxtView.setVisibility(View.GONE);
-        _000KmTxtView.setVisibility(View.GONE);
+        ImageView dateImageView = findViewById(R.id.dateIconID);
+        dateImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getInputDate();
+            }
+        });
+    }
 
-        // RadioButtonGroup
-        radioGroup.setVisibility(View.GONE);
+    private void getEditInputDate() {
+
+        dateField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (count == 0) {
+                    setItemInvisible();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String dateFromEdtField = dateField.getText().toString();
+                getViewByDate(dateFromEdtField);
+                //Toast.makeText(getApplicationContext(), dateFromEdtField, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+    private void getInputDate() {
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String days = String.valueOf(dayOfMonth);
+                String months = String.valueOf(month);
+                String years = String.valueOf(year);
+                String dateFormUser = days + "-" + months + "-" + years;
+                dateField.setText(dateFormUser);
+                getViewByDate(dateFormUser);
+                Toast.makeText(getApplicationContext(), dateFormUser, Toast.LENGTH_SHORT).show();
+                dateField.setText(dateFormUser);
+            }
+        });
+        dialog.setTitle("Date");
+        dialog.setCancelable(true);
+        dialog.show();
     }
 
     private void getViewByDate(String date) {
@@ -308,6 +280,26 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    private void setItemInvisible() {
+
+        //EditText
+        emissionEdtField.setVisibility(View.GONE);
+        avgConField.setVisibility(View.GONE);
+        engineSizeField.setVisibility(View.GONE);
+        milePerYField.setVisibility(View.GONE);
+
+        //TextView
+        euro4TxtView.setVisibility(View.GONE);
+        emissionTxtView.setVisibility(View.GONE);
+        avgConTxtView.setVisibility(View.GONE);
+        engSizeTxtView.setVisibility(View.GONE);
+        mileTxtView.setVisibility(View.GONE);
+        _000KmTxtView.setVisibility(View.GONE);
+
+        // RadioButtonGroup
+        radioGroup.setVisibility(View.GONE);
+    }
+
     private void checkUserInput() {
 
         // Reset errors displayed in the form.
@@ -355,7 +347,9 @@ public class MainActivity extends BaseActivity {
         } else {
 
             // Start Result Activity
-            moveEnteredValueToResultActivity(MainActivity.CITY_SELECTED);
+            if (checkNetwork())
+                moveEnteredValueToResultActivity(MainActivity.CITY_SELECTED);
+
         }
     }
 

@@ -105,8 +105,12 @@ public class HomeActivity extends BaseActivity {
         networkStatus();
         //Create Api controller to fetch data
         ApiController controller = new ApiController(this);
-        Intent intent = new Intent(this, ResultActivity.class);
-        intent.putExtra("apiModel", controller.getApiDataModel());
-        startActivity(intent);
+        Intent result = new Intent(HomeActivity.this, ResultActivity.class);
+        if (controller.getApiDataModel() != null) {
+            result.putExtra("Api response", controller.getApiDataModel());
+            startActivity(result);
+        }
+
+
     }
 }

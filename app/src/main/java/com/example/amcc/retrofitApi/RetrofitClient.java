@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static RetrofitClient INSTANCE;
-    private final String BASE_Url = "https://amcosts.azurewebsites.net/";
+    private final String BASE_Url = "https://jdroubi.heliohost.org/amcc_api/";
     private AmccApi amccApi;
     private Retrofit retrofit;
 

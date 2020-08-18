@@ -24,6 +24,6 @@
     <string name="diesel">Diesel</string>
     <string name="e5">e5</string>
     <string name="e10">e10</string>
-    <string name="euro4_higher">Euro 4 or higher</string>
+    <string name="euro4_higher">For Cars with Euro 4 or higher</string>
 
 </resources>

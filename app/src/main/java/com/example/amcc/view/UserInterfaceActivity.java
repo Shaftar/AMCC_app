@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MainActivity extends BaseActivity {
+public class UserInterfaceActivity extends BaseActivity {
 
     private Spinner spinner;
     public static String CITY_SELECTED;
@@ -47,7 +47,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_input_interface);
+        setContentView(R.layout.activity_user_interface);
         //Create City Name List
         setUpCityNamesList();
 
@@ -349,7 +349,7 @@ public class MainActivity extends BaseActivity {
 
             // Start Result Activity
             if (checkNetwork())
-                moveEnteredValueToResultActivity(MainActivity.CITY_SELECTED);
+                moveEnteredValueToResultActivity(UserInterfaceActivity.CITY_SELECTED);
 
         }
     }
@@ -362,7 +362,7 @@ public class MainActivity extends BaseActivity {
         int milePerYear = Integer.parseInt(milePerYField.getText().toString());
 
 
-        Intent userInputIntentData = new Intent(MainActivity.this, ResultActivity.class);
+        Intent userInputIntentData = new Intent(UserInterfaceActivity.this, ResultActivity.class);
         userInputIntentData.putExtra("City", city);
         String regDate = "";
         userInputIntentData.putExtra("First Register Date", regDate);

@@ -6,24 +6,14 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.amcc.R;
 import com.example.amcc.adapter.CustomListAdapter;
-import com.example.amcc.model.ApiDataModel;
-import com.example.amcc.model.CarDetails;
-import com.example.amcc.model.FuelType;
-import com.example.amcc.retrofitApi.RetrofitClient;
 import com.example.amcc.util.ApiController;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class HomeActivity extends BaseActivity {
@@ -58,7 +48,7 @@ public class HomeActivity extends BaseActivity {
 
                 switch (position) {
                     case 0:
-                        Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
+                        Intent mainActivity = new Intent(HomeActivity.this, UserInterfaceActivity.class);
                         startActivity(mainActivity);
                         break;
                     case 1:

@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -42,7 +44,6 @@ public class UserInterfaceActivity extends BaseActivity {
     //Create Calender Dialog
     private Dialog dialog;
     private CalendarView calendarView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +112,7 @@ public class UserInterfaceActivity extends BaseActivity {
 
     @SuppressLint("SimpleDateFormat")
     private void initialField() {
+
 
         calendarView = findViewById(R.id.calendarViewID);
         simpleDateFormat = new SimpleDateFormat("dd-mm-yy");
@@ -228,6 +230,8 @@ public class UserInterfaceActivity extends BaseActivity {
 
                 // Before 04/11/2008
                 euro4TxtView.setVisibility(View.VISIBLE);
+                euro4TxtView.setText(R.string.euro4_higher);
+                euro4TxtView.setTextColor(Color.BLUE);
                 engSizeTxtView.setVisibility(View.VISIBLE);
                 engineSizeField.setVisibility(View.VISIBLE);
                 radioGroup.setVisibility(View.VISIBLE);
@@ -242,6 +246,9 @@ public class UserInterfaceActivity extends BaseActivity {
                 //After 05/11/2008
                 //Before 30/06/2009
                 euro4TxtView.setVisibility(View.VISIBLE);
+                euro4TxtView.setVisibility(View.VISIBLE);
+                euro4TxtView.setText(R.string.euro4_higher);
+                euro4TxtView.setTextColor(Color.BLUE);
                 emissionTxtView.setVisibility(View.VISIBLE);
                 emissionEdtField.setVisibility(View.VISIBLE);
                 engSizeTxtView.setVisibility(View.VISIBLE);
@@ -304,6 +311,7 @@ public class UserInterfaceActivity extends BaseActivity {
     private void checkUserInput() {
 
         // Reset errors displayed in the form.
+        dateField.setError(null);
         emissionEdtField.setError(null);
         engineSizeField.setError(null);
         avgConField.setError(null);
@@ -314,6 +322,7 @@ public class UserInterfaceActivity extends BaseActivity {
         String engSize = engineSizeField.getText().toString();
         String avgCon = avgConField.getText().toString();
         String milePerY = milePerYField.getText().toString();
+        String RegDate = dateField.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -341,12 +350,37 @@ public class UserInterfaceActivity extends BaseActivity {
             focusView = avgConField;
             cancel = true;
         }
+        if (TextUtils.isEmpty(RegDate)) {
+            dateField.setError(getString(R.string.error_field_required));
+            focusView = dateField;
+            cancel = true;
+            timer(focusView);
+            euro4TxtView.setText(R.string.date_error_message);
+            euro4TxtView.setTextColor(Color.RED);
+            euro4TxtView.setPadding(0, 100, 0, 0);
+            euro4TxtView.setVisibility(View.VISIBLE);
+            Handler handler = new Handler();
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    euro4TxtView.setVisibility(View.GONE);
+                }
+            };
+            //Timer Tools
+            // 1 Second
+            int interval = 3000;
+            handler.postDelayed(runnable, interval);
+
+        }
         if (cancel) {
             // There was an error; don't get Result and focus the first
             // form field with an error.
             focusView.requestFocus();
+            timer(focusView);
+
         } else {
 
+            euro4TxtView.setVisibility(View.GONE);
             // Start Result Activity
             if (checkNetwork())
                 moveEnteredValueToResultActivity(UserInterfaceActivity.CITY_SELECTED);
@@ -371,5 +405,20 @@ public class UserInterfaceActivity extends BaseActivity {
         userInputIntentData.putExtra("Average Consume", avgCon);
         userInputIntentData.putExtra("Mileage Per Year", milePerYear);
         startActivity(userInputIntentData);
+    }
+
+    private void timer(View view) {
+        //Set Timer
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                view.clearFocus();
+            }
+        };
+        //Timer Tools
+        // 1 Second
+        int interval = 3000;
+        handler.postDelayed(runnable, interval);
     }
 }

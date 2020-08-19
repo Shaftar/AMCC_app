@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 
 import com.example.amcc.R;
 import com.example.amcc.adapter.CustomListAdapter;
+import com.example.amcc.model.CarDetails;
+import com.example.amcc.model.FuelType;
 import com.example.amcc.util.ApiController;
 
 
@@ -99,7 +101,9 @@ public class HomeActivity extends BaseActivity {
 
         networkStatus();
         //Create Api controller to fetch data
-        ApiController controller = new ApiController(this);
+        CarDetails car = new CarDetails("bremen", 2000,
+                129, FuelType.diesel, "08.06.2009", 4, 2000);
+        ApiController controller = new ApiController(this, car);
         progressBar.setVisibility(View.VISIBLE);
         Bundle bundle = new Bundle();
         Intent result = new Intent(HomeActivity.this, ResultActivity.class);

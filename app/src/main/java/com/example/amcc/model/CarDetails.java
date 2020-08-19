@@ -19,6 +19,21 @@ public class CarDetails {
         this.city = city;
     }
 
+    public CarDetails(int emission, int engineSize, String regDate, String fuelType, String city) {
+        this.emission = emission;
+        this.engineSize = engineSize;
+        this.regDate = regDate;
+        this.fuelType = fuelType;
+        this.city = city;
+    }
+
+    public CarDetails(int emission, int engineSize, String regDate, String city) {
+        this.emission = emission;
+        this.engineSize = engineSize;
+        this.regDate = regDate;
+        this.city = city;
+    }
+
     public int getEmission() {
         return emission;
     }

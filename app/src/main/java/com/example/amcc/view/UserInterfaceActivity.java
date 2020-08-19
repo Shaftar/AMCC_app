@@ -45,6 +45,7 @@ public class UserInterfaceActivity extends BaseActivity {
     //Create Calender Dialog
     private Dialog dialog;
     private CalendarView calendarView;
+    private String dateFormUser, fuelType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,7 +191,7 @@ public class UserInterfaceActivity extends BaseActivity {
                 String days = String.valueOf(dayOfMonth);
                 String months = String.valueOf(month);
                 String years = String.valueOf(year);
-                String dateFormUser = days + "-" + months + "-" + years;
+                dateFormUser = days + "-" + months + "-" + years;
                 dateField.setText(dateFormUser);
                 getViewByDate(dateFormUser);
                 Toast.makeText(getApplicationContext(), dateFormUser, Toast.LENGTH_SHORT).show();
@@ -273,16 +274,16 @@ public class UserInterfaceActivity extends BaseActivity {
 
                 switch (checkedId) {
                     case R.id.e5BtnID:
-                        String fuele5 = "e5";
-                        Toast.makeText(getApplicationContext(), fuele5, Toast.LENGTH_SHORT).show();
+                        fuelType = "e5";
+                        Toast.makeText(getApplicationContext(), fuelType, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.dieselBtnID:
-                        String fuelDiesel = "diesel";
-                        Toast.makeText(getApplicationContext(), fuelDiesel, Toast.LENGTH_SHORT).show();
+                        fuelType = "diesel";
+                        Toast.makeText(getApplicationContext(), fuelType, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.e10BtnID:
-                        String fuel10 = "e10";
-                        Toast.makeText(getApplicationContext(), fuel10, Toast.LENGTH_SHORT).show();
+                        fuelType = "e10";
+                        Toast.makeText(getApplicationContext(), fuelType, Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -391,20 +392,20 @@ public class UserInterfaceActivity extends BaseActivity {
 
     private void moveEnteredValueToResultActivity(String city) {
 
-        int emNum = Integer.parseInt(emissionEdtField.getText().toString());
-        int engSiNum = Integer.parseInt(engineSizeField.getText().toString());
-        double avgCon = Integer.parseInt(avgConField.getText().toString());
-        int milePerYear = Integer.parseInt(milePerYField.getText().toString());
+        String emNum = emissionEdtField.getText().toString();
+        String engSiNum = engineSizeField.getText().toString();
+        String avgCon = avgConField.getText().toString();
+        String milePerYear = milePerYField.getText().toString();
 
 
         Intent userInputIntentData = new Intent(UserInterfaceActivity.this, ResultActivity.class);
         userInputIntentData.putExtra("City", city);
-        String regDate = "";
-        userInputIntentData.putExtra("First Register Date", regDate);
+        userInputIntentData.putExtra("First Register Date", dateFormUser);
         userInputIntentData.putExtra("Emission", emNum);
         userInputIntentData.putExtra("Engine Size", engSiNum);
         userInputIntentData.putExtra("Average Consume", avgCon);
         userInputIntentData.putExtra("Mileage Per Year", milePerYear);
+        userInputIntentData.putExtra("Fuel Type", fuelType);
         startActivity(userInputIntentData);
     }
 

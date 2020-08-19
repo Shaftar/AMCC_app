@@ -27,5 +27,11 @@
     <string name="euro4_higher">For Cars with Euro 4 or higher</string>
     <string name="date_error_message">\"Please enter the first register date of you car to get further \"</string>
     <string name="something_wrong">Sorrry something went wrong! Try again later.</string>
+    <string name="new_request">New Request</string>
+    <string name="edit_input">Edit Input</string>
+    <string name="fuel_pice_res">\"Fuel Price: \"</string>
+    <string name="fuel_cost_annual">\"Fuel Cost: \"</string>
+    <string name="annual_tax">\"Annual Tax: \"</string>
+    <string name="resutl_txt">Result for you:</string>
 
 </resources>

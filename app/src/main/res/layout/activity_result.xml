@@ -48,6 +48,7 @@
                     android:id="@+id/resultTxtViewUserMessageID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp" />
 
@@ -55,6 +56,7 @@
                     android:id="@+id/resultAnnualTaxTxtViewID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp" />
 
@@ -62,6 +64,7 @@
                     android:id="@+id/resultFuelPriceTxtViewID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp" />
 
@@ -69,6 +72,7 @@
                     android:id="@+id/resultFuelCostTxtViewID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp" />
 
@@ -76,6 +80,7 @@
                     android:id="@+id/resultUniversalTxtView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp" />
 
@@ -91,6 +96,7 @@
                     android:id="@+id/resultTxtViewShowUserInputID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp" />
@@ -99,6 +105,7 @@
                     android:id="@+id/resultTxtViewCityID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp" />
 
@@ -106,6 +113,7 @@
                     android:id="@+id/resultTxtViewRegDateID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp" />
 
@@ -113,6 +121,7 @@
                     android:id="@+id/resultTxtViewEmissionID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp" />
 
@@ -120,6 +129,7 @@
                     android:id="@+id/resultTxtViewEngSizeID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp" />
 
@@ -127,6 +137,7 @@
                     android:id="@+id/resultTxtViewFuelID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp" />
 

@@ -102,7 +102,7 @@ public class HomeActivity extends BaseActivity {
         networkStatus();
         //Create Api controller to fetch data
         CarDetails car = new CarDetails("bremen", 2000,
-                129, FuelType.diesel, "08.06.2009", 4, 2000);
+                129, "diesel", "08.06.2009", 4, 2000);
         ApiController controller = new ApiController(this, car);
         progressBar.setVisibility(View.VISIBLE);
         Bundle bundle = new Bundle();

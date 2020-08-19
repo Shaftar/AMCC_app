@@ -33,5 +33,7 @@
     <string name="fuel_cost_annual">\"Fuel Cost: \"</string>
     <string name="annual_tax">\"Annual Tax: \"</string>
     <string name="resutl_txt">Result for you:</string>
+    <string name="user_info_block">Your Info block</string>
+    <string name="help_ques">Does this helps you?</string>
 
 </resources>

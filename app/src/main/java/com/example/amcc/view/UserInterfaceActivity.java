@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -19,6 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,6 +31,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
 import com.example.amcc.R;
+import com.example.amcc.model.CarDetails;
+import com.example.amcc.model.FuelType;
+import com.example.amcc.util.ApiController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,15 +48,61 @@ public class UserInterfaceActivity extends BaseActivity {
     private TextView euro4TxtView, emissionTxtView, engSizeTxtView, avgConTxtView, mileTxtView, _000KmTxtView;
     private EditText dateField, emissionEdtField, engineSizeField, avgConField, milePerYField;
     private RadioGroup radioGroup;
+    private RadioButton diesel, e5, e10;
     //Create Calender Dialog
     private Dialog dialog;
     private CalendarView calendarView;
-    private String dateFormUser, fuelType;
+    private String dateFormUser, fuelType, emission, engSize, avgCon, milePerY, RegDate;
+    private ProgressBar progressBar;
+    private int engSiNumIn, emissionNumIn, milePerYearIn, spinnerPosition;
+    private double avgConD;
+    private boolean radioBtnChecked, clearInstance;
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle userInputIntentData, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(userInputIntentData, outPersistentState);
+
+        userInputIntentData.putString("City", CITY_SELECTED);
+        userInputIntentData.putString("First Register Date", dateFormUser);
+        userInputIntentData.putString("Emission", emission);
+        userInputIntentData.putString("Engine Size", engSize);
+        userInputIntentData.putString("Average Consume", avgCon);
+        userInputIntentData.putString("Mileage Per Year", milePerY);
+        userInputIntentData.putString("Fuel Type", fuelType);
+        userInputIntentData.putInt("spinner position", spinnerPosition);
+        userInputIntentData.putBoolean("radioBtn Checked", radioBtnChecked);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle fromUserInterface) {
+        super.onRestoreInstanceState(fromUserInterface);
+        String city, date, fuelType, engSize, emission, avgCo, mileYear;
+        spinnerPosition = fromUserInterface.getInt("spinner position");
+        radioBtnChecked = fromUserInterface.getBoolean("radioBtn Checked");
+        city = fromUserInterface.getString("City");
+        date = fromUserInterface.getString("First Register Date");
+        engSize = fromUserInterface.getString("Engine Size");
+        emission = fromUserInterface.getString("Emission");
+        avgCo = fromUserInterface.getString("Average Consume");
+        mileYear = fromUserInterface.getString("Mileage Per Year");
+        fuelType = fromUserInterface.getString("Fuel Type");
+
+        //Set Text To
+        dateField.setText(date);
+        emissionEdtField.setText(emission);
+        engineSizeField.setText(engSize);
+        avgConField.setText(avgCo);
+        milePerYField.setText(mileYear);
+        getViewByDate(date);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_interface);
+        if (savedInstanceState != null && clearInstance) {
+            savedInstanceState.clear();
+        }
         //Create City Name List
         setUpCityNamesList();
 
@@ -97,10 +149,12 @@ public class UserInterfaceActivity extends BaseActivity {
         // City List tools
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, cityNameArray);
         spinner.setAdapter(spinnerAdapter);
+        spinner.setSelection(spinnerPosition);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                spinnerPosition = position;
                 CITY_SELECTED = spinner.getSelectedItem().toString();
                 //Toast.makeText(getApplicationContext(), "City: "+citySelected, Toast.LENGTH_SHORT).show();
             }
@@ -116,8 +170,10 @@ public class UserInterfaceActivity extends BaseActivity {
     private void initialField() {
 
 
+        progressBar = findViewById(R.id.progressBarUserInterfaceID);
+        progressBar.setVisibility(View.GONE);
         calendarView = findViewById(R.id.calendarViewID);
-        simpleDateFormat = new SimpleDateFormat("dd-mm-yy");
+        simpleDateFormat = new SimpleDateFormat("dd.mm.yy");
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.calender_view);
         calendarView = dialog.findViewById(R.id.calendarViewID);
@@ -138,6 +194,9 @@ public class UserInterfaceActivity extends BaseActivity {
 
         // RadioBtnGroup
         radioGroup = findViewById(R.id.BtnGroupID);
+        diesel = findViewById(R.id.dieselBtnID);
+        e5 = findViewById(R.id.e5BtnID);
+        e10 = findViewById(R.id.e10BtnID);
     }
 
     public void getResult(View view) {
@@ -191,7 +250,7 @@ public class UserInterfaceActivity extends BaseActivity {
                 String days = String.valueOf(dayOfMonth);
                 String months = String.valueOf(month);
                 String years = String.valueOf(year);
-                dateFormUser = days + "-" + months + "-" + years;
+                dateFormUser = days + "." + months + "." + years;
                 dateField.setText(dateFormUser);
                 getViewByDate(dateFormUser);
                 Toast.makeText(getApplicationContext(), dateFormUser, Toast.LENGTH_SHORT).show();
@@ -209,13 +268,13 @@ public class UserInterfaceActivity extends BaseActivity {
         try {
             Date date1 = simpleDateFormat.parse(date);
             //Dates To compare
-            String date04_11_2008 = "04-11-2008";
+            String date04_11_2008 = "04.11.2008";
             Date date2 = simpleDateFormat.parse(date04_11_2008);
-            String date05_11_2008 = "05-11-2008";
+            String date05_11_2008 = "05.11.2008";
             Date date3 = simpleDateFormat.parse(date05_11_2008);
-            String date30_06_2009 = "30-06-2009";
+            String date30_06_2009 = "30.06.2009";
             Date date4 = simpleDateFormat.parse(date30_06_2009);
-            String date01_07_2009 = "01-07-2009";
+            String date01_07_2009 = "01.07.2009";
             Date date5 = simpleDateFormat.parse(date01_07_2009);
 
             if (date1.after(date5) || date1.equals(date5)) {
@@ -248,7 +307,6 @@ public class UserInterfaceActivity extends BaseActivity {
                 //After 05/11/2008
                 //Before 30/06/2009
                 euro4TxtView.setVisibility(View.VISIBLE);
-                euro4TxtView.setVisibility(View.VISIBLE);
                 euro4TxtView.setText(R.string.euro4_higher);
                 euro4TxtView.setTextColor(Color.BLUE);
                 emissionTxtView.setVisibility(View.VISIBLE);
@@ -271,19 +329,28 @@ public class UserInterfaceActivity extends BaseActivity {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (radioBtnChecked) {
+                    RadioButton radioButton = findViewById(checkedId);
+                }
 
                 switch (checkedId) {
                     case R.id.e5BtnID:
                         fuelType = "e5";
-                        Toast.makeText(getApplicationContext(), fuelType, Toast.LENGTH_SHORT).show();
+                        if (e5.isChecked())
+                            radioBtnChecked = true;
+                        //Toast.makeText(getApplicationContext(), fuelType, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.dieselBtnID:
                         fuelType = "diesel";
-                        Toast.makeText(getApplicationContext(), fuelType, Toast.LENGTH_SHORT).show();
+                        if (diesel.isChecked())
+                            radioBtnChecked = true;
+                        //Toast.makeText(getApplicationContext(), fuelType, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.e10BtnID:
                         fuelType = "e10";
-                        Toast.makeText(getApplicationContext(), fuelType, Toast.LENGTH_SHORT).show();
+                        if (e10.isChecked())
+                            radioBtnChecked = true;
+                        //Toast.makeText(getApplicationContext(), fuelType, Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -320,11 +387,13 @@ public class UserInterfaceActivity extends BaseActivity {
         milePerYField.setError(null);
 
         // Store values at the time of the entered vlaues
-        String emission = emissionEdtField.getText().toString();
-        String engSize = engineSizeField.getText().toString();
-        String avgCon = avgConField.getText().toString();
-        String milePerY = milePerYField.getText().toString();
-        String RegDate = dateField.getText().toString();
+        //Get Text From Edit Text
+        emission = emissionEdtField.getText().toString();
+        engSize = engineSizeField.getText().toString();
+        avgCon = avgConField.getText().toString();
+        milePerY = milePerYField.getText().toString();
+        RegDate = dateField.getText().toString();
+
 
         boolean cancel = false;
         View focusView = null;
@@ -337,21 +406,21 @@ public class UserInterfaceActivity extends BaseActivity {
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(milePerY)) {
-            milePerYField.setError(getString(R.string.error_field_required));
-            focusView = milePerYField;
-            cancel = true;
-        }
+//        if (TextUtils.isEmpty(milePerY)) {
+//            milePerYField.setError(getString(R.string.error_field_required));
+//            focusView = milePerYField;
+//            cancel = true;
+//        }
         if (TextUtils.isEmpty(engSize)) {
             engineSizeField.setError(getString(R.string.error_field_required));
             focusView = engineSizeField;
             cancel = true;
         }
-        if (TextUtils.isEmpty(avgCon)) {
-            avgConField.setError(getString(R.string.error_field_required));
-            focusView = avgConField;
-            cancel = true;
-        }
+//        if (TextUtils.isEmpty(avgCon)) {
+//            avgConField.setError(getString(R.string.error_field_required));
+//            focusView = avgConField;
+//            cancel = true;
+//        }
         if (TextUtils.isEmpty(RegDate)) {
             dateField.setError(getString(R.string.error_field_required));
             focusView = dateField;
@@ -385,28 +454,45 @@ public class UserInterfaceActivity extends BaseActivity {
             euro4TxtView.setVisibility(View.GONE);
             // Start Result Activity
             if (checkNetwork())
-                moveEnteredValueToResultActivity(UserInterfaceActivity.CITY_SELECTED);
+                moveEnteredValueToResultActivity();
 
         }
     }
 
-    private void moveEnteredValueToResultActivity(String city) {
+    private void moveEnteredValueToResultActivity() {
 
-        String emNum = emissionEdtField.getText().toString();
-        String engSiNum = engineSizeField.getText().toString();
-        String avgCon = avgConField.getText().toString();
-        String milePerYear = milePerYField.getText().toString();
+        //Get Text From Edit Text
+        emission = emissionEdtField.getText().toString();
+        engSize = engineSizeField.getText().toString();
+        avgCon = avgConField.getText().toString();
+        milePerY = milePerYField.getText().toString();
+        RegDate = dateField.getText().toString();
+        emissionNumIn = Integer.parseInt(emissionEdtField.getText().toString());
+        engSiNumIn = Integer.parseInt(engineSizeField.getText().toString());
+        if (!TextUtils.isEmpty(avgCon) || !TextUtils.isEmpty(milePerY)) {
+            avgConD = Double.parseDouble(avgConField.getText().toString());
+            milePerYearIn = Integer.parseInt(milePerYField.getText().toString());
+        }
 
 
         Intent userInputIntentData = new Intent(UserInterfaceActivity.this, ResultActivity.class);
-        userInputIntentData.putExtra("City", city);
+        userInputIntentData.putExtra("City", CITY_SELECTED);
         userInputIntentData.putExtra("First Register Date", dateFormUser);
-        userInputIntentData.putExtra("Emission", emNum);
-        userInputIntentData.putExtra("Engine Size", engSiNum);
+        userInputIntentData.putExtra("Emission", emission);
+        userInputIntentData.putExtra("Engine Size", engSize);
         userInputIntentData.putExtra("Average Consume", avgCon);
-        userInputIntentData.putExtra("Mileage Per Year", milePerYear);
+        userInputIntentData.putExtra("Mileage Per Year", milePerY);
         userInputIntentData.putExtra("Fuel Type", fuelType);
-        startActivity(userInputIntentData);
+        //Create Car Object
+        if (TextUtils.isEmpty(avgCon) || TextUtils.isEmpty(milePerY)) {
+
+            avgConD = 6.0;
+            milePerYearIn = 10000;
+            CarDetails car = new CarDetails(CITY_SELECTED, engSiNumIn,
+                    emissionNumIn, fuelType, dateFormUser, avgConD, milePerYearIn);
+            getCosts(car);
+            startActivity(userInputIntentData);
+        }
     }
 
     private void timer(View view) {
@@ -422,5 +508,37 @@ public class UserInterfaceActivity extends BaseActivity {
         // After 1 Second clear focus view
         int interval = 3000;
         handler.postDelayed(runnable, interval);
+    }
+
+    public void getCosts(CarDetails car) {
+
+
+        //Create Api controller to fetch data
+        ApiController controller = new ApiController(this, car);
+        progressBar.setVisibility(View.VISIBLE);
+        setItemInvisible();
+        Bundle bundle = new Bundle();
+        Intent result = new Intent(UserInterfaceActivity.this, ResultActivity.class);
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.GONE);
+                //result.putExtra("ApiResponse", controller.getApiDataModel());
+                bundle.putParcelable("ApiResponse", controller.getApiDataModel());
+                result.putExtras(bundle);
+                startActivity(result);
+
+            }
+        };
+        //Timer Tools
+        // After 5 Second get object
+        int interval = 5000;
+        handler.postDelayed(runnable, interval);
+    }
+
+    private void getClearIntent() {
+        Intent intent = getIntent();
+        clearInstance = intent.getBooleanExtra("clearInstance", true);
     }
 }

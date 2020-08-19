@@ -19,7 +19,7 @@
     <string name="enter_from_1_20">enter from 1 – 20</string>
     <string name="get_result">Get Result</string>
     <string name="error_field_required">This field is required</string>
-    <string name="dd_mm_yy">dd-mm-yy</string>
+    <string name="dd_mm_yy">dd.mm.yy</string>
     <string name="date_icon">Date Icon</string>
     <string name="diesel">Diesel</string>
     <string name="e5">e5</string>

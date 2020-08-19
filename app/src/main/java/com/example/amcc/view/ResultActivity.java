@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +29,9 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
             txtViewEngSize, txtViewFuelType, txtViewEmission;
     private Button newRequestBtn, editBtn;
     private boolean setNewRequest;
+    private ProgressBar progressBar;
 
-    @SuppressLint("SetTextI18n")
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,39 +39,10 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
 
         //Initial Item
         initialItem();
+        //Show User Input
+        showUserInput();
+        getProgressInfoBar();
 
-        ApiDataModel object = getIntent().getParcelableExtra("ApiResponse");
-        if (object != null) {
-            Log.d(TAG, "onCreate: " + object.toString());
-            try {
-
-                String error = String.valueOf(object.getError());
-                if (TextUtils.isEmpty(error)) {
-                    String fuelPrice = String.valueOf(object.getFuelPrice());
-                    String fuelCost = String.valueOf(object.getAnnualFuelCosts());
-                    String annualTax = String.valueOf(object.getAnnualTax());
-                    txtViewUserMsgFirst.setText(R.string.resutl_txt);
-                    txtViewFuelPrice.setText(R.string.fuel_pice_res + fuelPrice);
-                    Log.d("fuelPrice", fuelPrice);
-                    txtViewFuelCost.setText(R.string.fuel_cost_annual + object.getAnnualFuelCosts());
-                    Log.d("fuelCost", fuelCost);
-                    txtViewAnnualTax.setText(R.string.annual_tax + object.getAnnualTax());
-                    Log.d("annualTx", annualTax);
-                } else {
-                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
-                }
-
-            } catch (NullPointerException e) {
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                showUserInput();
-            }
-
-
-        } else {
-            txtViewUserMsgShowInput.setText(R.string.something_wrong);
-            txtViewUserMsgShowInput.setTextColor(Color.RED);
-            setItemInvisible();
-        }
     }
 
     private void initialItem() {
@@ -88,6 +61,7 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
         txtViewFuelType = findViewById(R.id.resultTxtViewFuelID);
 
         //Button
+        progressBar = findViewById(R.id.progressBarResultInfoID);
         newRequestBtn = findViewById(R.id.btnResultNewID);
         editBtn = findViewById(R.id.btnResultEditID);
         newRequestBtn.setOnClickListener(this);
@@ -145,5 +119,77 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
         txtViewEngSize.setText(engSize);
         txtViewFuelType.setText(fuelType);
         txtViewEmission.setText(emission);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void getApiData() {
+        ApiDataModel object = getIntent().getParcelableExtra("ApiResponse");
+        if (object != null) {
+            Log.d(TAG, "onCreate: " + object.toString());
+            try {
+
+                String error = String.valueOf(object.getError());
+                if (TextUtils.isEmpty(error)) {
+                    String fuelPrice = String.valueOf(object.getFuelPrice());
+                    String fuelCost = String.valueOf(object.getAnnualFuelCosts());
+                    String annualTax = String.valueOf(object.getAnnualTax());
+                    txtViewUserMsgFirst.setText(R.string.resutl_txt);
+                    txtViewFuelPrice.setText(R.string.fuel_pice_res + fuelPrice);
+                    Log.d("fuelPrice", fuelPrice);
+                    txtViewFuelCost.setText(R.string.fuel_cost_annual + object.getAnnualFuelCosts());
+                    Log.d("fuelCost", fuelCost);
+                    txtViewAnnualTax.setText(R.string.annual_tax + object.getAnnualTax());
+                    Log.d("annualTx", annualTax);
+                } else {
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (NullPointerException e) {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                showUserInput();
+            }
+
+
+        } else {
+            txtViewUserMsgShowInput.setText(R.string.something_wrong);
+            txtViewUserMsgShowInput.setTextColor(Color.RED);
+            setItemInvisible();
+        }
+    }
+
+    private void getProgressInfoBar() {
+
+        progressBar.setVisibility(View.VISIBLE);
+        setItemInvisible();
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.GONE);
+                getApiData();
+                setItemVisible();
+
+
+            }
+        };
+        //Timer Tools
+        // After 5 Second get object
+        int interval = 10000;
+        handler.postDelayed(runnable, interval);
+    }
+
+    private void setItemVisible() {
+
+        txtViewUserMsgFirst.setVisibility(View.VISIBLE);
+        txtViewFuelPrice.setVisibility(View.VISIBLE);
+        txtViewAnnualTax.setVisibility(View.VISIBLE);
+        txtViewFuelCost.setVisibility(View.VISIBLE);
+        txtViewUserMsgLast.setVisibility(View.VISIBLE);
+        txtViewUserMsgShowInput.setVisibility(View.VISIBLE);
+        txtViewCity.setVisibility(View.VISIBLE);
+        txtViewRegDate.setVisibility(View.VISIBLE);
+        txtViewEngSize.setVisibility(View.VISIBLE);
+        txtViewFuelType.setVisibility(View.VISIBLE);
+        txtViewEmission.setVisibility(View.VISIBLE);
     }
 }

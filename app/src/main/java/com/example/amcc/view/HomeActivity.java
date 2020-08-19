@@ -24,8 +24,8 @@ public class HomeActivity extends BaseActivity {
 
 
     // References to feed our custom List Adapter object
-    String[] nameListArray = {"First Function", "Second Function"};
-    String[] infoListArray = {"info about first function.", "info about second function."};
+    String[] nameListArray = {"Get Car Annual Tax", "Get KFZ Cost"};
+    String[] infoListArray = {"You can find the cheap Annual Tax car for you.", "With our easy way, you can get your car cost."};
     Integer[] imgListArrayID = {R.drawable.car_ins, R.drawable.car_go};
     private static final String DEBUG_TAG = "NetworkStatus";
     private ProgressBar progressBar;

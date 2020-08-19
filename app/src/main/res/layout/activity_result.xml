@@ -60,6 +60,12 @@
                     android:layout_marginBottom="10dp"
                     android:padding="10dp" />
 
+                <ProgressBar
+                    android:id="@+id/progressBarResultInfoID"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <TextView
                     android:id="@+id/resultFuelPriceTxtViewID"
                     android:layout_width="match_parent"

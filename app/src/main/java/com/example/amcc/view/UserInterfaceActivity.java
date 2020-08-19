@@ -512,29 +512,16 @@ public class UserInterfaceActivity extends BaseActivity {
 
     public void getCosts(CarDetails car) {
 
-
         //Create Api controller to fetch data
-        ApiController controller = new ApiController(this, car);
         progressBar.setVisibility(View.VISIBLE);
+        ApiController controller = new ApiController(this, car);
         setItemInvisible();
         Bundle bundle = new Bundle();
         Intent result = new Intent(UserInterfaceActivity.this, ResultActivity.class);
-        Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.GONE);
-                //result.putExtra("ApiResponse", controller.getApiDataModel());
-                bundle.putParcelable("ApiResponse", controller.getApiDataModel());
-                result.putExtras(bundle);
-                startActivity(result);
-
-            }
-        };
-        //Timer Tools
-        // After 5 Second get object
-        int interval = 5000;
-        handler.postDelayed(runnable, interval);
+        //result.putExtra("ApiResponse", controller.getApiDataModel());
+        bundle.putParcelable("ApiResponse", controller.getApiDataModel());
+        result.putExtras(bundle);
+        startActivity(result);
     }
 
     private void getClearIntent() {

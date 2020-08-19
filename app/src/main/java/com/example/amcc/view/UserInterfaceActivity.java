@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
 
 import com.example.amcc.R;
 
@@ -417,7 +418,7 @@ public class UserInterfaceActivity extends BaseActivity {
             }
         };
         //Timer Tools
-        // 1 Second
+        // After 1 Second clear focus view
         int interval = 3000;
         handler.postDelayed(runnable, interval);
     }

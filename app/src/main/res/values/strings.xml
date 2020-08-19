@@ -26,5 +26,6 @@
     <string name="e10">e10</string>
     <string name="euro4_higher">For Cars with Euro 4 or higher</string>
     <string name="date_error_message">\"Please enter the first register date of you car to get further \"</string>
+    <string name="something_wrong">Sorrry something went wrong! Try again later.</string>
 
 </resources>

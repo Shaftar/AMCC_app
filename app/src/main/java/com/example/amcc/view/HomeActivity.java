@@ -6,10 +6,12 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.amcc.R;
 import com.example.amcc.adapter.CustomListAdapter;
@@ -24,12 +26,15 @@ public class HomeActivity extends BaseActivity {
     String[] infoListArray = {"info about first function.", "info about second function."};
     Integer[] imgListArrayID = {R.drawable.car_ins, R.drawable.car_go};
     private static final String DEBUG_TAG = "NetworkStatus";
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        progressBar = findViewById(R.id.progressBarHomeID);
+        progressBar.setVisibility(View.GONE);
 
     }
 
@@ -95,12 +100,24 @@ public class HomeActivity extends BaseActivity {
         networkStatus();
         //Create Api controller to fetch data
         ApiController controller = new ApiController(this);
+        progressBar.setVisibility(View.VISIBLE);
+        Bundle bundle = new Bundle();
         Intent result = new Intent(HomeActivity.this, ResultActivity.class);
-        if (controller.getApiDataModel() != null) {
-            result.putExtra("Api response", controller.getApiDataModel());
-            startActivity(result);
-        }
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.GONE);
+                //result.putExtra("ApiResponse", controller.getApiDataModel());
+                bundle.putParcelable("ApiResponse", controller.getApiDataModel());
+                result.putExtras(bundle);
+                startActivity(result);
 
-
+            }
+        };
+        //Timer Tools
+        // After 5 Second get object
+        int interval = 5000;
+        handler.postDelayed(runnable, interval);
     }
 }

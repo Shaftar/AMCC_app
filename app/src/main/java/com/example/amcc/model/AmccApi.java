@@ -1,13 +1,15 @@
-package com.example.amcc.retrofitApi;
+package com.example.amcc.model;
 
 import com.example.amcc.model.ApiDataModel;
+
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface AmccApi {
     @GET("costs.php")
-    Call<ApiDataModel> GetCosts(
+    Single<ApiDataModel> GetCosts(
             @Query("city") String city,
             @Query("engine_size") int engineSize,
             @Query("reg_date") String regDate,

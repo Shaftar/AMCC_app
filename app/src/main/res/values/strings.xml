@@ -6,15 +6,15 @@
 
     <string name="the_first_function_name">The first function</string>
     <string name="the_second_function_name">Info about this function</string>
-    <string name="city">City</string>
-    <string name="first_register_date">First Register Date</string>
-    <string name="emission">Emission Co2 value</string>
+    <string name="city">City: </string>
+    <string name="first_register_date">First Register Date: </string>
+    <string name="emission">Emission Co2 value: </string>
     <string name="enter_emission_number">Enter Emission number</string>
-    <string name="engine_size">Engine Size</string>
+    <string name="engine_size">Engine Size: </string>
     <string name="enter_the_size_of_engine">Enter the size of engine</string>
-    <string name="average_consume">Average Consume</string>
+    <string name="average_consume">Average Consume: </string>
     <string name="average_consume_per_100_km">average consume per 100/km</string>
-    <string name="mileage_per_year">Mileage per Year</string>
+    <string name="mileage_per_year">Mileage per Year: </string>
     <string name="_000_km">.000 km</string>
     <string name="enter_from_1_20">enter from 1 – 20</string>
     <string name="get_result">Get Result</string>
@@ -29,11 +29,14 @@
     <string name="something_wrong">Sorrry something went wrong! Try again later.</string>
     <string name="new_request">New Request</string>
     <string name="edit_input">Edit Input</string>
-    <string name="fuel_pice_res">\"Fuel Price: \"</string>
-    <string name="fuel_cost_annual">\"Fuel Cost: \"</string>
-    <string name="annual_tax">\"Annual Tax: \"</string>
-    <string name="resutl_txt">Result for you:</string>
-    <string name="user_info_block">Your Info block</string>
+    <string name="fuel_pice_res">Fuel Price: </string>
+    <string name="fuel_cost_annual">Fuel Cost: </string>
+    <string name="annual_tax">Annual Tax: </string>
+    <string name="resutl_txt">Result for you: </string>
+    <string name="user_info_block">Your Info block </string>
     <string name="help_ques">Does this helps you?</string>
+    <string name="fuel_type">Fuel Type: </string>
+    <string name="annual_tax_result">Annual Tax: </string>
+    <string name="no_res">We\'re Sorry no result found!</string>
 
 </resources>

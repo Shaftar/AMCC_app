@@ -1,4 +1,4 @@
-package com.example.amcc.view;
+package com.example.amcc.mvc;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -28,17 +28,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModel;
 
 import com.example.amcc.R;
 import com.example.amcc.model.CarDetails;
-import com.example.amcc.model.FuelType;
-import com.example.amcc.util.ApiController;
+import com.example.amcc.view.BaseActivity;
+import com.example.amcc.view.HomeActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class UserInterfaceActivity extends BaseActivity {
 
@@ -54,9 +54,10 @@ public class UserInterfaceActivity extends BaseActivity {
     private CalendarView calendarView;
     private String dateFormUser, fuelType, emission, engSize, avgCon, milePerY, RegDate;
     private ProgressBar progressBar;
-    private int engSiNumIn, emissionNumIn, milePerYearIn, spinnerPosition;
-    private double avgConD;
-    private boolean radioBtnChecked, clearInstance;
+    private int spinnerPosition;
+    private boolean radioBtnChecked;
+    private ArrayList<String> cityNameArray;
+    private ArrayAdapter<String> spinnerAdapter;
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle userInputIntentData, @NonNull PersistableBundle outPersistentState) {
@@ -93,14 +94,14 @@ public class UserInterfaceActivity extends BaseActivity {
         engineSizeField.setText(engSize);
         avgConField.setText(avgCo);
         milePerYField.setText(mileYear);
-        getViewByDate(date);
+//        getViewByDate(date);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_interface);
-        if (savedInstanceState != null && clearInstance) {
+        if (savedInstanceState != null && getClearIntent()) {
             savedInstanceState.clear();
         }
         //Create City Name List
@@ -125,6 +126,7 @@ public class UserInterfaceActivity extends BaseActivity {
             if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                     connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
                 //we are connected to a network
+                Toast.makeText(getApplicationContext(), "Network is connected", Toast.LENGTH_SHORT).show();
                 return true;
             }
         } catch (Exception e) {
@@ -137,17 +139,27 @@ public class UserInterfaceActivity extends BaseActivity {
         return false;
     }
 
+    public void setCountriesValues(List<String> values) {
+        cityNameArray.clear();
+        cityNameArray.addAll(values);
+        spinnerAdapter.notifyDataSetChanged();
+    }
+
+    public void countryApiError(String error) {
+        Log.d("onFailuar", "Api Countries: " + error);
+        Toast.makeText(getApplicationContext(),
+                "onError fetchCountries " + error,
+                Toast.LENGTH_LONG).show();
+    }
 
     private void setUpCityNamesList() {
 
+        cityNameArray = new ArrayList<>();
+        CountriesController countriesController = new CountriesController(this);
         spinner = findViewById(R.id.spinnerCityHolderID);
-        ArrayList<String> cityNameArray = new ArrayList<>();
-        cityNameArray.add("Bremen");
-        cityNameArray.add("Berlin");
-        cityNameArray.add("Hamburg");
-        cityNameArray.add("Bayern");
+        spinnerAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, cityNameArray);
+
         // City List tools
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, cityNameArray);
         spinner.setAdapter(spinnerAdapter);
         spinner.setSelection(spinnerPosition);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -242,6 +254,7 @@ public class UserInterfaceActivity extends BaseActivity {
             }
         });
     }
+
     private void getInputDate() {
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -252,7 +265,7 @@ public class UserInterfaceActivity extends BaseActivity {
                 String years = String.valueOf(year);
                 dateFormUser = days + "." + months + "." + years;
                 dateField.setText(dateFormUser);
-                getViewByDate(dateFormUser);
+//                getViewByDate(dateFormUser);
                 Toast.makeText(getApplicationContext(), dateFormUser, Toast.LENGTH_SHORT).show();
                 dateField.setText(dateFormUser);
                 dialog.dismiss();
@@ -280,26 +293,33 @@ public class UserInterfaceActivity extends BaseActivity {
             if (date1.after(date5) || date1.equals(date5)) {
 
                 // After 01/07/2009
+                euro4TxtView.setVisibility(View.VISIBLE);
+                euro4TxtView.setText(R.string.euro4_higher);
                 emissionTxtView.setVisibility(View.VISIBLE);
                 emissionEdtField.setVisibility(View.VISIBLE);
                 engSizeTxtView.setVisibility(View.VISIBLE);
                 engineSizeField.setVisibility(View.VISIBLE);
+                avgConTxtView.setVisibility(View.VISIBLE);
+                avgConField.setVisibility(View.VISIBLE);
+                mileTxtView.setVisibility(View.VISIBLE);
+                milePerYField.setVisibility(View.VISIBLE);
                 radioGroup.setVisibility(View.VISIBLE);
-                // Unvisible
-                euro4TxtView.setVisibility(View.GONE);
             } else if (date1.before(date2) || date1.equals(date2)) {
 
                 // Before 04/11/2008
-                euro4TxtView.setVisibility(View.VISIBLE);
-                euro4TxtView.setText(R.string.euro4_higher);
+                emissionTxtView.setVisibility(View.VISIBLE);
+                emissionEdtField.setVisibility(View.VISIBLE);
                 euro4TxtView.setTextColor(Color.BLUE);
                 engSizeTxtView.setVisibility(View.VISIBLE);
                 engineSizeField.setVisibility(View.VISIBLE);
+                avgConTxtView.setVisibility(View.VISIBLE);
+                avgConField.setVisibility(View.VISIBLE);
+                mileTxtView.setVisibility(View.VISIBLE);
+                milePerYField.setVisibility(View.VISIBLE);
                 radioGroup.setVisibility(View.VISIBLE);
 
                 //Unvisible
-                emissionTxtView.setVisibility(View.GONE);
-                emissionEdtField.setVisibility(View.GONE);
+                euro4TxtView.setVisibility(View.GONE);
             } else if (date1.after(date3) && date1.before(date4)
                     || date1.equals(date3)
                     || date1.equals(date4)) {
@@ -310,6 +330,10 @@ public class UserInterfaceActivity extends BaseActivity {
                 euro4TxtView.setText(R.string.euro4_higher);
                 euro4TxtView.setTextColor(Color.BLUE);
                 emissionTxtView.setVisibility(View.VISIBLE);
+                avgConTxtView.setVisibility(View.VISIBLE);
+                avgConField.setVisibility(View.VISIBLE);
+                mileTxtView.setVisibility(View.VISIBLE);
+                milePerYField.setVisibility(View.VISIBLE);
                 emissionEdtField.setVisibility(View.VISIBLE);
                 engSizeTxtView.setVisibility(View.VISIBLE);
                 engineSizeField.setVisibility(View.VISIBLE);
@@ -405,31 +429,35 @@ public class UserInterfaceActivity extends BaseActivity {
             cancel = true;
         }
 
-        // Check for a valid email address.
-//        if (TextUtils.isEmpty(milePerY)) {
-//            milePerYField.setError(getString(R.string.error_field_required));
-//            focusView = milePerYField;
-//            cancel = true;
-//        }
+
+        if (TextUtils.isEmpty(milePerY)) {
+            milePerYField.setError(getString(R.string.error_field_required));
+            focusView = milePerYField;
+            cancel = true;
+        }
         if (TextUtils.isEmpty(engSize)) {
             engineSizeField.setError(getString(R.string.error_field_required));
             focusView = engineSizeField;
             cancel = true;
         }
-//        if (TextUtils.isEmpty(avgCon)) {
-//            avgConField.setError(getString(R.string.error_field_required));
-//            focusView = avgConField;
-//            cancel = true;
-//        }
+        if (TextUtils.isEmpty(avgCon)) {
+            avgConField.setError(getString(R.string.error_field_required));
+            focusView = avgConField;
+            cancel = true;
+        }
         if (TextUtils.isEmpty(RegDate)) {
             dateField.setError(getString(R.string.error_field_required));
             focusView = dateField;
             cancel = true;
-            timer(focusView);
+        }
+        if (TextUtils.isEmpty(RegDate)) {
+
             euro4TxtView.setText(R.string.date_error_message);
             euro4TxtView.setTextColor(Color.RED);
             euro4TxtView.setPadding(0, 100, 0, 0);
             euro4TxtView.setVisibility(View.VISIBLE);
+            focusView = dateField;
+            cancel = true;
             Handler handler = new Handler();
             Runnable runnable = new Runnable() {
                 @Override
@@ -441,7 +469,6 @@ public class UserInterfaceActivity extends BaseActivity {
             // 1 Second
             int interval = 3000;
             handler.postDelayed(runnable, interval);
-
         }
         if (cancel) {
             // There was an error; don't get Result and focus the first
@@ -450,17 +477,14 @@ public class UserInterfaceActivity extends BaseActivity {
             timer(focusView);
 
         } else {
-
-            euro4TxtView.setVisibility(View.GONE);
-            // Start Result Activity
-            if (checkNetwork())
-                moveEnteredValueToResultActivity();
-
+            moveEnteredValueToResultActivity();
         }
     }
 
     private void moveEnteredValueToResultActivity() {
 
+        int engSiNumIn, emissionNumIn, milePerYearIn;
+        double avgConD;
         //Get Text From Edit Text
         emission = emissionEdtField.getText().toString();
         engSize = engineSizeField.getText().toString();
@@ -469,30 +493,35 @@ public class UserInterfaceActivity extends BaseActivity {
         RegDate = dateField.getText().toString();
         emissionNumIn = Integer.parseInt(emissionEdtField.getText().toString());
         engSiNumIn = Integer.parseInt(engineSizeField.getText().toString());
-        if (!TextUtils.isEmpty(avgCon) || !TextUtils.isEmpty(milePerY)) {
-            avgConD = Double.parseDouble(avgConField.getText().toString());
-            milePerYearIn = Integer.parseInt(milePerYField.getText().toString());
-        }
+        avgConD = Double.parseDouble(avgConField.getText().toString());
+        milePerYearIn = Integer.parseInt(milePerYField.getText().toString());
 
 
         Intent userInputIntentData = new Intent(UserInterfaceActivity.this, ResultActivity.class);
         userInputIntentData.putExtra("City", CITY_SELECTED);
         userInputIntentData.putExtra("First Register Date", dateFormUser);
-        userInputIntentData.putExtra("Emission", emission);
-        userInputIntentData.putExtra("Engine Size", engSize);
-        userInputIntentData.putExtra("Average Consume", avgCon);
-        userInputIntentData.putExtra("Mileage Per Year", milePerY);
+        userInputIntentData.putExtra("Emission", emissionNumIn);
+        userInputIntentData.putExtra("Engine Size", engSiNumIn);
+        userInputIntentData.putExtra("Average Consume", avgConD);
+        userInputIntentData.putExtra("Mileage Per Year", milePerYearIn);
         userInputIntentData.putExtra("Fuel Type", fuelType);
-        //Create Car Object
-        if (TextUtils.isEmpty(avgCon) || TextUtils.isEmpty(milePerY)) {
+        checkNetwork();
+        progressBar.setVisibility(View.VISIBLE);
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.GONE);
+                //Create Car Object
+                startActivity(userInputIntentData);
 
-            avgConD = 6.0;
-            milePerYearIn = 10000;
-            CarDetails car = new CarDetails(CITY_SELECTED, engSiNumIn,
-                    emissionNumIn, fuelType, dateFormUser, avgConD, milePerYearIn);
-            getCosts(car);
-            startActivity(userInputIntentData);
-        }
+            }
+        };
+        //Timer Tools
+        // After 5 Second get object
+        int interval = 5000;
+        handler.postDelayed(runnable, interval);
+
     }
 
     private void timer(View view) {
@@ -510,22 +539,10 @@ public class UserInterfaceActivity extends BaseActivity {
         handler.postDelayed(runnable, interval);
     }
 
-    public void getCosts(CarDetails car) {
 
-        //Create Api controller to fetch data
-        progressBar.setVisibility(View.VISIBLE);
-        ApiController controller = new ApiController(this, car);
-        setItemInvisible();
-        Bundle bundle = new Bundle();
-        Intent result = new Intent(UserInterfaceActivity.this, ResultActivity.class);
-        //result.putExtra("ApiResponse", controller.getApiDataModel());
-        bundle.putParcelable("ApiResponse", controller.getApiDataModel());
-        result.putExtras(bundle);
-        startActivity(result);
-    }
-
-    private void getClearIntent() {
+    private boolean getClearIntent() {
         Intent intent = getIntent();
-        clearInstance = intent.getBooleanExtra("clearInstance", true);
+        boolean clearInstance;
+        return clearInstance = intent.getBooleanExtra("clearInstance", true);
     }
 }

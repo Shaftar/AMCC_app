@@ -34,6 +34,9 @@ public class CarDetails {
         this.city = city;
     }
 
+    public CarDetails() {
+    }
+
     public int getEmission() {
         return emission;
     }
@@ -62,4 +65,31 @@ public class CarDetails {
         return city;
     }
 
+    public void setEmission(int emission) {
+        this.emission = emission;
+    }
+
+    public void setYearlyMileage(int yearlyMileage) {
+        this.yearlyMileage = yearlyMileage;
+    }
+
+    public void setEngineSize(int engineSize) {
+        this.engineSize = engineSize;
+    }
+
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
+
+    public void setAvgConsume(double avgConsume) {
+        this.avgConsume = avgConsume;
+    }
+
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 }

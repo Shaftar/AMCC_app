@@ -16,8 +16,9 @@ import android.widget.ProgressBar;
 import com.example.amcc.R;
 import com.example.amcc.adapter.CustomListAdapter;
 import com.example.amcc.model.CarDetails;
-import com.example.amcc.model.FuelType;
-import com.example.amcc.util.ApiController;
+import com.example.amcc.mvc.ResultActivity;
+import com.example.amcc.mvc.UserInterfaceActivity;
+import com.example.amcc.mvc.RetrofitApiController;
 
 
 public class HomeActivity extends BaseActivity {
@@ -98,23 +99,14 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void getCosts() {
-
         networkStatus();
-        //Create Api controller to fetch data
-        CarDetails car = new CarDetails("bremen", 2000,
-                129, "diesel", "08.06.2009", 4, 2000);
-        ApiController controller = new ApiController(this, car);
         progressBar.setVisibility(View.VISIBLE);
-        Bundle bundle = new Bundle();
         Intent result = new Intent(HomeActivity.this, ResultActivity.class);
         Handler handler = new Handler();
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 progressBar.setVisibility(View.GONE);
-                //result.putExtra("ApiResponse", controller.getApiDataModel());
-                bundle.putParcelable("ApiResponse", controller.getApiDataModel());
-                result.putExtras(bundle);
                 startActivity(result);
 
             }

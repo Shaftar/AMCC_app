@@ -48,17 +48,35 @@
                     android:id="@+id/resultTxtViewUserMessageID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="24sp"
                     android:layout_marginBottom="10dp"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:text="@string/resutl_txt"
+                    android:textSize="24sp" />
 
-                <TextView
-                    android:id="@+id/resultAnnualTaxTxtViewID"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="10dp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/resultAnnualTaxTxtViewID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/annual_tax_result"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/resultAnnualValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="24sp" />
+                </LinearLayout>
 
                 <ProgressBar
                     android:id="@+id/progressBarResultInfoID"
@@ -66,29 +84,73 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/resultFuelPriceTxtViewID"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="10dp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/resultFuelCostTxtViewID"
+                    <TextView
+                        android:id="@+id/resultFuelPriceTxtViewID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/fuel_pice_res"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/resultFuelPriceValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="10dp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/resultFuelCostTxtViewID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/fuel_cost_annual"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/resultFuelCostValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/resultUniversalTxtView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="24sp"
                     android:layout_marginBottom="10dp"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:text="@string/help_ques"
+                    android:textSize="24sp" />
+
+                <Button
+                    android:id="@+id/retryBtnID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/retry"
+                    android:textSize="15sp" />
 
                 <View
                     android:id="@+id/divider1ResultID"
@@ -98,54 +160,194 @@
                     android:layout_marginBottom="20dp"
                     android:background="?android:attr/listDivider" />
 
+
                 <TextView
                     android:id="@+id/resultTxtViewShowUserInputID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="24sp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="10dp"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:text="@string/user_info_block"
+                    android:textSize="24sp" />
 
-                <TextView
-                    android:id="@+id/resultTxtViewCityID"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="10dp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/resultTxtViewRegDateID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="10dp" />
+                    <TextView
+                        android:id="@+id/resultTxtViewCityID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/city"
+                        android:textSize="24sp" />
 
-                <TextView
-                    android:id="@+id/resultTxtViewEmissionID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="10dp" />
+                    <TextView
+                        android:id="@+id/resultCityValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="24sp" />
 
-                <TextView
-                    android:id="@+id/resultTxtViewEngSizeID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="10dp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/resultTxtViewFuelID"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="10dp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/resultTxtViewRegDateID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/first_register_date"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/resultRegDateValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/resultTxtViewEmissionID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/emission"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/resultEmissionValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/resultTxtViewAvgConID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/average_consume"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/resultAvgConValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/resultTxtViewMileAgeYearID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/mileage_per_year"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/resultMileYearValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/resultTxtViewEngSizeID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/engine_size"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/resultEngSizeValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/resultTxtViewFuelID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/fuel_type"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/resultFuelTypeValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="24sp" />
+
+                </LinearLayout>
+
 
                 <View
                     android:id="@+id/divider2ResultID"
@@ -169,6 +371,7 @@
                         android:layout_marginEnd="15dp"
                         android:layout_weight="1"
                         android:padding="20dp"
+                        android:textSize="15sp"
                         android:text="@string/new_request" />
 
                     <Button
@@ -179,6 +382,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:padding="20dp"
+                        android:textSize="15sp"
                         android:text="@string/edit_input" />
                 </LinearLayout>
             </LinearLayout>

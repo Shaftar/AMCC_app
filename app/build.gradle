@@ -62,6 +62,9 @@ dependencies {
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
+    //RateUs library
+    implementation 'com.codemybrainsout.rating:ratingdialog:1.0.8'
+
 
 
 

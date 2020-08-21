@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.codemybrainsout.ratingdialog.RatingDialog;
 import com.example.amcc.R;
 import com.example.amcc.model.ApiDataModel;
 import com.example.amcc.model.CarDetails;
@@ -90,6 +91,7 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
         retryBtn.setOnClickListener(this);
         newRequestBtn.setOnClickListener(this);
         editBtn.setOnClickListener(this);
+        txtViewUserMsgLast.setOnClickListener(this);
 
     }
 
@@ -127,11 +129,14 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
             case R.id.btnResultEditID:
                 Intent editIntent = new Intent(ResultActivity.this, UserInterfaceActivity.class);
                 startActivity(editIntent);
+//                clickToRate();
                 break;
             case R.id.retryBtnID:
                 retrofitApiController.onRefresh();
                 getProgressInfoBar();
                 break;
+            case R.id.resultUniversalTxtView:
+                clickToRate();
         }
     }
 
@@ -216,6 +221,7 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
             txtViewAnnualValue.setText(annualTax + " Euro");
             String annualFuel = String.valueOf(apiDataModel.getAnnualFuelCosts());
             txtViewFuelCostValue.setText(annualFuel + " Euro");
+            txtViewUserMsgLast.setTextColor(Color.BLUE);
             txtViewUserMsgLast.setText(R.string.help_ques);
             retryBtn.setVisibility(View.GONE);
 
@@ -266,5 +272,27 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
         carDetails.setRegDate(date);
         carDetails.setYearlyMileage(mileYearIN);
         retrofitApiController = new RetrofitApiController(this, carDetails);
+    }
+
+    public void clickToRate() {
+
+        RatingDialog ratingDialog = new RatingDialog.Builder(this)
+                .threshold(3)
+                .onRatingBarFormSumbit(new RatingDialog.Builder.RatingDialogFormListener() {
+                    @Override
+                    public void onFormSubmitted(String feedback) {
+
+                        Toast.makeText(getApplicationContext(),
+                                "Thank you for your feedback", Toast.LENGTH_LONG).show();
+                    }
+                }).onRatingChanged(new RatingDialog.Builder.RatingDialogListener() {
+                    @Override
+                    public void onRatingSelected(float rating, boolean thresholdCleared) {
+
+                    }
+                })
+                .build();
+
+        ratingDialog.show();
     }
 }

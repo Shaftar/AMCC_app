@@ -1,16 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        android:id="@+id/set_contentID"
-        app:key="notifications"
-        app:title="Enable message notifications" />
 
-    <Preference
-        app:key="feedback"
-        app:title="Send feedback"
-        app:summary="Report technical issues or suggest new features"/>
+    <PreferenceCategory android:title="Category0">
+
+        <SwitchPreferenceCompat
+            android:id="@+id/set_contentID"
+            app:key="notifications"
+            app:title="Enable message notifications" />
+
+        <Preference
+            app:key="feedback"
+            app:summary="Report technical issues or suggest new features"
+            app:title="Send feedback" />
+
+
+        <Preference
+            android:icon="@android:drawable/ic_menu_camera"
+            android:key="icon"
+            android:summary="ummary_icon_preference"
+            android:title="title_icon_preference" />
+
+        <Preference
+            android:key="single_line_title"
+            android:summary="summary_single_line_title_preference"
+            android:title="title_single_line_title_preference"
+            app:singleLineTitle="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Category1">
+
+        <CheckBoxPreference
+            android:key="checkbox"
+            android:summary="summery checkbox"
+            android:title="Checkbox" />
+
+        <SwitchPreferenceCompat
+            android:key="switch"
+            android:summary="switch me"
+            android:title="Switch" />
+
+        <DropDownPreference
+            android:key="dropdown"
+            android:title="Dropdown"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:defaultValue="5"
+            android:key="seekbar"
+            android:max="10"
+            android:title="Seekbar Me" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Category2">
+
+        <EditTextPreference
+            android:dialogTitle="edit Text"
+            android:key="edittext"
+            android:title="Edit Me"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            android:dialogTitle="go away?"
+            android:key="list"
+            android:title="List"
+            app:useSimpleSummaryProvider="true" />
+
+        <MultiSelectListPreference
+            android:dialogTitle="what do you do?"
+            android:key="multi_select_list"
+            android:summary="Multi List "
+            android:title="Multi list" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="advanced"
+        android:title="Advanced"
+        app:initialExpandedChildrenCount="1">
+
+        <Preference
+            android:key="expandable"
+            android:summary="was ist das?"
+            android:title="expandable" />
+
+        <Preference
+            android:summary="Website Me"
+            android:title="Website">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.android.com" />
+
+        </Preference>
+
+        <SwitchPreferenceCompat
+            android:key="parent"
+            android:summary="sitch me"
+            android:title="Get know" />
+
+        <SwitchPreferenceCompat
+            android:dependency="parent"
+            android:key="Send Me"
+            android:summary="very nice"
+            android:title="Send me notifications" />
+
+        <SwitchPreferenceCompat
+            android:key="toggle_summary"
+            android:summaryOff="Off"
+            android:summaryOn="On"
+            android:title="Switch Me" />
+
+        <Preference
+            android:key="copyable"
+            android:selectable="false"
+            android:summary="copy my"
+            android:title="Copy Me"
+            app:enableCopying="true" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

@@ -130,6 +130,7 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.retryBtnID:
                 retrofitApiController.onRefresh();
+                getProgressInfoBar();
                 break;
         }
     }
@@ -204,20 +205,10 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
     public void showApiData(ApiDataModel apiDataModel) {
 
         if (apiDataModel == null) {
-            txtViewUserMsgFirst.setText(R.string.resutl_txt);
-            txtViewFuelPriceValue.setText(R.string.fuel_pice_res);
-            txtViewAnnualValue.setText(R.string.annual_tax);
-            txtViewFuelCostValue.setText(R.string.fuel_cost_annual);
-            txtViewUserMsgLast.setText(R.string.help_ques);
-            if (!TextUtils.isEmpty(apiDataModel.getError())) {
-                Toast.makeText(getApplicationContext(), apiDataModel.getError(), Toast.LENGTH_SHORT).show();
-                txtViewUserMsgFirst.setText(R.string.no_res);
-                txtViewUserMsgLast.setText(R.string.something_wrong);
-                txtViewUserMsgLast.setTextColor(Color.RED);
-                retryBtn.setVisibility(View.VISIBLE);
+            taxApiError(apiDataModel.getError());
 
-            }
         } else {
+
             txtViewUserMsgFirst.setText(R.string.resutl_txt);
             String fuelPrice = String.valueOf(apiDataModel.getFuelPrice());
             txtViewFuelPriceValue.setText(fuelPrice + " Euro");
@@ -236,6 +227,14 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
         Toast.makeText(getApplicationContext(),
                 "onError fetchCarTaxInfo " + error,
                 Toast.LENGTH_LONG).show();
+        if (!TextUtils.isEmpty(error)) {
+            Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+            txtViewUserMsgFirst.setText(R.string.no_res);
+            txtViewUserMsgLast.setText(R.string.something_wrong);
+            txtViewUserMsgLast.setTextColor(Color.RED);
+            retryBtn.setVisibility(View.VISIBLE);
+
+        }
     }
 
     @Override

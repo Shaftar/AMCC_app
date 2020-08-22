@@ -5,13 +5,15 @@
     <string name="share">Share</string>
 
     <string name="the_first_function_name">The first function</string>
-    <string name="the_second_function_name">Info about this function</string>
+    <string name="the_second_function_name">The second function</string>
+    <string name="info_first_function">Info about first function</string>
+    <string name="info_second_function">Info about second function</string>
     <string name="city">City: </string>
     <string name="first_register_date">First Register Date: </string>
     <string name="emission">Emission Co2 value: </string>
-    <string name="enter_emission_number">Enter Emission number</string>
+    <string name="enter_emission_number">Enter Emission value</string>
     <string name="engine_size">Engine Size: </string>
-    <string name="enter_the_size_of_engine">Enter the size of engine</string>
+    <string name="enter_the_size_of_engine">Enter the size of engine in liter</string>
     <string name="average_consume">Average Consume: </string>
     <string name="average_consume_per_100_km">average consume per 100/km</string>
     <string name="mileage_per_year">Mileage per Year: </string>

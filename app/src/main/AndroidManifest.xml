@@ -28,11 +28,15 @@
                 android:value=".view.HomeActivity"/>
         </activity>
         <activity
-            android:name=".mvc.UserInterfaceActivity"
-            android:label="MainFunction"></activity>
+            android:name=".mvp.UserInterfaceActivityForMVP"
+            android:label="MainFunction">
+
+        </activity>
         <activity
-            android:name=".mvc.ResultActivity"
-            android:label="GetResult"></activity>
+            android:name=".mvp.ResultActivityForMVP"
+            android:label="GetResult">
+
+        </activity>
     </application>
 
 </manifest>

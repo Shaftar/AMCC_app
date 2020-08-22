@@ -6,18 +6,21 @@
         android:id="@+id/iShare"
         android:icon="@drawable/share_icon"
         app:showAsAction="ifRoom"
+        android:background="@android:drawable/menuitem_background"
         android:title="@string/share">
     </item>
     <item
         android:id="@+id/iHome"
         app:showAsAction="ifRoom|withText"
         android:icon="@drawable/home_icon"
+        android:background="@android:drawable/menuitem_background"
         android:title="@string/home">
     </item>
     <item
         android:id="@+id/iSet"
         app:showAsAction="ifRoom|withText"
         android:icon="@drawable/gear_setting"
+        android:background="@android:drawable/menuitem_background"
         android:title="@string/setting">
     </item>
 

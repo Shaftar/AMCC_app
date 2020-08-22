@@ -16,18 +16,21 @@ import android.widget.ProgressBar;
 import com.example.amcc.R;
 import com.example.amcc.adapter.CustomListAdapter;
 import com.example.amcc.model.CarDetails;
-import com.example.amcc.mvc.ResultActivity;
-import com.example.amcc.mvc.UserInterfaceActivity;
-import com.example.amcc.mvc.RetrofitApiController;
+import com.example.amcc.model.FunctionsList;
+import com.example.amcc.mvp.ResultActivityForMVP;
+import com.example.amcc.mvp.UserInterfaceActivityForMVP;
+
+import java.util.ArrayList;
 
 
 public class HomeActivity extends BaseActivity {
 
 
     // References to feed our custom List Adapter object
-    String[] nameListArray = {"Get Car Annual Tax", "Get KFZ Cost"};
-    String[] infoListArray = {"You can find the cheap Annual Tax car for you.", "With our easy way, you can get your car cost."};
-    Integer[] imgListArrayID = {R.drawable.car_ins, R.drawable.car_go};
+//    int[] nameListArray = {R.string.the_first_function_name, R.string.the_second_function_name};
+//    int[] infoListArray = {R.string.info_first_function, R.string.info_second_function};
+//    Integer[] imgListArrayID = {R.drawable.car_ins, R.drawable.car_go};
+    private ArrayList<FunctionsList> functionsLists;
     private static final String DEBUG_TAG = "NetworkStatus";
     private ProgressBar progressBar;
 
@@ -43,8 +46,22 @@ public class HomeActivity extends BaseActivity {
 
     private void setListHomeAdapter() {
 
+        functionsLists = new ArrayList<>();
+        functionsLists.add(new FunctionsList(R.string.the_first_function_name, R.string.info_first_function, R.drawable.car_ins));
+        functionsLists.add(new FunctionsList(R.string.the_first_function_name, R.string.info_first_function, R.drawable.car_ins));
+        functionsLists.add(new FunctionsList(R.string.the_first_function_name, R.string.info_first_function, R.drawable.car_ins));
+        functionsLists.add(new FunctionsList(R.string.the_first_function_name, R.string.info_first_function, R.drawable.car_ins));
+        functionsLists.add(new FunctionsList(R.string.the_first_function_name, R.string.info_first_function, R.drawable.car_ins));
+        functionsLists.add(new FunctionsList(R.string.the_first_function_name, R.string.info_first_function, R.drawable.car_ins));
+        functionsLists.add(new FunctionsList(R.string.the_first_function_name, R.string.info_first_function, R.drawable.car_ins));
+        functionsLists.add(new FunctionsList(R.string.the_first_function_name, R.string.info_first_function, R.drawable.car_ins));
+        functionsLists.add(new FunctionsList(R.string.the_first_function_name, R.string.info_first_function, R.drawable.car_ins));
+        functionsLists.add(new FunctionsList(R.string.the_first_function_name, R.string.info_first_function, R.drawable.car_ins));
+        functionsLists.add(new FunctionsList(R.string.the_first_function_name, R.string.info_first_function, R.drawable.car_ins));
+        functionsLists.add(new FunctionsList(R.string.the_second_function_name, R.string.info_second_function, R.drawable.car_go));
+        functionsLists.add(new FunctionsList(R.string.the_second_function_name, R.string.info_second_function, R.drawable.car_go));
         // Create Custom Adapter here
-        CustomListAdapter homeListAdapter = new CustomListAdapter(this, nameListArray, infoListArray, imgListArrayID);
+        CustomListAdapter homeListAdapter = new CustomListAdapter(this, functionsLists);
         // Link listView to our CustomListAdapter
         //Create list View
         ListView listView = findViewById(R.id.homelistViewID);
@@ -56,7 +73,7 @@ public class HomeActivity extends BaseActivity {
 
                 switch (position) {
                     case 0:
-                        Intent mainActivity = new Intent(HomeActivity.this, UserInterfaceActivity.class);
+                        Intent mainActivity = new Intent(HomeActivity.this, UserInterfaceActivityForMVP.class);
                         startActivity(mainActivity);
                         break;
                     case 1:
@@ -101,7 +118,7 @@ public class HomeActivity extends BaseActivity {
     public void getCosts() {
         networkStatus();
         progressBar.setVisibility(View.VISIBLE);
-        Intent result = new Intent(HomeActivity.this, ResultActivity.class);
+        Intent result = new Intent(HomeActivity.this, ResultActivityForMVP.class);
         Handler handler = new Handler();
         Runnable runnable = new Runnable() {
             @Override

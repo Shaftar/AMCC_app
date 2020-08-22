@@ -51,6 +51,7 @@
                     android:layout_marginBottom="10dp"
                     android:padding="10dp"
                     android:text="@string/resutl_txt"
+                    android:background="@android:color/secondary_text_dark"
                     android:textSize="24sp" />
 
                 <LinearLayout
@@ -142,6 +143,7 @@
                     android:layout_marginBottom="10dp"
                     android:padding="10dp"
                     android:text="@string/help_ques"
+                    android:background="@android:drawable/dialog_holo_light_frame"
                     android:textSize="24sp" />
 
                 <Button
@@ -150,6 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/retry"
+                    android:background="@android:drawable/btn_default_small"
                     android:textSize="15sp" />
 
                 <View
@@ -169,6 +172,7 @@
                     android:layout_marginBottom="10dp"
                     android:padding="10dp"
                     android:text="@string/user_info_block"
+                    android:background="@android:color/secondary_text_dark"
                     android:textSize="24sp" />
 
                 <LinearLayout

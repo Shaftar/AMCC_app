@@ -53,4 +53,7 @@ dependencies {
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
+    //Validation
+    implementation 'com.basgeekball:awesome-validation:4.2'
+
 }

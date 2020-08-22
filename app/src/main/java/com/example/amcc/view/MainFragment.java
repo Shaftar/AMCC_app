@@ -1,7 +1,9 @@
 package com.example.amcc.view;
 
 import android.os.Bundle;
+import android.service.autofill.RegexValidator;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.amcc.R;
 import com.example.amcc.model.CarDetails;
 import com.example.amcc.model.FuelType;
@@ -37,6 +42,7 @@ public class MainFragment extends Fragment {
     SimpleDateFormat germanFormat;
     CalendarView calendarView;
 
+    AwesomeValidation validation;
     NavController navController;
 
     ShardViewModel viewModel;
@@ -58,6 +64,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        validation = new AwesomeValidation(ValidationStyle.BASIC);
+
         spinner = view.findViewById(R.id.spinnerCityHolderID);
         emissionEdtField = view.findViewById(R.id.edtNumEmissionID);
         engineSizeField = view.findViewById(R.id.edtNumEngSizeID);
@@ -72,9 +80,18 @@ public class MainFragment extends Fragment {
 
         navController = Navigation.findNavController(view);
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
-            CarDetails car = new CarDetails(citySelected, Integer.parseInt(engineSizeField.getText().toString()), Integer.parseInt(emissionEdtField.getText().toString()), FuelType.e5, regDate, Integer.parseInt(avgConField.getText().toString()), Integer.parseInt(milePerYField.getText().toString()));
-            viewModel.setApiData(car);
-            navController.navigate(R.id.resultFragment);
+
+            validateInput();
+            if (validation.validate()) {
+                CarDetails car = new CarDetails(citySelected,
+                        Integer.parseInt(engineSizeField.getText().toString()),
+                        Integer.parseInt(emissionEdtField.getText().toString()),
+                        FuelType.e5, regDate,
+                        Integer.parseInt(avgConField.getText().toString()),
+                        Integer.parseInt(milePerYField.getText().toString()));
+                viewModel.setApiData(car);
+                navController.navigate(R.id.resultFragment);
+            }
         });
     }
 
@@ -99,60 +116,14 @@ public class MainFragment extends Fragment {
 
             }
         });
-
     }
 
-    public void getResult(View view) {
-
-        // Check user Input and get result
-        checkUserInput();
-    }
-
-    private void checkUserInput() {
-
-        // Reset errors displayed in the form.
-        emissionEdtField.setError(null);
-        engineSizeField.setError(null);
-        avgConField.setError(null);
-        milePerYField.setError(null);
-
-        // Store values at the time of the entered vlaues
-        String emission = emissionEdtField.getText().toString();
-        String engSize = engineSizeField.getText().toString();
-        String avgCon = avgConField.getText().toString();
-        String milePerY = milePerYField.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid password, if the user entered one.
-        if (TextUtils.isEmpty(emission)) {
-            emissionEdtField.setError(getString(R.string.error_field_required));
-            focusView = emissionEdtField;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(milePerY)) {
-            milePerYField.setError(getString(R.string.error_field_required));
-            focusView = milePerYField;
-            cancel = true;
-        }
-        if (TextUtils.isEmpty(engSize)) {
-            engineSizeField.setError(getString(R.string.error_field_required));
-            focusView = engineSizeField;
-            cancel = true;
-        }
-        if (TextUtils.isEmpty(avgCon)) {
-            avgConField.setError(getString(R.string.error_field_required));
-            focusView = avgConField;
-            cancel = true;
-        }
-        if (cancel) {
-            // There was an error; don't get Result and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        }
+    private void validateInput() {
+        String errorMsg = "field should not be empty";
+        validation.addValidation(emissionEdtField, RegexTemplate.NOT_EMPTY, errorMsg);
+        validation.addValidation(engineSizeField, RegexTemplate.NOT_EMPTY, errorMsg);
+        validation.addValidation(milePerYField, RegexTemplate.NOT_EMPTY, errorMsg);
+        validation.addValidation(avgConField, RegexTemplate.NOT_EMPTY, errorMsg);
     }
 
 

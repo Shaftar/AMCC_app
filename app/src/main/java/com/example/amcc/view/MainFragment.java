@@ -1,9 +1,6 @@
 package com.example.amcc.view;
 
 import android.os.Bundle;
-import android.service.autofill.RegexValidator;
-import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +34,7 @@ public class MainFragment extends Fragment {
 
     private static final String TAG = "PrintDate";
     private Spinner spinner;
-    private EditText emissionEdtField, engineSizeField, avgConField, milePerYField;
+    private EditText emissionEdtField, engineSizeField, avgConField, milePerYField, regDateField;
     private String citySelected, regDate;
     SimpleDateFormat germanFormat;
     CalendarView calendarView;
@@ -71,22 +68,24 @@ public class MainFragment extends Fragment {
         engineSizeField = view.findViewById(R.id.edtNumEngSizeID);
         avgConField = view.findViewById(R.id.edtNumConsumeID);
         milePerYField = view.findViewById(R.id.edtNumMileAgeYearID);
-        calendarView = view.findViewById(R.id.calendarViewID);
-        germanFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
-        regDate = germanFormat.format(calendarView.getDate());
-        calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> regDate = "" + dayOfMonth + "." + (month + 1) + "." + year);
+//        calendarView = view.findViewById(R.id.calendarViewID);
+//        germanFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+        //       regDate = germanFormat.format(calendarView.getDate());
+        //     calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> regDate = "" + dayOfMonth + "." + (month + 1) + "." + year);
+        regDateField = view.findViewById(R.id.edtFirst_reg_year);
+
         //Create City Name List
         setUpCityNamesList();
 
         navController = Navigation.findNavController(view);
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
-
             validateInput();
             if (validation.validate()) {
                 CarDetails car = new CarDetails(citySelected,
                         Integer.parseInt(engineSizeField.getText().toString()),
                         Integer.parseInt(emissionEdtField.getText().toString()),
-                        FuelType.e5, regDate,
+                        FuelType.e5,
+                        regDateField.getText().toString(),
                         Integer.parseInt(avgConField.getText().toString()),
                         Integer.parseInt(milePerYField.getText().toString()));
                 viewModel.setApiData(car);
@@ -120,8 +119,9 @@ public class MainFragment extends Fragment {
 
     private void validateInput() {
         String errorMsg = "field should not be empty";
-        validation.addValidation(emissionEdtField, RegexTemplate.NOT_EMPTY, errorMsg);
-        validation.addValidation(engineSizeField, RegexTemplate.NOT_EMPTY, errorMsg);
+        validation.addValidation(regDateField, "(0?[1-9]|[1-2]\\d|30|31).(0?[1-9]|1[0-2]).(\\d{4})", "Empty or invalid");
+        validation.addValidation(emissionEdtField, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
+        validation.addValidation(engineSizeField, "[0-9]+", errorMsg);
         validation.addValidation(milePerYField, RegexTemplate.NOT_EMPTY, errorMsg);
         validation.addValidation(avgConField, RegexTemplate.NOT_EMPTY, errorMsg);
     }

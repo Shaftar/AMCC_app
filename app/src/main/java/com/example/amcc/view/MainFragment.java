@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,12 +25,10 @@ import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.amcc.R;
 import com.example.amcc.model.CarDetails;
 import com.example.amcc.model.FuelType;
-import com.example.amcc.viewModel.ShardViewModel;
+import com.example.amcc.viewModel.SharedViewModel;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class MainFragment extends Fragment {
 
@@ -36,13 +36,13 @@ public class MainFragment extends Fragment {
     private Spinner spinner;
     private EditText emissionEdtField, engineSizeField, avgConField, milePerYField, regDateField;
     private String citySelected, regDate;
-    SimpleDateFormat germanFormat;
-    CalendarView calendarView;
+    RadioGroup radioGroup;
+    RadioButton radioButton;
 
     AwesomeValidation validation;
     NavController navController;
 
-    ShardViewModel viewModel;
+    SharedViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,40 +54,40 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(ShardViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        navController = Navigation.findNavController(view);
         validation = new AwesomeValidation(ValidationStyle.BASIC);
-
-        spinner = view.findViewById(R.id.spinnerCityHolderID);
-        emissionEdtField = view.findViewById(R.id.edtNumEmissionID);
-        engineSizeField = view.findViewById(R.id.edtNumEngSizeID);
-        avgConField = view.findViewById(R.id.edtNumConsumeID);
-        milePerYField = view.findViewById(R.id.edtNumMileAgeYearID);
-//        calendarView = view.findViewById(R.id.calendarViewID);
-//        germanFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
-        //       regDate = germanFormat.format(calendarView.getDate());
-        //     calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> regDate = "" + dayOfMonth + "." + (month + 1) + "." + year);
-        regDateField = view.findViewById(R.id.edtFirst_reg_year);
-
         //Create City Name List
         setUpCityNamesList();
 
-        navController = Navigation.findNavController(view);
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
+            emissionEdtField = view.findViewById(R.id.edtNumEmissionID);
+            engineSizeField = view.findViewById(R.id.edtNumEngSizeID);
+            avgConField = view.findViewById(R.id.edtNumConsumeID);
+            milePerYField = view.findViewById(R.id.edtNumMileAgeYearID);
+            regDateField = view.findViewById(R.id.edtFirst_reg_year);
+
+            radioGroup = view.findViewById(R.id.fuel_type_radio_group);
+            int radioId = radioGroup.getCheckedRadioButtonId();
+            radioButton = view.findViewById(radioId);
+            String fuelType = radioButton.getText().toString();
             validateInput();
             if (validation.validate()) {
                 CarDetails car = new CarDetails(citySelected,
                         Integer.parseInt(engineSizeField.getText().toString()),
                         Integer.parseInt(emissionEdtField.getText().toString()),
-                        FuelType.e5,
+                        FuelType.fromString(fuelType),
                         regDateField.getText().toString(),
-                        Integer.parseInt(avgConField.getText().toString()),
+                        Double.parseDouble(avgConField.getText().toString()),
                         Integer.parseInt(milePerYField.getText().toString()));
+                Toast.makeText(getActivity(), fuelType, Toast.LENGTH_SHORT).show();
                 viewModel.setApiData(car);
                 navController.navigate(R.id.resultFragment);
             }
@@ -95,6 +95,7 @@ public class MainFragment extends Fragment {
     }
 
     private void setUpCityNamesList() {
+        spinner = getView().findViewById(R.id.spinnerCityHolderID);
 
         List<String> cityNameArray = new ArrayList<>();
         cityNameArray.add("Bremen");
@@ -125,7 +126,6 @@ public class MainFragment extends Fragment {
         validation.addValidation(milePerYField, RegexTemplate.NOT_EMPTY, errorMsg);
         validation.addValidation(avgConField, RegexTemplate.NOT_EMPTY, errorMsg);
     }
-
 
     // For check the Network Connection before
     // we request data

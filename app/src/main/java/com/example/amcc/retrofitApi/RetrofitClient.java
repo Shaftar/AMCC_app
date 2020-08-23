@@ -2,6 +2,8 @@ package com.example.amcc.retrofitApi;
 
 import com.example.amcc.model.ApiDataModel;
 import com.example.amcc.model.CarDetails;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -9,14 +11,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static RetrofitClient INSTANCE;
-    private final String BASE_Url = "http://jdroubi.heliohost.org/amcc_api/";
+    private final String BASE_Url = "https://jdroubi.heliohost.org/amcc_api/";
+    //  private final String BASE_Url = "http://amcc.42web.io/amcc_api/";
+
     private AmccApi amccApi;
-    private Retrofit retrofit;
 
     private RetrofitClient() {
-        retrofit = new Retrofit.Builder()
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_Url)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         amccApi = retrofit.create(AmccApi.class);
     }

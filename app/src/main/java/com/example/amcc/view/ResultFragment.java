@@ -15,12 +15,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.amcc.R;
 import com.example.amcc.model.ApiDataModel;
-import com.example.amcc.viewModel.ShardViewModel;
+import com.example.amcc.viewModel.SharedViewModel;
 
 public class ResultFragment extends Fragment {
 
     private static final String TAG = "ResultFragment";
-    ShardViewModel viewModel;
+    SharedViewModel viewModel;
     TextView tax, fuel_costs;
     private ProgressBar pgsBar;
 
@@ -39,20 +39,27 @@ public class ResultFragment extends Fragment {
         tax.setText("");
         pgsBar = view.findViewById(R.id.pBar);
         pgsBar.setVisibility(View.VISIBLE);
+
+
+        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        ApiDataModel result = viewModel.getApiData().getValue();
+        viewModel.getApiData().observe(getViewLifecycleOwner(), apiDataModel -> {
+            pgsBar.setVisibility(View.GONE);
+            tax.setText(String.valueOf(apiDataModel.getAnnualTax()));
+            fuel_costs.setText(String.valueOf(apiDataModel.getAnnualFuelCosts()));
+        });
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ShardViewModel.class);
-        viewModel.getApiData().observe(getViewLifecycleOwner(), new Observer<ApiDataModel>() {
-            @Override
-            public void onChanged(ApiDataModel apiDataModel) {
-                pgsBar.setVisibility(View.GONE);
-                tax.setText(String.valueOf(apiDataModel.getAnnualTax()));
-                fuel_costs.setText(String.valueOf(apiDataModel.getAnnualFuelCosts()));
-            }
-        });
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
 }

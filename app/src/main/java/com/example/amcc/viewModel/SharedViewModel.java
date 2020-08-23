@@ -14,7 +14,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShardViewModel extends ViewModel {
+public class SharedViewModel extends ViewModel {
     private static final String TAG = "ShardViewModel";
     MutableLiveData<CarDetails> mCar = new MutableLiveData<>();
     MutableLiveData<ApiDataModel> mApiData = new MutableLiveData<>();
@@ -32,7 +32,6 @@ public class ShardViewModel extends ViewModel {
                 if (response.code() == 200) {
                     Log.d(TAG, "setApiData: received response" + response.body().toString());
                     mApiData.setValue(response.body());
-
                 }
             }
 

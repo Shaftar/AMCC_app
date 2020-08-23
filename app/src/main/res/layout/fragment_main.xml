@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_margin="16dp"
         android:background="@color/colorPrimary"
-        android:padding="10dp"
+        android:padding="12dp"
         app:layout_constraintBottom_toTopOf="@+id/divInputInterfaceID"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,14 +63,29 @@
                 android:text="@string/emission"
                 android:textSize="24sp" />
 
-            <EditText
-                android:id="@+id/edtNumEmissionID"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="16dp"
-                android:hint="@string/enter_emission_number"
-                android:inputType="number"
-                android:padding="8dp" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtNumEmissionID"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:hint="@string/enter_emission_number"
+                    android:inputType="number"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:text="g/km" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -78,14 +93,28 @@
                 android:text="@string/engine_size"
                 android:textSize="24sp" />
 
-            <EditText
-                android:id="@+id/edtNumEngSizeID"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="16dp"
-                android:hint="@string/enter_the_size_of_engine"
-                android:inputType="number"
-                android:padding="8dp" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtNumEngSizeID"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:hint="@string/enter_the_size_of_engine"
+                    android:inputType="number"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="cm³" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -93,15 +122,31 @@
                 android:text="@string/average_consume"
                 android:textSize="24sp" />
 
-            <EditText
-                android:id="@+id/edtNumConsumeID"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:autofillHints=""
-                android:hint="@string/average_consume_per_100_km"
-                android:inputType="numberDecimal"
-                android:padding="8dp" />
+                android:layout_height="match_parent"
+                android:layout_marginVertical="16dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtNumConsumeID"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:hint="@string/enter_average_consume"
+                    android:inputType="numberDecimal"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/average_consume_per_100_km" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -110,7 +155,7 @@
                 android:textSize="24sp" />
 
             <RadioGroup
-                android:id="@+id/BtnGroupID"
+                android:id="@+id/fuel_type_radio_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -159,25 +204,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginVertical="16dp"
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/edtNumMileAgeYearID"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="16dp"
                     android:layout_weight="1"
+                    android:gravity="end"
                     android:hint="@string/enter_from_1_20"
                     android:inputType="number"
                     android:padding="8dp" />
 
                 <TextView
-                    android:id="@+id/txtView1000kmID"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="16dp"
                     android:layout_marginEnd="16dp"
-                    android:padding="10dp"
+                    android:layout_weight="1"
+                    android:padding="8dp"
                     android:text="@string/_000_km" />
             </LinearLayout>
         </LinearLayout>

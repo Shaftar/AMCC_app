@@ -12,11 +12,15 @@
     <string name="enter_emission_number">Enter Emission number</string>
     <string name="engine_size">Engine Size</string>
     <string name="enter_the_size_of_engine">Enter engine size</string>
+
     <string name="average_consume">Average Consume</string>
-    <string name="average_consume_per_100_km">average consume per 100/km</string>
+    <string name="enter_average_consume">Car average fuel consume</string>
+    <string name="average_consume_per_100_km">liter/100km</string>
+
     <string name="mileage_per_year">Mileage per Year</string>
     <string name="_000_km">.000 km per year</string>
     <string name="enter_from_1_20">Enter Mileage per Year</string>
+
     <string name="get_result">Get Result</string>
     <string name="error_field_required">This field is required</string>
     <!-- TODO: Remove or change this placeholder text -->

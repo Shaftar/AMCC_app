@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -79,6 +78,7 @@ public class MainFragment extends Fragment {
             radioButton = view.findViewById(radioId);
             String fuelType = radioButton.getText().toString();
             validateInput();
+
             if (validation.validate()) {
                 CarDetails car = new CarDetails(citySelected,
                         Integer.parseInt(engineSizeField.getText().toString()),
@@ -87,7 +87,7 @@ public class MainFragment extends Fragment {
                         regDateField.getText().toString(),
                         Double.parseDouble(avgConField.getText().toString()),
                         Integer.parseInt(milePerYField.getText().toString()));
-                Toast.makeText(getActivity(), fuelType, Toast.LENGTH_SHORT).show();
+
                 viewModel.setApiData(car);
                 navController.navigate(R.id.resultFragment);
             }

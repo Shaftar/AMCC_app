@@ -44,6 +44,7 @@ public class MainFragment extends Fragment {
     private String citySelected, regDate;
     RadioGroup radioGroup;
     RadioButton radioButton;
+    GridLayout emissionGird;
 
     AwesomeValidation validation;
     NavController navController;
@@ -64,66 +65,69 @@ public class MainFragment extends Fragment {
 
     }
 
+    private TextWatcher showHideEmission = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            try {
+                SimpleDateFormat geFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+                Date d1 = geFormat.parse(regDateField.getText().toString());
+                Date fixDate = geFormat.parse("5.11.2008");
+                if (d1.compareTo(fixDate) < 0) {
+                    emissionGird.setVisibility(View.GONE);
+                    return;
+                }
+                emissionGird.setVisibility(View.VISIBLE);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
-        final GridLayout gridLayout = view.findViewById(R.id.emission_layout);
+        emissionGird = view.findViewById(R.id.emission_layout);
 
-        regDateField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                try {
-                    SimpleDateFormat geFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-                    Date d1 = geFormat.parse(regDateField.getText().toString());
-                    Date fixDate = geFormat.parse("5.11.2008");
-                    if (d1.compareTo(fixDate) < 0) {
-                        gridLayout.setVisibility(View.GONE);
-                        //  emissionEdtField.setText("");
-                        return;
-                    }
-                    gridLayout.setVisibility(View.VISIBLE);
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+        regDateField.addTextChangedListener(showHideEmission);
 
         navController = Navigation.findNavController(view);
         validation = new AwesomeValidation(ValidationStyle.BASIC);
         //Create City Name List
-        setUpCityNamesList();
+        setUpCityNamesList(view);
 
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
+
+            FuelType fuelType = getFuelType(view);
 
             engineSizeField = view.findViewById(R.id.edtNumEngSizeID);
             avgConField = view.findViewById(R.id.edtNumConsumeID);
             milePerYField = view.findViewById(R.id.edtNumMileAgeYearID);
             regDateField = view.findViewById(R.id.edtFirst_reg_year);
+            emissionEdtField = view.findViewById(R.id.edtNumEmissionID);
 
-            radioGroup = view.findViewById(R.id.fuel_type_radio_group);
-            int radioId = radioGroup.getCheckedRadioButtonId();
-            radioButton = view.findViewById(radioId);
-            String fuelType = radioButton.getText().toString();
+            if (emissionGird.getVisibility() == View.GONE) {
+                emissionEdtField.setText("0");
+            }
             validateInput();
+
 
             if (validation.validate()) {
                 CarDetails car = new CarDetails(citySelected,
                         Integer.parseInt(engineSizeField.getText().toString()),
                         Integer.parseInt(emissionEdtField.getText().toString()),
-                        FuelType.fromString(fuelType),
+                        fuelType,
                         regDateField.getText().toString(),
                         Double.parseDouble(avgConField.getText().toString()),
                         Integer.parseInt(milePerYField.getText().toString()));
@@ -134,8 +138,25 @@ public class MainFragment extends Fragment {
         });
     }
 
-    private void setUpCityNamesList() {
-        spinner = getView().findViewById(R.id.spinnerCityHolderID);
+    private FuelType getFuelType(@NonNull View view) {
+        radioGroup = view.findViewById(R.id.fuel_type_radio_group);
+        int radioId = radioGroup.getCheckedRadioButtonId();
+        radioButton = view.findViewById(radioId);
+        String fuelType = radioButton.getText().toString();
+        return FuelType.fromString(fuelType);
+    }
+
+    private void validateInput() {
+        String errorMsg = "field should not be empty";
+        validation.addValidation(regDateField, "(0?[1-9]|[1-2]\\d|30|31).(0?[1-9]|1[0-2]).(\\d{4})", "Empty or invalid");
+        validation.addValidation(emissionEdtField, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
+        validation.addValidation(engineSizeField, "[0-9]+", errorMsg);
+        validation.addValidation(milePerYField, RegexTemplate.NOT_EMPTY, errorMsg);
+        validation.addValidation(avgConField, RegexTemplate.NOT_EMPTY, errorMsg);
+    }
+
+    private void setUpCityNamesList(View view) {
+        spinner = view.findViewById(R.id.spinnerCityHolderID);
 
         List<String> cityNameArray = new ArrayList<>();
         cityNameArray.add("Bremen");
@@ -157,16 +178,6 @@ public class MainFragment extends Fragment {
             }
         });
     }
-
-    private void validateInput() {
-        String errorMsg = "field should not be empty";
-        validation.addValidation(regDateField, "(0?[1-9]|[1-2]\\d|30|31).(0?[1-9]|1[0-2]).(\\d{4})", "Empty or invalid");
-        validation.addValidation(emissionEdtField, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
-        validation.addValidation(engineSizeField, "[0-9]+", errorMsg);
-        validation.addValidation(milePerYField, RegexTemplate.NOT_EMPTY, errorMsg);
-        validation.addValidation(avgConField, RegexTemplate.NOT_EMPTY, errorMsg);
-    }
-
     // For check the Network Connection before
     // we request data
 //    public boolean checkNetwork() {

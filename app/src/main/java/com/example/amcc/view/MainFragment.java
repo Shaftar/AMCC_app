@@ -1,12 +1,15 @@
 package com.example.amcc.view;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -26,8 +29,12 @@ import com.example.amcc.model.CarDetails;
 import com.example.amcc.model.FuelType;
 import com.example.amcc.viewModel.SharedViewModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainFragment extends Fragment {
 
@@ -60,6 +67,39 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        regDateField = view.findViewById(R.id.edtFirst_reg_year);
+        final GridLayout gridLayout = view.findViewById(R.id.emission_layout);
+
+        regDateField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                try {
+                    SimpleDateFormat geFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+                    Date d1 = geFormat.parse(regDateField.getText().toString());
+                    Date fixDate = geFormat.parse("5.11.2008");
+                    if (d1.compareTo(fixDate) < 0) {
+                        gridLayout.setVisibility(View.GONE);
+                        //  emissionEdtField.setText("");
+                        return;
+                    }
+                    gridLayout.setVisibility(View.VISIBLE);
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         navController = Navigation.findNavController(view);
         validation = new AwesomeValidation(ValidationStyle.BASIC);
@@ -67,7 +107,7 @@ public class MainFragment extends Fragment {
         setUpCityNamesList();
 
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
-            emissionEdtField = view.findViewById(R.id.edtNumEmissionID);
+
             engineSizeField = view.findViewById(R.id.edtNumEngSizeID);
             avgConField = view.findViewById(R.id.edtNumConsumeID);
             milePerYField = view.findViewById(R.id.edtNumMileAgeYearID);

@@ -9,6 +9,11 @@ import android.widget.ListView;
 import com.example.amcc.R;
 import com.example.amcc.adapter.CustomListAdapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class HomeActivity extends BaseActivity {
 
@@ -41,6 +46,11 @@ public class HomeActivity extends BaseActivity {
                         startActivity(mainActivity);
                         break;
                     case 1:
+                        try {
+                            compare();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         break;
                 }
             }
@@ -52,5 +62,19 @@ public class HomeActivity extends BaseActivity {
         super.onStart();
         // Set List Adapter
         setListHomeAdapter();
+    }
+
+    private void compare() throws ParseException {
+        SimpleDateFormat sdformat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+        Date d1 = sdformat.parse("5.2.2019");
+        Date fixed = sdformat.parse("10.12.2018");
+        System.out.println("The date 1 is: " + sdformat.format(d1));
+        if (d1.compareTo(fixed) < 0) {
+            System.out.println("The date 1 is older: ");
+            return;
+        }
+        System.out.println("sdjfoij");
+
+
     }
 }

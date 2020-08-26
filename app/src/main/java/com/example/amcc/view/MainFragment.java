@@ -120,10 +120,8 @@ public class MainFragment extends Fragment {
             if (emissionGird.getVisibility() == View.GONE) {
                 emissionEdtField.setText("0");
             }
-            validateInput();
-
-
-            if (validation.validate()) {
+            
+            if (inputIsValid()) {
                 CarDetails car = new CarDetails(citySelected,
                         Integer.parseInt(engineSizeField.getText().toString()),
                         Integer.parseInt(emissionEdtField.getText().toString()),
@@ -146,13 +144,14 @@ public class MainFragment extends Fragment {
         return FuelType.fromString(fuelType);
     }
 
-    private void validateInput() {
+    private boolean inputIsValid() {
         String errorMsg = "field should not be empty";
         validation.addValidation(regDateField, "(0?[1-9]|[1-2]\\d|30|31).(0?[1-9]|1[0-2]).(\\d{4})", "Empty or invalid");
         validation.addValidation(emissionEdtField, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
         validation.addValidation(engineSizeField, "[0-9]+", errorMsg);
         validation.addValidation(milePerYField, RegexTemplate.NOT_EMPTY, errorMsg);
         validation.addValidation(avgConField, RegexTemplate.NOT_EMPTY, errorMsg);
+        return validation.validate();
     }
 
     private void setUpCityNamesList(View view) {

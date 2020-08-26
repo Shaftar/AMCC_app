@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static RetrofitClient INSTANCE;
-    private final String BASE_Url = "https://jdroubi.heliohost.org/amcc_api/";
+    private final String BASE_Url = "http://jdroubi.heliohost.org/amcc_api/";
     //  private final String BASE_Url = "http://amcc.42web.io/amcc_api/";
 
     private AmccApi amccApi;
@@ -23,7 +23,7 @@ public class RetrofitClient {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_Url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
         amccApi = retrofit.create(AmccApi.class);
     }

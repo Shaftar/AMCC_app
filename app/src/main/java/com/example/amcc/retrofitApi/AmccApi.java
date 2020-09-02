@@ -1,6 +1,9 @@
 package com.example.amcc.retrofitApi;
 
 import com.example.amcc.model.ApiDataModel;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -16,4 +19,7 @@ public interface AmccApi {
             @Query("avg_consume") double avgConsume,
             @Query("yearly_mileage") int yearlyMileage
     );
+
+    @GET("api/city/read.php")
+    Call<List<String>> GetAllCities();
 }

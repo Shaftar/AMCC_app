@@ -42,9 +42,9 @@ public class CustomListAdapter extends ArrayAdapter {
         @SuppressLint("ViewHolder") View rowView = inflater.inflate(R.layout.listview_row, parent, false);
 
         //this code gets references to objects in the listview_row.xml file
-        TextView nameTextField = (TextView) rowView.findViewById(R.id.listRowtextViewTitleID);
-        TextView infoTextField = (TextView) rowView.findViewById(R.id.infoListTxtViewRowID);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.listImgVID);
+        TextView nameTextField = rowView.findViewById(R.id.listRowtextViewTitleID);
+        TextView infoTextField = rowView.findViewById(R.id.infoListTxtViewRowID);
+        ImageView imageView = rowView.findViewById(R.id.listImgVID);
 
         //this code sets the values of the objects to values from the arrays
         nameTextField.setText(nameArray[position]);

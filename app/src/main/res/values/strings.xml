@@ -36,5 +36,6 @@
     <string name="fuel_price_label">Fuel Price:</string>
     <string name="annual_tax_result">Annual Tax:</string>
     <string name="resutl_txt">Costs</string>
+    <string name="enter_city_name_or_zip">Enter city name or ZIP</string>
 
 </resources>

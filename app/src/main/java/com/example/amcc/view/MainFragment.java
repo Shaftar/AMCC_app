@@ -9,6 +9,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -20,6 +22,7 @@ import android.widget.RadioGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -36,19 +39,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MainFragment extends Fragment {
 
-    private static final String TAG = "PrintDate";
     private EditText emissionEdtField, engineSizeField, avgConField, milePerYField, regDateField;
     String dateFormUser;
     RadioGroup radioGroup;
     RadioButton radioButton;
     GridLayout emissionGird;
-    private String citySelected;
-    private DatePicker calendarView;
+    AutoCompleteTextView city;
 
+    private DatePicker calendarView;
     AwesomeValidation validation;
     NavController navController;
 
@@ -64,8 +67,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        viewModel.setCitiesArray();
+
 
     }
 
@@ -100,10 +102,22 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+
         super.onViewCreated(view, savedInstanceState);
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
         emissionGird = view.findViewById(R.id.emission_layout);
+        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        viewModel.getCities().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> cities) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                        android.R.layout.simple_dropdown_item_1line, cities);
+                city = view.findViewById(R.id.city_list);
+                city.setAdapter(adapter);
 
+            }
+        });
         regDateField.addTextChangedListener(showHideEmission);
 
         navController = Navigation.findNavController(view);
@@ -121,12 +135,13 @@ public class MainFragment extends Fragment {
             regDateField = view.findViewById(R.id.edtFirst_reg_year);
             emissionEdtField = view.findViewById(R.id.edtNumEmissionID);
 
+
             if (emissionGird.getVisibility() == View.GONE) {
                 emissionEdtField.setText("0");
             }
-            
+
             if (inputIsValid()) {
-                CarDetails car = new CarDetails(citySelected,
+                CarDetails car = new CarDetails(city.getText().toString(),
                         Integer.parseInt(engineSizeField.getText().toString()),
                         Integer.parseInt(emissionEdtField.getText().toString()),
                         fuelType,
@@ -141,6 +156,7 @@ public class MainFragment extends Fragment {
             }
         });
     }
+
 
     private FuelType getFuelType(@NonNull View view) {
         radioGroup = view.findViewById(R.id.fuel_type_radio_group);

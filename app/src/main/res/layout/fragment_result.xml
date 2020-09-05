@@ -1,71 +1,309 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ResultFragment">
-
-
-    <TextView
-        android:id="@+id/tax_cost_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Annual Tax: "
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/tax_cost_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tax_cost_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.188"
-        app:layout_constraintStart_toEndOf="@+id/tax_cost_label"
-        app:layout_constraintTop_toTopOf="@+id/tax_cost_label"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/fuel_cost_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="Annual Fuel Costs: "
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tax_cost_label"
-        app:layout_constraintVertical_bias="0.198" />
-
-    <TextView
-        android:id="@+id/fuel_cost_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fuel_cost_label"
-        app:layout_constraintTop_toBottomOf="@+id/tax_cost_textview"
-        app:layout_constraintVertical_bias="0.198" />
+    android:fitsSystemWindows="true">
+    <!-- Load the toolbar here -->
 
     <ProgressBar
-        android:id="@+id/pBar"
-        style="?android:attr/progressBarStyleLarge"
+        android:id="@+id/progressBarResultInfoID"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerInParent="true" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/pullToRefreshResultID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:layout_marginBottom="15dp"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/costs_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:drawable="@android:color/secondary_text_dark"
+                    android:padding="10dp"
+                    android:text="@string/resutl_txt"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/annual_tax_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/annual_tax_result"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/resultAnnualValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/fuel_price_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/fuel_price_label"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/resultFuelPriceValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/annual_fuel_costs_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="@string/fuel_cost_annual"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/resultFuelCostValueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textColor="@color/colorValue"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/resultUniversalTxtView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawable="@android:drawable/dialog_holo_light_frame"
+                    android:padding="10dp"
+                    android:text="@string/help_ques"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/retryBtnID"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/retry"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:id="@+id/resultTxtViewShowUserInputID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawable="@android:color/secondary_text_dark"
+                    android:padding="10dp"
+                    android:text="@string/car_specification"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/city_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text="@string/city"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/resultCityValueID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/colorValue"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/reg_date_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text="@string/first_register_date"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/resultRegDateValueID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/colorValue"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/emission_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text="@string/emission"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/resultEmissionValueID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/colorValue"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/avg_consume_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text="@string/average_consume"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/resultAvgConValueID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/colorValue"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/mileage_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text="@string/mileage_per_year"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/resultKilometerYearValueID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/colorValue"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/engine_size_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text="@string/engine_size"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/resultEngSizeValueID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/colorValue"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/fuel_type_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text="@string/fuel_type"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/resultFuelTypeValueID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/colorValue"
+                    android:textSize="15sp" />
+
+                <View
+                    android:id="@+id/divider2ResultID"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="?android:attr/listDivider" />
+
+                <Button
+                    android:id="@+id/btnResultNewID"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="@string/new_request"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</RelativeLayout>

@@ -1,6 +1,9 @@
 package com.example.amcc.model;
 
-public class CarDetails {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class CarDetails implements Parcelable {
 
     private int emission, yearlyMileage, engineSize;
     private String regDate;
@@ -17,6 +20,28 @@ public class CarDetails {
         this.avgConsume = avgConsume;
         this.fuelType = fuelType.toString();
         this.city = city;
+    }
+
+    public static final Creator<CarDetails> CREATOR = new Creator<CarDetails>() {
+        @Override
+        public CarDetails createFromParcel(Parcel in) {
+            return new CarDetails(in);
+        }
+
+        @Override
+        public CarDetails[] newArray(int size) {
+            return new CarDetails[size];
+        }
+    };
+
+    protected CarDetails(Parcel in) {
+        emission = in.readInt();
+        yearlyMileage = in.readInt();
+        engineSize = in.readInt();
+        regDate = in.readString();
+        avgConsume = in.readDouble();
+        fuelType = in.readString();
+        city = in.readString();
     }
 
     public int getEmission() {
@@ -47,4 +72,19 @@ public class CarDetails {
         return city;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(emission);
+        parcel.writeInt(yearlyMileage);
+        parcel.writeInt(engineSize);
+        parcel.writeString(regDate);
+        parcel.writeDouble(avgConsume);
+        parcel.writeString(fuelType);
+        parcel.writeString(city);
+    }
 }

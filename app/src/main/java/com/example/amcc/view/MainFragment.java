@@ -1,18 +1,21 @@
 package com.example.amcc.view;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,20 +34,20 @@ import com.example.amcc.viewModel.SharedViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class MainFragment extends Fragment {
 
     private static final String TAG = "PrintDate";
-    private Spinner spinner;
     private EditText emissionEdtField, engineSizeField, avgConField, milePerYField, regDateField;
-    private String citySelected, regDate;
+    String dateFormUser;
     RadioGroup radioGroup;
     RadioButton radioButton;
     GridLayout emissionGird;
+    private String citySelected;
+    private DatePicker calendarView;
 
     AwesomeValidation validation;
     NavController navController;
@@ -106,7 +109,7 @@ public class MainFragment extends Fragment {
         navController = Navigation.findNavController(view);
         validation = new AwesomeValidation(ValidationStyle.BASIC);
         //Create City Name List
-        setUpCityNamesList(view);
+        onClickCalenderImage(view);
 
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
 
@@ -130,9 +133,11 @@ public class MainFragment extends Fragment {
                         regDateField.getText().toString(),
                         Double.parseDouble(avgConField.getText().toString()),
                         Integer.parseInt(milePerYField.getText().toString()));
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("carInformation", car);
 
                 viewModel.setApiData(car);
-                navController.navigate(R.id.resultFragment);
+                navController.navigate(R.id.resultFragment, bundle);
             }
         });
     }
@@ -155,46 +160,49 @@ public class MainFragment extends Fragment {
         return validation.validate();
     }
 
-    private void setUpCityNamesList(View view) {
-        spinner = view.findViewById(R.id.spinnerCityHolderID);
-
-        List<String> cityNameArray = new ArrayList<>();
-        cityNameArray.add("Bremen");
-        cityNameArray.add("Berlin");
-        cityNameArray.add("Hamburg");
-        cityNameArray.add("Bayern");
-        // City List tools
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(requireActivity(), R.layout.support_simple_spinner_dropdown_item, cityNameArray);
-        spinner.setAdapter(spinnerAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void onClickCalenderImage(View view) {
+        ImageView dateImageView = view.findViewById(R.id.calender_image);
+        dateImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                citySelected = spinner.getSelectedItem().toString();
-            }
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.calender_view);
+                calendarView = dialog.findViewById(R.id.calendarViewID);
+                Button okBtn = dialog.findViewById(R.id.okCalenderBtnID);
+                Button cancelBtn = dialog.findViewById(R.id.cancelCalenderBtnID);
+                cancelBtn.setOnClickListener(view1 -> dialog.dismiss());
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                if (Build.VERSION.SDK_INT > 25) {
+                    calendarView.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+                        @Override
+                        public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            int month = monthOfYear + 1;
+                            dateFormUser = dayOfMonth + "." + month + "." + year;
+                            okBtn.setOnClickListener(view12 -> {
+                                regDateField.setText(dateFormUser);
+                                dialog.dismiss();
+                            });
+                        }
+                    });
+                    dialog.show();
+                    dialog.setCancelable(true);
+                } else {
+                    final Calendar calendar = Calendar.getInstance();
+                    int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH);
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                            int monthOf = month + 1;
+                            dateFormUser = dayOfMonth + "." + monthOf + "." + year;
+                            regDateField.setText(dateFormUser);
+                        }
+                    }, day, month, year);
+                    datePickerDialog.show();
+                }
             }
         });
     }
-    // For check the Network Connection before
-    // we request data
-//    public boolean checkNetwork() {
-//        try {
-//            ConnectivityManager connectivityManager =
-//                    (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//
-//            if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-//                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-//                //we are connected to a network
-//                return true;
-//            }
-//        } catch (Exception e) {
-//            Log.e("Connectivity Exception", e.getMessage());
-//        }
-//        return false;
-//    }
-
 
 }

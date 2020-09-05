@@ -28,5 +28,13 @@
     <string name="e5">Super</string>
     <string name="e10">E10</string>
     <string name="fuel_type">Fuel Type</string>
+    <string name="cancel">Cancel</string>
+    <string name="new_request">Edit</string>
+    <string name="car_specification">Car Specification</string>
+    <string name="help_ques">Does this help?</string>
+    <string name="fuel_cost_annual">Annual Fuel Cost:</string>
+    <string name="fuel_price_label">Fuel Price:</string>
+    <string name="annual_tax_result">Annual Tax:</string>
+    <string name="resutl_txt">Costs</string>
 
 </resources>

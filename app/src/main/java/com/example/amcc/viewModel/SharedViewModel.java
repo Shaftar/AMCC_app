@@ -19,8 +19,29 @@ import retrofit2.Response;
 public class SharedViewModel extends ViewModel {
     private static final String TAG = "ShardViewModel";
     MutableLiveData<CarDetails> mCar = new MutableLiveData<>();
+    MutableLiveData<List<String>> mCities = new MutableLiveData<>();
     MutableLiveData<ApiDataModel> mApiData = new MutableLiveData<>();
     RetrofitClient client = RetrofitClient.getINSTANCE();
+
+    public LiveData<List<String>> getCities() {
+        client.getCities().enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                if (response.isSuccessful()) {
+                    Log.d("country", response.body().toString());
+                    mCities.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+
+            }
+        });
+
+
+        return mCities;
+    }
 
     public LiveData<ApiDataModel> getApiData() {
         return mApiData;
@@ -44,18 +65,4 @@ public class SharedViewModel extends ViewModel {
         });
     }
 
-    public void setCitiesArray() {
-        client.getCities().enqueue(new Callback<List<String>>() {
-            @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                System.out.println("fuck you bitch:" + response.code());
-                System.out.println("fuck you bitch:" + response.body());
-            }
-
-            @Override
-            public void onFailure(Call<List<String>> call, Throwable t) {
-
-            }
-        });
-    }
 }

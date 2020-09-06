@@ -32,7 +32,6 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.amcc.R;
 import com.example.amcc.model.CarDetails;
-import com.example.amcc.model.FuelType;
 import com.example.amcc.viewModel.SharedViewModel;
 
 import java.text.ParseException;
@@ -127,7 +126,7 @@ public class MainFragment extends Fragment {
 
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
 
-            FuelType fuelType = getFuelType(view);
+            String fuelType = getFuelType(view);
 
             engineSizeField = view.findViewById(R.id.edtNumEngSizeID);
             avgConField = view.findViewById(R.id.edtNumConsumeID);
@@ -158,12 +157,11 @@ public class MainFragment extends Fragment {
     }
 
 
-    private FuelType getFuelType(@NonNull View view) {
+    private String getFuelType(@NonNull View view) {
         radioGroup = view.findViewById(R.id.fuel_type_radio_group);
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = view.findViewById(radioId);
-        String fuelType = radioButton.getText().toString();
-        return FuelType.fromString(fuelType);
+        return radioButton.getText().toString();
     }
 
     private boolean inputIsValid() {

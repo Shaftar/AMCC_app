@@ -12,13 +12,13 @@ public class CarDetails implements Parcelable {
     private String city;
 
     //regDate should be as in German date format : dd.mm.yyyy
-    public CarDetails(String city, int engineSize, int emission, FuelType fuelType, String regDate, double avgConsume, int yearlyMileage) {
+    public CarDetails(String city, int engineSize, int emission, String fuelType, String regDate, double avgConsume, int yearlyMileage) {
         this.emission = emission;
         this.yearlyMileage = yearlyMileage;
         this.engineSize = engineSize;
         this.regDate = regDate;
         this.avgConsume = avgConsume;
-        this.fuelType = fuelType.toString();
+        this.fuelType = fuelType;
         this.city = city;
     }
 

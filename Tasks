@@ -1,0 +1,9 @@
+1-  *Remove Enum from project
+    *change the api to make it suitable 
+2- for old SDK the start date is 1900  (Bug)
+3- progress bar appears only one time  (Bug)
+4- Design the first home activity
+5- Add ads
+6- app depolyment to google play
+7- for some city the fuel price is null (bug)
+8- 

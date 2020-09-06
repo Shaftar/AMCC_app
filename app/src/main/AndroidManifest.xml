@@ -13,7 +13,12 @@
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".view.HomeActivity"
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4242963717208905~4145654251" />
+
+        <activity
+            android:name=".view.HomeActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,16 +26,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.SettingsActivity"
+        <activity
+            android:name=".view.SettingsActivity"
             android:label="Settings"
             android:parentActivityName=".view.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.HomeActivity"/>
+                android:value=".view.HomeActivity" />
         </activity>
-        <activity android:name=".view.MainActivity"
-            android:label="MainFunction">
-        </activity>
+        <activity
+            android:name=".view.MainActivity"
+            android:label="MainFunction"></activity>
     </application>
 
 </manifest>

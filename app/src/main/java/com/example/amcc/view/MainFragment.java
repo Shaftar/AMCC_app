@@ -18,6 +18,7 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,7 +50,7 @@ public class MainFragment extends Fragment {
     RadioButton radioButton;
     GridLayout emissionGird;
     AutoCompleteTextView city;
-
+    TextView emissionKlasse;
     private DatePicker calendarView;
     AwesomeValidation validation;
     NavController navController;
@@ -82,10 +83,16 @@ public class MainFragment extends Fragment {
                 SimpleDateFormat geFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
                 Date d1 = geFormat.parse(regDateField.getText().toString());
                 Date fixDate = geFormat.parse("5.11.2008");
+                Date date2 = geFormat.parse("01.11.2009");
                 if (d1.compareTo(fixDate) < 0) {
                     emissionGird.setVisibility(View.GONE);
                     return;
                 }
+                if (d1.compareTo(date2) < 0) {
+                    emissionKlasse.setVisibility(View.VISIBLE);
+                    return;
+                }
+                emissionKlasse.setVisibility(View.GONE);
                 emissionGird.setVisibility(View.VISIBLE);
 
             } catch (ParseException e) {
@@ -106,6 +113,7 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
         emissionGird = view.findViewById(R.id.emission_layout);
+        emissionKlasse = view.findViewById(R.id.txtView_euro3);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         viewModel.getCities().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
             @Override

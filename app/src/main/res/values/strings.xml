@@ -23,6 +23,7 @@
 
     <string name="get_result">Get Result</string>
     <string name="error_field_required">This field is required</string>
+    <string name="euro4_higher">For Cars with Euro 3 or higher</string>
 
     <string name="diesel">Diesel</string>
     <string name="e5">Super</string>

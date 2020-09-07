@@ -19,7 +19,6 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -71,8 +70,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Toast.makeText(getActivity(), "OnActivityCreated " + mInterstitialAd.isLoaded(), Toast.LENGTH_SHORT).show();
-        mInterstitialAd.show();
     }
 
     private TextWatcher showHideEmission = new TextWatcher() {
@@ -125,8 +122,6 @@ public class MainFragment extends Fragment {
 
             }
         });
-        Toast.makeText(getActivity(), "OnViewCreated " + mInterstitialAd.isLoaded(), Toast.LENGTH_SHORT).show();
-        mInterstitialAd.show();
         regDateField.addTextChangedListener(showHideEmission);
 
         navController = Navigation.findNavController(view);
@@ -148,9 +143,7 @@ public class MainFragment extends Fragment {
             if (emissionGird.getVisibility() == View.GONE) {
                 emissionEdtField.setText("0");
             }
-            Toast.makeText(getActivity(), "OnClick " + mInterstitialAd.isLoaded(), Toast.LENGTH_SHORT).show();
 
-            mInterstitialAd.show();
             if (inputIsValid()) {
                 CarDetails car = new CarDetails(city.getText().toString(),
                         Integer.parseInt(engineSizeField.getText().toString()),
@@ -161,7 +154,7 @@ public class MainFragment extends Fragment {
                         Integer.parseInt(milePerYField.getText().toString()));
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("carInformation", car);
-                //        mInterstitialAd.show();
+                mInterstitialAd.show();
                 viewModel.setApiData(car);
                 navController.navigate(R.id.resultFragment, bundle);
             }
@@ -238,7 +231,6 @@ public class MainFragment extends Fragment {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getActivity(), "OnResume " + mInterstitialAd.isLoaded(), Toast.LENGTH_SHORT).show();
                 mInterstitialAd.show();
             }
         };

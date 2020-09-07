@@ -69,6 +69,16 @@
                     android:src="@drawable/date_icon" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/txtView_euro3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/euro4_higher"
+                android:textColor="#4CAF50"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
             <GridLayout
                 android:id="@+id/emission_layout"
                 android:layout_width="match_parent"

@@ -7,6 +7,12 @@
 5- Format date after choosef from calender      >>>>>>>>>>>>>>>>>>>>> Done
 6- Handel Erro messages (wrong plz/ wrong city name / space after city name......)
 
+7- Retry (Button in result fragment) implemention
+8- Edit (Button in result fragment) implemention 
+9- Erorr report to user 
+10- Select date without change (onOKclick)
+
+
 
 11- set reg date (no day after today is allowed)                  >>>>>>>>>>>>>>>>>>>>> Done 
 12- Create Grid for emissionklasse( will be shown before 11.2009) >>>>>>>>>>>>>>>>>>>>> Done

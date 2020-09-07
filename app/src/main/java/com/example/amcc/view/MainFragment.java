@@ -187,6 +187,7 @@ public class MainFragment extends Fragment {
                 cancelBtn.setOnClickListener(view1 -> dialog.dismiss());
 
                 if (Build.VERSION.SDK_INT > 25) {
+                    calendarView.setMaxDate(System.currentTimeMillis());
                     calendarView.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
                         @Override
                         public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -217,6 +218,7 @@ public class MainFragment extends Fragment {
                             regDateField.setText(dateFormUser);
                         }
                     }, year, month, day);
+                    datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                     datePickerDialog.show();
                 }
             }

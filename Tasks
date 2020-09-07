@@ -1,10 +1,10 @@
 1-  *Remove Enum from project             >>>>>>>>>>>>>>>>>>>>> Done
     *change the api to make it suitable   >>>>>>>>>>>>>>>>>>>>> Done
     
-2- for old SDK the start date is 1900  (Bug)
+2- for old SDK the start date is 1900  >>>>>>>>>>> Done
 3- progress bar appears only one time  (Bug)
 4- some city the fuel price is null    (bug)
-5- Format date after choosef from calender      (bug)
+5- Format date after choosef from calender      >>>>>>>> Done
 6- Handel Erro messages (wrong plz/ wrong city name / space after city name......)
 
 

@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -19,6 +18,7 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,7 +52,7 @@ public class MainFragment extends Fragment {
     RadioButton radioButton;
     GridLayout emissionGird;
     AutoCompleteTextView city;
-
+    TextView emissionKlasse;
     private DatePicker calendarView;
     AwesomeValidation validation;
     NavController navController;
@@ -82,12 +82,27 @@ public class MainFragment extends Fragment {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             try {
                 SimpleDateFormat geFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-                Date d1 = geFormat.parse(regDateField.getText().toString());
-                Date fixDate = geFormat.parse("5.11.2008");
-                if (d1.compareTo(fixDate) < 0) {
-                    emissionGird.setVisibility(View.GONE);
+                Date regDateOfCar = geFormat.parse(regDateField.getText().toString());
+                Date oldRegulation = geFormat.parse("5.11.2008");
+                Date newRegulation = geFormat.parse("01.07.2009");
+
+                if (regDateOfCar.after(oldRegulation) && regDateOfCar.before(newRegulation)) {
+                    emissionGird.setVisibility(View.VISIBLE);
+                    emissionKlasse.setVisibility(View.VISIBLE);
                     return;
                 }
+
+                if (regDateOfCar.before(oldRegulation)) {
+                    emissionGird.setVisibility(View.GONE);
+                    emissionKlasse.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                if (regDateOfCar.before(newRegulation)) {
+                    emissionKlasse.setVisibility(View.VISIBLE);
+                    return;
+                }
+                emissionKlasse.setVisibility(View.GONE);
                 emissionGird.setVisibility(View.VISIBLE);
 
             } catch (ParseException e) {
@@ -108,7 +123,7 @@ public class MainFragment extends Fragment {
         mInterstitialAd = new InterstitialAd(getActivity());
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_id));
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
+        emissionKlasse = view.findViewById(R.id.txtView_euro3);
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
         emissionGird = view.findViewById(R.id.emission_layout);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
@@ -192,12 +207,15 @@ public class MainFragment extends Fragment {
                 cancelBtn.setOnClickListener(view1 -> dialog.dismiss());
 
                 if (Build.VERSION.SDK_INT > 25) {
+                    calendarView.setMaxDate(System.currentTimeMillis());
                     calendarView.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
                         @Override
                         public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            int month = monthOfYear + 1;
-                            dateFormUser = dayOfMonth + "." + month + "." + year;
                             okBtn.setOnClickListener(view12 -> {
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.set(year, monthOfYear, dayOfMonth);
+                                SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+                                dateFormUser = format.format(calendar.getTime());
                                 regDateField.setText(dateFormUser);
                                 dialog.dismiss();
                             });
@@ -206,34 +224,24 @@ public class MainFragment extends Fragment {
                     dialog.show();
                     dialog.setCancelable(true);
                 } else {
-                    final Calendar calendar = Calendar.getInstance();
-                    int year = calendar.get(Calendar.YEAR);
-                    int month = calendar.get(Calendar.MONTH);
-                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    Calendar calendarOld = Calendar.getInstance();
+                    int year = calendarOld.get(Calendar.YEAR);
+                    int month = calendarOld.get(Calendar.MONTH);
+                    int day = calendarOld.get(Calendar.DAY_OF_MONTH);
                     DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            int monthOf = month + 1;
-                            dateFormUser = dayOfMonth + "." + monthOf + "." + year;
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(year, month, dayOfMonth);
+                            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+                            dateFormUser = format.format(calendar.getTime());
                             regDateField.setText(dateFormUser);
                         }
-                    }, day, month, year);
+                    }, year, month, day);
+                    datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                     datePickerDialog.show();
                 }
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Handler idn = new Handler();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                mInterstitialAd.show();
-            }
-        };
-        idn.postDelayed(runnable, 2000);
     }
 }

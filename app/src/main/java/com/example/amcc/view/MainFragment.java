@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +35,8 @@ import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.amcc.R;
 import com.example.amcc.model.CarDetails;
 import com.example.amcc.viewModel.SharedViewModel;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,6 +59,7 @@ public class MainFragment extends Fragment {
     NavController navController;
 
     SharedViewModel viewModel;
+    public InterstitialAd mInterstitialAd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,8 +71,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
+        Toast.makeText(getActivity(), "OnActivityCreated " + mInterstitialAd.isLoaded(), Toast.LENGTH_SHORT).show();
+        mInterstitialAd.show();
     }
 
     private TextWatcher showHideEmission = new TextWatcher() {
@@ -101,9 +106,12 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-
         super.onViewCreated(view, savedInstanceState);
+
+        mInterstitialAd = new InterstitialAd(getActivity());
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_id));
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
         emissionGird = view.findViewById(R.id.emission_layout);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
@@ -117,6 +125,8 @@ public class MainFragment extends Fragment {
 
             }
         });
+        Toast.makeText(getActivity(), "OnViewCreated " + mInterstitialAd.isLoaded(), Toast.LENGTH_SHORT).show();
+        mInterstitialAd.show();
         regDateField.addTextChangedListener(showHideEmission);
 
         navController = Navigation.findNavController(view);
@@ -138,7 +148,9 @@ public class MainFragment extends Fragment {
             if (emissionGird.getVisibility() == View.GONE) {
                 emissionEdtField.setText("0");
             }
+            Toast.makeText(getActivity(), "OnClick " + mInterstitialAd.isLoaded(), Toast.LENGTH_SHORT).show();
 
+            mInterstitialAd.show();
             if (inputIsValid()) {
                 CarDetails car = new CarDetails(city.getText().toString(),
                         Integer.parseInt(engineSizeField.getText().toString()),
@@ -149,7 +161,7 @@ public class MainFragment extends Fragment {
                         Integer.parseInt(milePerYField.getText().toString()));
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("carInformation", car);
-
+                //        mInterstitialAd.show();
                 viewModel.setApiData(car);
                 navController.navigate(R.id.resultFragment, bundle);
             }
@@ -219,4 +231,17 @@ public class MainFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Handler idn = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getActivity(), "OnResume " + mInterstitialAd.isLoaded(), Toast.LENGTH_SHORT).show();
+                mInterstitialAd.show();
+            }
+        };
+        idn.postDelayed(runnable, 2000);
+    }
 }

@@ -5,6 +5,7 @@
 3- progress bar appears only one time  (Bug)
 4- some city the fuel price is null    (bug)
 5- Format date after choosef from calender      (bug)
+6- Handel Erro messages (wrong plz/ wrong city name / space after city name......)
 
 
 11- set reg date (no day after today is allowed)

@@ -190,9 +190,11 @@ public class MainFragment extends Fragment {
                     calendarView.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
                         @Override
                         public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            int month = monthOfYear + 1;
-                            dateFormUser = dayOfMonth + "." + month + "." + year;
                             okBtn.setOnClickListener(view12 -> {
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.set(year, monthOfYear, dayOfMonth);
+                                SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+                                dateFormUser = format.format(calendar.getTime());
                                 regDateField.setText(dateFormUser);
                                 dialog.dismiss();
                             });
@@ -201,22 +203,23 @@ public class MainFragment extends Fragment {
                     dialog.show();
                     dialog.setCancelable(true);
                 } else {
-                    final Calendar calendar = Calendar.getInstance();
-                    int year = calendar.get(Calendar.YEAR);
-                    int month = calendar.get(Calendar.MONTH);
-                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    Calendar calendarOld = Calendar.getInstance();
+                    int year = calendarOld.get(Calendar.YEAR);
+                    int month = calendarOld.get(Calendar.MONTH);
+                    int day = calendarOld.get(Calendar.DAY_OF_MONTH);
                     DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            int monthOf = month + 1;
-                            dateFormUser = dayOfMonth + "." + monthOf + "." + year;
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(year, month, dayOfMonth);
+                            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+                            dateFormUser = format.format(calendar.getTime());
                             regDateField.setText(dateFormUser);
                         }
-                    }, day, month, year);
+                    }, year, month, day);
                     datePickerDialog.show();
                 }
             }
         });
     }
-
 }

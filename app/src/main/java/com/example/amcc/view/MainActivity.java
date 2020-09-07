@@ -17,5 +17,4 @@ public class MainActivity extends BaseActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
-
 }

@@ -33,6 +33,8 @@ import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.amcc.R;
 import com.example.amcc.model.CarDetails;
 import com.example.amcc.viewModel.SharedViewModel;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,6 +57,7 @@ public class MainFragment extends Fragment {
     NavController navController;
 
     SharedViewModel viewModel;
+    public InterstitialAd mInterstitialAd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,8 +69,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
     }
 
     private TextWatcher showHideEmission = new TextWatcher() {
@@ -101,9 +102,12 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-
         super.onViewCreated(view, savedInstanceState);
+
+        mInterstitialAd = new InterstitialAd(getActivity());
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_id));
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
         emissionGird = view.findViewById(R.id.emission_layout);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
@@ -149,7 +153,7 @@ public class MainFragment extends Fragment {
                         Integer.parseInt(milePerYField.getText().toString()));
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("carInformation", car);
-
+                mInterstitialAd.show();
                 viewModel.setApiData(car);
                 navController.navigate(R.id.resultFragment, bundle);
             }

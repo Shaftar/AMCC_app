@@ -8,6 +8,8 @@ import android.widget.ListView;
 
 import com.example.amcc.R;
 import com.example.amcc.adapter.CustomListAdapter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 
 public class HomeActivity extends BaseActivity {
@@ -21,6 +23,10 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        AdView adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     private void setListHomeAdapter() {

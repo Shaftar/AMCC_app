@@ -29,6 +29,8 @@
     <string name="e10">E10</string>
     <string name="fuel_type">Fuel Type</string>
     <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+
     <string name="new_request">Edit</string>
     <string name="car_specification">Car Specification</string>
     <string name="help_ques">Does this help?</string>
@@ -38,6 +40,7 @@
     <string name="resutl_txt">Costs</string>
     <string name="enter_city_name_or_zip">Enter city name or ZIP</string>
     <string name="banner_id">ca-app-pub-4242963717208905/1233368693</string>
+    <string name="banner_id_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="interstitial_id">ca-app-pub-4242963717208905/7770856884</string>
     <string name="admob_app_id">ca-app-pub-4242963717208905~4145654251</string>
 

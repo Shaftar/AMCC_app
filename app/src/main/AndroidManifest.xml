@@ -36,9 +36,7 @@
         </activity>
         <activity
             android:name=".view.MainActivity"
-            android:label="MainFunction">
-
-        </activity>
+            android:label="MainFunction"></activity>
     </application>
 
 </manifest>

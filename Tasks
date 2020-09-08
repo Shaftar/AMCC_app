@@ -1,28 +1,47 @@
-1-  *Remove Enum from project             >>>>>>>>>>>>>>>>>>>>> Done
-    *change the api to make it suitable   >>>>>>>>>>>>>>>>>>>>> Done
+Reg Date:
+_________
+* date validation doesnt go away after entering a right formated date (Bug)
+
+* more margin for ok and cancel in dialog box (Design)
+
+* calender icon moved to right with validation checked (Design)
+
+* When click on calender icon: 
+      if no date select -> date of today
+       else show selected date from EditText
+       
+* Select date without change (onOKclick)                    ---------> working on Jaber
+ 
+-- Format date after choosef from calender      >>>>>>>>>>>>>>>>>>>>> Done
+ * nice to have : also format the manually enterd date  
+ 
+-- set reg date (no day after today is allowed)  >>>>>>>>>>>>>>>>>>>>> Done 
+   * also for the manual input
+   
+___________________________________________________________________________   
     
-2- for old SDK the start date is 1900     >>>>>>>>>>>>>>>>>>>>> Done
-3- progress bar appears only one time  (Bug)
-4- some city the fuel price is null    (bug)
-5- Format date after choosef from calender      >>>>>>>>>>>>>>>>>>>>> Done
-6- Handel Erro messages (wrong plz/ wrong city name / space after city name......)
+* for old SDK the start date is 1900     >>>>>>>>>>>>>>>>>>>>> Done
 
-7- Retry (Button in result fragment) implemention
-8- Edit (Button in result fragment) implemention 
-9- Erorr report to user 
-10- Select date without change (onOKclick)
+* progress bar appears only one time  (Bug)              ---------> working on Jaber
+* some city the fuel price is null    (bug)
+
+* Handel Erro messages (wrong plz/ wrong city name / space after city name......)
+
+* Retry (Button in result fragment) implemention*
+* Edit (Button in result fragment) implemention 
+* Erorr report to user                                (Feature)
 
 
 
-11- set reg date (no day after today is allowed)                  >>>>>>>>>>>>>>>>>>>>> Done 
 12- Create Grid for emissionklasse( will be shown before 11.2009) >>>>>>>>>>>>>>>>>>>>> Done
+   * grid and label are missing (Design)
+
+13- preventing screen from turning off when app is opend  (Feature)
+
+15- Design the first home activity (Design)
 
 
-13- google ads                     >>>>>>>>>>>>>>>>>>>>> Done
 14- app depolyment to google play
-
-
-15- Design the first home activity
 
 NICE TO HAVE:
 

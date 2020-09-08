@@ -2,8 +2,7 @@ package com.example.amcc.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
+import android.view.WindowManager;
 import android.widget.ListView;
 
 import com.example.amcc.R;
@@ -23,7 +22,7 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         AdView adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
@@ -38,17 +37,14 @@ public class HomeActivity extends BaseActivity {
         ListView listView = findViewById(R.id.homelistViewID);
         listView.setAdapter(homeListAdapter);
         // Create EventListener
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
-                        startActivity(mainActivity);
-                        break;
-                    case 1:
-                        break;
-                }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            switch (position) {
+                case 0:
+                    Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
+                    startActivity(mainActivity);
+                    break;
+                case 1:
+                    break;
             }
         });
     }

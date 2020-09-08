@@ -4,7 +4,7 @@ _________
 
 * more margin for ok and cancel in dialog box (Design)
 
-* calender icon moved to right with validation checked (Design)
+* calender icon moved to right when date is not valid (Design)
 
 * When click on calender icon: 
       if no date select -> date of today

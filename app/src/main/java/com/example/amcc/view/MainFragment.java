@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -30,7 +29,6 @@ import androidx.navigation.Navigation;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.amcc.R;
 import com.example.amcc.model.CarDetails;
 import com.example.amcc.viewModel.SharedViewModel;
@@ -186,17 +184,17 @@ public class MainFragment extends Fragment {
 
     private boolean inputIsValid() {
         String errorMsg = "field should not be empty";
+
         validation.addValidation(regDateField, "(0?[1-9]|[1-2]\\d|30|31).(0?[1-9]|1[0-2]).(\\d{4})", "Empty or invalid");
-        validation.addValidation(emissionEdtField, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
-        validation.addValidation(engineSizeField, "[0-9]+", errorMsg);
-        validation.addValidation(milePerYField, RegexTemplate.NOT_EMPTY, errorMsg);
-        validation.addValidation(avgConField, RegexTemplate.NOT_EMPTY, errorMsg);
+        validation.addValidation(emissionEdtField, "([1-9]\\d\\d?)", getString(R.string.error_field_required));
+        validation.addValidation(engineSizeField, "([1-9]\\d{2}\\d?)", errorMsg);
+        validation.addValidation(milePerYField, "([1-9]\\d{2})", errorMsg);
+        validation.addValidation(avgConField, "(^[1-9]\\d?(\\.[0-9]\\d?)?$)", errorMsg);
         return validation.validate();
     }
 
     private void onClickCalenderImage(View view) {
-        ImageView dateImageView = view.findViewById(R.id.calender_image);
-        dateImageView.setOnClickListener(new View.OnClickListener() {
+        regDateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Dialog dialog = new Dialog(getActivity());

@@ -18,9 +18,9 @@ import retrofit2.Response;
 
 public class SharedViewModel extends ViewModel {
     private static final String TAG = "ShardViewModel";
-    MutableLiveData<CarDetails> mCar = new MutableLiveData<>();
     MutableLiveData<List<String>> mCities = new MutableLiveData<>();
-    MutableLiveData<ApiDataModel> mApiData = new MutableLiveData<>();
+    SingleLiveEvent<ApiDataModel> mApiData = new SingleLiveEvent<>();
+
     RetrofitClient client = RetrofitClient.getINSTANCE();
 
     public LiveData<List<String>> getCities() {
@@ -43,7 +43,7 @@ public class SharedViewModel extends ViewModel {
         return mCities;
     }
 
-    public LiveData<ApiDataModel> getApiData() {
+    public SingleLiveEvent<ApiDataModel> getApiData() {
         return mApiData;
     }
 

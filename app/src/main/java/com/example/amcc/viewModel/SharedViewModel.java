@@ -19,6 +19,8 @@ import retrofit2.Response;
 public class SharedViewModel extends ViewModel {
     private static final String TAG = "ShardViewModel";
     MutableLiveData<CarDetails> mCar = new MutableLiveData<>();
+    MutableLiveData<Boolean> taxError = new MutableLiveData<>();
+    MutableLiveData<Boolean> cityError = new MutableLiveData<>();
     MutableLiveData<List<String>> mCities = new MutableLiveData<>();
     MutableLiveData<ApiDataModel> mApiData = new MutableLiveData<>();
     RetrofitClient client = RetrofitClient.getINSTANCE();
@@ -30,12 +32,12 @@ public class SharedViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     Log.d("country", response.body().toString());
                     mCities.setValue(response.body());
+                    taxError.setValue(false);
                 }
             }
-
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
-
+                taxError.setValue(true);
             }
         });
 
@@ -55,14 +57,23 @@ public class SharedViewModel extends ViewModel {
                 if (response.code() == 200) {
                     Log.d(TAG, "setApiData: received response" + response.body().toString());
                     mApiData.setValue(response.body());
+                    cityError.setValue(false);
                 }
             }
 
             @Override
             public void onFailure(Call<ApiDataModel> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
+                cityError.setValue(true);
             }
         });
     }
 
+    public MutableLiveData<Boolean> getTaxError() {
+        return taxError;
+    }
+
+    public MutableLiveData<Boolean> getCityError() {
+        return cityError;
+    }
 }

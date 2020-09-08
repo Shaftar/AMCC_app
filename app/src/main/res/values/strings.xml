@@ -43,5 +43,7 @@
     <string name="banner_id_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="interstitial_id">ca-app-pub-4242963717208905/7770856884</string>
     <string name="admob_app_id">ca-app-pub-4242963717208905~4145654251</string>
+    <string name="try_later_msg">Sorry something went wrong! Please try later.</string>
+    <string name="dialog_rate_app">Does this helps you?</string>
 
 </resources>

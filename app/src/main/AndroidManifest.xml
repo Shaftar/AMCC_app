@@ -39,7 +39,9 @@
         <activity
             android:name=".view.MainActivity"
             android:label="MainFunction"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

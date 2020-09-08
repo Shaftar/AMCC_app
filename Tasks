@@ -1,4 +1,8 @@
-Reg Date:
+Reg Date: new Idea,
+-we remove the calender icon // or just disable editText
+-user is not allowed to enter date manully
+whenn user click on date filed then dialog will pop up after ok the date will set 
+because it's a lot of work and validation for manuall input
 _________
 * date validation doesnt go away after entering a right formated date (Bug)
 
@@ -12,7 +16,7 @@ _________
        
 * Select date without change (onOKclick)                    ---------> working on Jaber
  
--- Format date after choosef from calender      >>>>>>>>>>>>>>>>>>>>> Done
+-- Format date after choose from calender      >>>>>>>>>>>>>>>>>>>>> Done
  * nice to have : also format the manually enterd date  
  
 -- set reg date (no day after today is allowed)  >>>>>>>>>>>>>>>>>>>>> Done 

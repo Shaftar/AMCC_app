@@ -30,17 +30,18 @@ ___________________________________________________________________________
 * some city the fuel price is null    (bug)
 
 * Handel Erro messages (wrong plz/ wrong city name / space after city name......)
+* Add city validation if empty (bug)   ........... working on Shaftar
 
-* Retry (Button in result fragment) implemention*     ........ working on Shaftar
-* Edit (Button in result fragment) implemention      ......... working on Shaftar
-* Erorr report to user                                (Feature)
+* Retry (Button in result fragment) implemention*     >>>>>>>>>>>>>>>> Done
+* Edit (Button in result fragment) implemention      >>>>>>>>>>>>>>> Done
+* Erorr report to user                                >>>>>>>>>>>>> Done
 
 
 
 12- Create Grid for emissionklasse( will be shown before 11.2009) >>>>>>>>>>>>>>>>>>>>> Done
    * grid and label are missing (Design)
 
-13- preventing screen from turning off when app is opend  (Feature)
+13- preventing screen from turning off when app is opend  ............ working on Shaftar
 
 15- Design the first home activity (Design)
 

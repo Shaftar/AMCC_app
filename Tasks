@@ -1,10 +1,18 @@
-Reg Date: new Idea,
+
+Validation section: For you (Jaber)
+- Make sure to fix all edit input and validate them correctly.
+I didn't really understand how your validation works, but I bleive, you just need to modify Your
+Awesomevalidation regex!
+
+* date validation doesnt go away after entering a right formated date (Bug)
+* Handel Erro messages (wrong plz/ wrong city name / space after city name......)
+* Add city validation if empty (bug)   ........... working on Shaftar
+*Reg Date: new Idea,
 -we remove the calender icon // or just disable editText
 -user is not allowed to enter date manully           >>> I think thats should be we disable edittext
 whenn user click on date filed then dialog will pop up after ok the date will set 
 because it's a lot of work and validation for manuall input
 _________
-* date validation doesnt go away after entering a right formated date (Bug)
 
 * more margin for ok and cancel in dialog box (Design)
 
@@ -28,9 +36,6 @@ ___________________________________________________________________________
 
 * progress bar appears only one time  (Bug)              ---------> working on Jaber
 * some city the fuel price is null    (bug)
-
-* Handel Erro messages (wrong plz/ wrong city name / space after city name......)
-* Add city validation if empty (bug)   ........... working on Shaftar
 
 * Retry (Button in result fragment) implemention*     >>>>>>>>>>>>>>>> Done
 * Edit (Button in result fragment) implemention      >>>>>>>>>>>>>>> Done

@@ -23,7 +23,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -41,7 +40,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class MainFragment extends Fragment {
@@ -127,15 +125,12 @@ public class MainFragment extends Fragment {
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
         emissionGird = view.findViewById(R.id.emission_layout);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        viewModel.getCities().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
-            @Override
-            public void onChanged(List<String> cities) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                        android.R.layout.simple_dropdown_item_1line, cities);
-                city = view.findViewById(R.id.city_list);
-                city.setAdapter(adapter);
+        viewModel.getCities().observe(getViewLifecycleOwner(), cities -> {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_dropdown_item_1line, cities);
+            city = view.findViewById(R.id.city_list);
+            city.setAdapter(adapter);
 
-            }
         });
         regDateField.addTextChangedListener(showHideEmission);
 
@@ -186,6 +181,7 @@ public class MainFragment extends Fragment {
 
     private boolean inputIsValid() {
         String errorMsg = "field should not be empty";
+        validation.addValidation(city, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
         validation.addValidation(regDateField, "(0?[1-9]|[1-2]\\d|30|31).(0?[1-9]|1[0-2]).(\\d{4})", "Empty or invalid");
         validation.addValidation(emissionEdtField, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
         validation.addValidation(engineSizeField, "[0-9]+", errorMsg);
@@ -196,51 +192,40 @@ public class MainFragment extends Fragment {
 
     private void onClickCalenderImage(View view) {
         ImageView dateImageView = view.findViewById(R.id.calender_image);
-        dateImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Dialog dialog = new Dialog(getActivity());
-                dialog.setContentView(R.layout.calender_view);
-                calendarView = dialog.findViewById(R.id.calendarViewID);
-                Button okBtn = dialog.findViewById(R.id.okCalenderBtnID);
-                Button cancelBtn = dialog.findViewById(R.id.cancelCalenderBtnID);
-                cancelBtn.setOnClickListener(view1 -> dialog.dismiss());
+        dateImageView.setOnClickListener(v -> {
+            Dialog dialog = new Dialog(getActivity());
+            dialog.setContentView(R.layout.calender_view);
+            calendarView = dialog.findViewById(R.id.calendarViewID);
+            Button okBtn = dialog.findViewById(R.id.okCalenderBtnID);
+            Button cancelBtn = dialog.findViewById(R.id.cancelCalenderBtnID);
+            cancelBtn.setOnClickListener(view1 -> dialog.dismiss());
 
-                if (Build.VERSION.SDK_INT > 25) {
-                    calendarView.setMaxDate(System.currentTimeMillis());
-                    calendarView.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
-                        @Override
-                        public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            okBtn.setOnClickListener(view12 -> {
-                                Calendar calendar = Calendar.getInstance();
-                                calendar.set(year, monthOfYear, dayOfMonth);
-                                SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
-                                dateFormUser = format.format(calendar.getTime());
-                                regDateField.setText(dateFormUser);
-                                dialog.dismiss();
-                            });
-                        }
-                    });
-                    dialog.show();
-                    dialog.setCancelable(true);
-                } else {
-                    Calendar calendarOld = Calendar.getInstance();
-                    int year = calendarOld.get(Calendar.YEAR);
-                    int month = calendarOld.get(Calendar.MONTH);
-                    int day = calendarOld.get(Calendar.DAY_OF_MONTH);
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.set(year, month, dayOfMonth);
-                            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
-                            dateFormUser = format.format(calendar.getTime());
-                            regDateField.setText(dateFormUser);
-                        }
-                    }, year, month, day);
-                    datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-                    datePickerDialog.show();
-                }
+            if (Build.VERSION.SDK_INT > 25) {
+                calendarView.setMaxDate(System.currentTimeMillis());
+                calendarView.setOnDateChangedListener((view13, year, monthOfYear, dayOfMonth) -> okBtn.setOnClickListener(view12 -> {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(year, monthOfYear, dayOfMonth);
+                    SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+                    dateFormUser = format.format(calendar.getTime());
+                    regDateField.setText(dateFormUser);
+                    dialog.dismiss();
+                }));
+                dialog.show();
+                dialog.setCancelable(true);
+            } else {
+                Calendar calendarOld = Calendar.getInstance();
+                int year = calendarOld.get(Calendar.YEAR);
+                int month = calendarOld.get(Calendar.MONTH);
+                int day = calendarOld.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view13, year1, month1, dayOfMonth) -> {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(year1, month1, dayOfMonth);
+                    SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+                    dateFormUser = format.format(calendar.getTime());
+                    regDateField.setText(dateFormUser);
+                }, year, month, day);
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                datePickerDialog.show();
             }
         });
     }

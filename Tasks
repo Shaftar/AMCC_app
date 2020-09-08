@@ -1,6 +1,6 @@
 Reg Date: new Idea,
 -we remove the calender icon // or just disable editText
--user is not allowed to enter date manully
+-user is not allowed to enter date manully           >>> I think thats should be we disable edittext
 whenn user click on date filed then dialog will pop up after ok the date will set 
 because it's a lot of work and validation for manuall input
 _________
@@ -31,8 +31,8 @@ ___________________________________________________________________________
 
 * Handel Erro messages (wrong plz/ wrong city name / space after city name......)
 
-* Retry (Button in result fragment) implemention*
-* Edit (Button in result fragment) implemention 
+* Retry (Button in result fragment) implemention*     ........ working on Shaftar
+* Edit (Button in result fragment) implemention      ......... working on Shaftar
 * Erorr report to user                                (Feature)
 
 

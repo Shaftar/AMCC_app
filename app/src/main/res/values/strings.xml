@@ -6,20 +6,20 @@
 
     <string name="the_first_function_name">The first function</string>
     <string name="the_second_function_name">Info about this function</string>
-    <string name="city">City</string>
+    <string name="city">City or Postcode</string>
     <string name="first_register_date">First Register Date</string>
     <string name="emission">Co2 Emission</string>
-    <string name="enter_emission_number">Enter Emission number</string>
+    <string name="enter_emission_number">e.g. 140</string>
     <string name="engine_size">Engine Size</string>
-    <string name="enter_the_size_of_engine">Enter engine size</string>
+    <string name="enter_the_size_of_engine">e.g. 1398</string>
 
-    <string name="average_consume">Average Consume</string>
-    <string name="enter_average_consume">Car average fuel consume</string>
+    <string name="average_consume">Average Fuel Consumption</string>
+    <string name="enter_average_consume">e.g. 7.5</string>
     <string name="average_consume_per_100_km">liter/100km</string>
 
-    <string name="mileage_per_year">Mileage per Year</string>
+    <string name="mileage_per_year">Kilometers per Year</string>
     <string name="_000_km">.000 km per year</string>
-    <string name="enter_from_1_20">Enter Mileage per Year</string>
+    <string name="enter_from_1_20">e.g. 20</string>
 
     <string name="get_result">Get Result</string>
     <string name="error_field_required">This field is required</string>
@@ -33,15 +33,16 @@
     <string name="euro4_higher">For Cars with Euro 3 or higher</string>
     <string name="new_request">Edit</string>
     <string name="car_specification">Car Specification</string>
-    <string name="help_ques">Does this help?</string>
+    <string name="help_ques">Was this helpful?</string>
     <string name="fuel_cost_annual">Annual Fuel Cost:</string>
     <string name="fuel_price_label">Fuel Price:</string>
     <string name="annual_tax_result">Annual Tax:</string>
     <string name="resutl_txt">Costs</string>
-    <string name="enter_city_name_or_zip">Enter city name or ZIP</string>
+    <string name="enter_city_name_or_zip">Enter city or ZIP</string>
     <string name="banner_id">ca-app-pub-4242963717208905/1233368693</string>
     <string name="banner_id_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="interstitial_id">ca-app-pub-4242963717208905/7770856884</string>
     <string name="admob_app_id">ca-app-pub-4242963717208905~4145654251</string>
+    <string name="_01_01_2020">01.01.2020</string>
 
 </resources>

@@ -37,6 +37,8 @@ import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -201,13 +203,35 @@ public class MainFragment extends Fragment {
             Button okBtn = dialog.findViewById(R.id.okCalenderBtnID);
             Button cancelBtn = dialog.findViewById(R.id.cancelCalenderBtnID);
             cancelBtn.setOnClickListener(view1 -> dialog.dismiss());
+            String dateFromInput = regDateField.getText().toString();
 
+            // should open on from text edit if not empty
             if (Build.VERSION.SDK_INT > 25) {
+
+                // Ok button of dialog
+                // if no date set yet
+                // set text field to date of today
+                okBtn.setOnClickListener(view12 -> {
+                    if (dateFromInput.isEmpty()) {
+                        LocalDate now = LocalDate.now();
+                        String date = now.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+                        regDateField.setText(date);
+                    }
+                    dialog.dismiss();
+                });
+
+
+                //If Reg date was not empty then the date picker will start from the entered date
+                if (!dateFromInput.isEmpty()) {
+                    int[] date = dateArray(dateFromInput);
+                    calendarView.updateDate(date[0], date[1], date[2]);
+                }
+
                 calendarView.setMaxDate(System.currentTimeMillis());
                 calendarView.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view13, int year, int month, int dayOfMonth) {
-                        okBtn.setOnClickListener(view12 -> {
+                        okBtn.setOnClickListener(view14 -> {
                             formatDate(year, month, dayOfMonth);
                             regDateField.setText(dateFormUser);
                             dialog.dismiss();
@@ -221,6 +245,13 @@ public class MainFragment extends Fragment {
                 int year = calendarOld.get(Calendar.YEAR);
                 int month = calendarOld.get(Calendar.MONTH);
                 int day = calendarOld.get(Calendar.DAY_OF_MONTH);
+                if (!dateFromInput.isEmpty()) {
+                    int[] date = dateArray(dateFromInput);
+                    year = date[0];
+                    month = date[1];
+                    day = date[2];
+                }
+
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view13, int year, int month, int dayOfMonth) {
@@ -239,5 +270,14 @@ public class MainFragment extends Fragment {
         calendar.set(year, month, dayOfMonth);
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
         dateFormUser = format.format(calendar.getTime());
+    }
+
+    private int[] dateArray(String date) {
+        String[] parts = date.split("\\.");
+        int day = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int year = Integer.parseInt(parts[2]);
+
+        return new int[]{year, month - 1, day};
     }
 }

@@ -54,7 +54,6 @@ public class ResultFragment extends Fragment {
         fuelPrice = view.findViewById(R.id.resultFuelPriceValueID);
         setValues(car);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-//        ApiDataModel result = viewModel.getApiData().getValue();
         viewModel.getApiData().observe(getViewLifecycleOwner(), apiDataModel -> {
             pgsBar.setVisibility(View.GONE);
             tax.setText(String.valueOf(apiDataModel.getAnnualTax()));

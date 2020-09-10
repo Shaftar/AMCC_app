@@ -55,5 +55,13 @@ dependencies {
 
     //Validation
     implementation 'com.basgeekball:awesome-validation:4.2'
+    //android ads
+    implementation 'com.google.android.gms:play-services-ads:19.3.0'
+
+
+    //App ID: ca-app-pub-4242963717208905~4145654251
+    // banner ad : ca-app-pub-4242963717208905/1233368693
+   // native_ad: ca-app-pub-4242963717208905/4856100698
+    //interstitial_id: ca-app-pub-4242963717208905/7770856884
 
 }

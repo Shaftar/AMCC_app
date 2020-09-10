@@ -15,9 +15,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,10 +29,11 @@ import androidx.navigation.Navigation;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.amcc.R;
 import com.example.amcc.model.CarDetails;
 import com.example.amcc.viewModel.SharedViewModel;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,12 +50,13 @@ public class MainFragment extends Fragment {
     RadioButton radioButton;
     GridLayout emissionGird;
     AutoCompleteTextView city;
-
+    TextView emissionKlasse;
     private DatePicker calendarView;
     AwesomeValidation validation;
     NavController navController;
 
     SharedViewModel viewModel;
+    public InterstitialAd mInterstitialAd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,8 +68,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
     }
 
     private TextWatcher showHideEmission = new TextWatcher() {
@@ -80,12 +80,27 @@ public class MainFragment extends Fragment {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             try {
                 SimpleDateFormat geFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-                Date d1 = geFormat.parse(regDateField.getText().toString());
-                Date fixDate = geFormat.parse("5.11.2008");
-                if (d1.compareTo(fixDate) < 0) {
-                    emissionGird.setVisibility(View.GONE);
+                Date regDateOfCar = geFormat.parse(regDateField.getText().toString());
+                Date oldRegulation = geFormat.parse("5.11.2008");
+                Date newRegulation = geFormat.parse("01.07.2009");
+
+                if (regDateOfCar.after(oldRegulation) && regDateOfCar.before(newRegulation)) {
+                    emissionGird.setVisibility(View.VISIBLE);
+                    emissionKlasse.setVisibility(View.VISIBLE);
                     return;
                 }
+
+                if (regDateOfCar.before(oldRegulation)) {
+                    emissionGird.setVisibility(View.GONE);
+                    emissionKlasse.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                if (regDateOfCar.before(newRegulation)) {
+                    emissionKlasse.setVisibility(View.VISIBLE);
+                    return;
+                }
+                emissionKlasse.setVisibility(View.GONE);
                 emissionGird.setVisibility(View.VISIBLE);
 
             } catch (ParseException e) {
@@ -101,9 +116,12 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-
         super.onViewCreated(view, savedInstanceState);
+
+        mInterstitialAd = new InterstitialAd(getActivity());
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_id));
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        emissionKlasse = view.findViewById(R.id.txtView_euro3);
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
         emissionGird = view.findViewById(R.id.emission_layout);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
@@ -122,7 +140,7 @@ public class MainFragment extends Fragment {
         navController = Navigation.findNavController(view);
         validation = new AwesomeValidation(ValidationStyle.BASIC);
         //Create City Name List
-        onClickCalenderImage(view);
+        onClickRegDate(view);
 
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
 
@@ -149,7 +167,7 @@ public class MainFragment extends Fragment {
                         Integer.parseInt(milePerYField.getText().toString()));
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("carInformation", car);
-
+                mInterstitialAd.show();
                 viewModel.setApiData(car);
                 navController.navigate(R.id.resultFragment, bundle);
             }
@@ -166,57 +184,60 @@ public class MainFragment extends Fragment {
 
     private boolean inputIsValid() {
         String errorMsg = "field should not be empty";
+
         validation.addValidation(regDateField, "(0?[1-9]|[1-2]\\d|30|31).(0?[1-9]|1[0-2]).(\\d{4})", "Empty or invalid");
-        validation.addValidation(emissionEdtField, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
-        validation.addValidation(engineSizeField, "[0-9]+", errorMsg);
-        validation.addValidation(milePerYField, RegexTemplate.NOT_EMPTY, errorMsg);
-        validation.addValidation(avgConField, RegexTemplate.NOT_EMPTY, errorMsg);
+        validation.addValidation(emissionEdtField, "([1-9]\\d\\d?)", getString(R.string.error_field_required));
+        validation.addValidation(engineSizeField, "([1-9]\\d{2}\\d?)", errorMsg);
+        validation.addValidation(milePerYField, "([1-9]\\d{2})", errorMsg);
+        validation.addValidation(avgConField, "(^[1-9]\\d?(\\.[0-9]\\d?)?$)", errorMsg);
         return validation.validate();
     }
 
-    private void onClickCalenderImage(View view) {
-        ImageView dateImageView = view.findViewById(R.id.calender_image);
-        dateImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Dialog dialog = new Dialog(getActivity());
-                dialog.setContentView(R.layout.calender_view);
-                calendarView = dialog.findViewById(R.id.calendarViewID);
-                Button okBtn = dialog.findViewById(R.id.okCalenderBtnID);
-                Button cancelBtn = dialog.findViewById(R.id.cancelCalenderBtnID);
-                cancelBtn.setOnClickListener(view1 -> dialog.dismiss());
+    private void onClickRegDate(View view) {
+        regDateField.setOnClickListener(v -> {
+            Dialog dialog = new Dialog(getActivity());
+            dialog.setContentView(R.layout.calender_view);
+            calendarView = dialog.findViewById(R.id.calendarViewID);
+            Button okBtn = dialog.findViewById(R.id.okCalenderBtnID);
+            Button cancelBtn = dialog.findViewById(R.id.cancelCalenderBtnID);
+            cancelBtn.setOnClickListener(view1 -> dialog.dismiss());
 
-                if (Build.VERSION.SDK_INT > 25) {
-                    calendarView.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
-                        @Override
-                        public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            int month = monthOfYear + 1;
-                            dateFormUser = dayOfMonth + "." + month + "." + year;
-                            okBtn.setOnClickListener(view12 -> {
-                                regDateField.setText(dateFormUser);
-                                dialog.dismiss();
-                            });
-                        }
-                    });
-                    dialog.show();
-                    dialog.setCancelable(true);
-                } else {
-                    final Calendar calendar = Calendar.getInstance();
-                    int year = calendar.get(Calendar.YEAR);
-                    int month = calendar.get(Calendar.MONTH);
-                    int day = calendar.get(Calendar.DAY_OF_MONTH);
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            int monthOf = month + 1;
-                            dateFormUser = dayOfMonth + "." + monthOf + "." + year;
+            if (Build.VERSION.SDK_INT > 25) {
+                calendarView.setMaxDate(System.currentTimeMillis());
+                calendarView.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+                    @Override
+                    public void onDateChanged(DatePicker view13, int year, int month, int dayOfMonth) {
+                        okBtn.setOnClickListener(view12 -> {
+                            formatDate(year, month, dayOfMonth);
                             regDateField.setText(dateFormUser);
-                        }
-                    }, day, month, year);
-                    datePickerDialog.show();
-                }
+                            dialog.dismiss();
+                        });
+                    }
+                });
+                dialog.show();
+                dialog.setCancelable(true);
+            } else {
+                Calendar calendarOld = Calendar.getInstance();
+                int year = calendarOld.get(Calendar.YEAR);
+                int month = calendarOld.get(Calendar.MONTH);
+                int day = calendarOld.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view13, int year, int month, int dayOfMonth) {
+                        formatDate(year, month, dayOfMonth);
+                        regDateField.setText(dateFormUser);
+                    }
+                }, year, month, day);
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                datePickerDialog.show();
             }
         });
     }
 
+    private void formatDate(int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, dayOfMonth);
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+        dateFormUser = format.format(calendar.getTime());
+    }
 }

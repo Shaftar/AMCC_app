@@ -22,7 +22,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -41,7 +40,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class MainFragment extends Fragment {
@@ -127,15 +125,12 @@ public class MainFragment extends Fragment {
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
         emissionGird = view.findViewById(R.id.emission_layout);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        viewModel.getCities().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
-            @Override
-            public void onChanged(List<String> cities) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                        android.R.layout.simple_dropdown_item_1line, cities);
-                city = view.findViewById(R.id.city_list);
-                city.setAdapter(adapter);
+        viewModel.getCities().observe(getViewLifecycleOwner(), cities -> {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_dropdown_item_1line, cities);
+            city = view.findViewById(R.id.city_list);
+            city.setAdapter(adapter);
 
-            }
         });
         regDateField.addTextChangedListener(showHideEmission);
 
@@ -187,6 +182,7 @@ public class MainFragment extends Fragment {
     private boolean inputIsValid() {
         String errorMsg = "field should not be empty";
 
+        validation.addValidation(city, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
         validation.addValidation(regDateField, "(0?[1-9]|[1-2]\\d|30|31).(0?[1-9]|1[0-2]).(\\d{4})", "Empty or invalid");
         validation.addValidation(emissionEdtField, "([1-9]\\d\\d?)", getString(R.string.error_field_required));
         validation.addValidation(engineSizeField, "([1-9]\\d{2}\\d?)", errorMsg);
@@ -203,6 +199,7 @@ public class MainFragment extends Fragment {
             Button okBtn = dialog.findViewById(R.id.okCalenderBtnID);
             Button cancelBtn = dialog.findViewById(R.id.cancelCalenderBtnID);
             cancelBtn.setOnClickListener(view1 -> dialog.dismiss());
+
             String dateFromInput = regDateField.getText().toString();
 
             // should open on from text edit if not empty
@@ -220,7 +217,6 @@ public class MainFragment extends Fragment {
                     dialog.dismiss();
                 });
 
-
                 //If Reg date was not empty then the date picker will start from the entered date
                 if (!dateFromInput.isEmpty()) {
                     int[] date = dateArray(dateFromInput);
@@ -231,7 +227,9 @@ public class MainFragment extends Fragment {
                 calendarView.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view13, int year, int month, int dayOfMonth) {
+
                         okBtn.setOnClickListener(view14 -> {
+
                             formatDate(year, month, dayOfMonth);
                             regDateField.setText(dateFormUser);
                             dialog.dismiss();
@@ -245,12 +243,14 @@ public class MainFragment extends Fragment {
                 int year = calendarOld.get(Calendar.YEAR);
                 int month = calendarOld.get(Calendar.MONTH);
                 int day = calendarOld.get(Calendar.DAY_OF_MONTH);
+
                 if (!dateFromInput.isEmpty()) {
                     int[] date = dateArray(dateFromInput);
                     year = date[0];
                     month = date[1];
                     day = date[2];
                 }
+
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -280,4 +280,5 @@ public class MainFragment extends Fragment {
 
         return new int[]{year, month - 1, day};
     }
+
 }

@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -29,7 +28,6 @@ import androidx.navigation.Navigation;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.amcc.R;
 import com.example.amcc.model.CarDetails;
 import com.example.amcc.viewModel.SharedViewModel;
@@ -137,7 +135,7 @@ public class MainFragment extends Fragment {
         navController = Navigation.findNavController(view);
         validation = new AwesomeValidation(ValidationStyle.BASIC);
         //Create City Name List
-        onClickCalenderImage(view);
+        onClickRegDate(view);
 
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
 
@@ -183,16 +181,15 @@ public class MainFragment extends Fragment {
         String errorMsg = "field should not be empty";
         validation.addValidation(city, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
         validation.addValidation(regDateField, "(0?[1-9]|[1-2]\\d|30|31).(0?[1-9]|1[0-2]).(\\d{4})", "Empty or invalid");
-        validation.addValidation(emissionEdtField, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
-        validation.addValidation(engineSizeField, "[0-9]+", errorMsg);
-        validation.addValidation(milePerYField, RegexTemplate.NOT_EMPTY, errorMsg);
-        validation.addValidation(avgConField, RegexTemplate.NOT_EMPTY, errorMsg);
+        validation.addValidation(emissionEdtField, "([1-9]\\d\\d?)", getString(R.string.error_field_required));
+        validation.addValidation(engineSizeField, "([1-9]\\d{2}\\d?)", errorMsg);
+        validation.addValidation(milePerYField, "([1-9]\\d{2})", errorMsg);
+        validation.addValidation(avgConField, "(^[1-9]\\d?(\\.[0-9]\\d?)?$)", errorMsg);
         return validation.validate();
     }
 
-    private void onClickCalenderImage(View view) {
-        ImageView dateImageView = view.findViewById(R.id.calender_image);
-        dateImageView.setOnClickListener(v -> {
+    private void onClickRegDate(View view) {
+        regDateField.setOnClickListener(v -> {
             Dialog dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.calender_view);
             calendarView = dialog.findViewById(R.id.calendarViewID);
@@ -202,14 +199,16 @@ public class MainFragment extends Fragment {
 
             if (Build.VERSION.SDK_INT > 25) {
                 calendarView.setMaxDate(System.currentTimeMillis());
-                calendarView.setOnDateChangedListener((view13, year, monthOfYear, dayOfMonth) -> okBtn.setOnClickListener(view12 -> {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(year, monthOfYear, dayOfMonth);
-                    SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
-                    dateFormUser = format.format(calendar.getTime());
-                    regDateField.setText(dateFormUser);
-                    dialog.dismiss();
-                }));
+                calendarView.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+                    @Override
+                    public void onDateChanged(DatePicker view13, int year, int month, int dayOfMonth) {
+                        okBtn.setOnClickListener(view12 -> {
+                            formatDate(year, month, dayOfMonth);
+                            regDateField.setText(dateFormUser);
+                            dialog.dismiss();
+                        });
+                    }
+                });
                 dialog.show();
                 dialog.setCancelable(true);
             } else {
@@ -217,16 +216,23 @@ public class MainFragment extends Fragment {
                 int year = calendarOld.get(Calendar.YEAR);
                 int month = calendarOld.get(Calendar.MONTH);
                 int day = calendarOld.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view13, year1, month1, dayOfMonth) -> {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(year1, month1, dayOfMonth);
-                    SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
-                    dateFormUser = format.format(calendar.getTime());
-                    regDateField.setText(dateFormUser);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view13, int year, int month, int dayOfMonth) {
+                        formatDate(year, month, dayOfMonth);
+                        regDateField.setText(dateFormUser);
+                    }
                 }, year, month, day);
                 datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
         });
+    }
+
+    private void formatDate(int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, dayOfMonth);
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+        dateFormUser = format.format(calendar.getTime());
     }
 }

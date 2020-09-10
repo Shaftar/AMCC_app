@@ -19,7 +19,8 @@
 
         <activity
             android:name=".view.HomeActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,14 +30,18 @@
         <activity
             android:name=".view.SettingsActivity"
             android:label="Settings"
-            android:parentActivityName=".view.HomeActivity">
+            android:parentActivityName=".view.HomeActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.HomeActivity" />
         </activity>
         <activity
             android:name=".view.MainActivity"
-            android:label="MainFunction"></activity>
+            android:label="MainFunction"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

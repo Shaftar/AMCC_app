@@ -22,7 +22,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -39,7 +38,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class MainFragment extends Fragment {
@@ -125,15 +123,12 @@ public class MainFragment extends Fragment {
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
         emissionGird = view.findViewById(R.id.emission_layout);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        viewModel.getCities().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
-            @Override
-            public void onChanged(List<String> cities) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                        android.R.layout.simple_dropdown_item_1line, cities);
-                city = view.findViewById(R.id.city_list);
-                city.setAdapter(adapter);
+        viewModel.getCities().observe(getViewLifecycleOwner(), cities -> {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_dropdown_item_1line, cities);
+            city = view.findViewById(R.id.city_list);
+            city.setAdapter(adapter);
 
-            }
         });
         regDateField.addTextChangedListener(showHideEmission);
 
@@ -184,7 +179,7 @@ public class MainFragment extends Fragment {
 
     private boolean inputIsValid() {
         String errorMsg = "field should not be empty";
-
+        validation.addValidation(city, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
         validation.addValidation(regDateField, "(0?[1-9]|[1-2]\\d|30|31).(0?[1-9]|1[0-2]).(\\d{4})", "Empty or invalid");
         validation.addValidation(emissionEdtField, "([1-9]\\d\\d?)", getString(R.string.error_field_required));
         validation.addValidation(engineSizeField, "([1-9]\\d{2}\\d?)", errorMsg);

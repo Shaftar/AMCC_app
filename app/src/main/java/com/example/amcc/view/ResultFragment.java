@@ -69,7 +69,9 @@ public class ResultFragment extends Fragment {
         fuelPrice = view.findViewById(R.id.resultFuelPriceValueID);
         setValues(car);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
         fetchApiData();
+
     }
 
     @Override

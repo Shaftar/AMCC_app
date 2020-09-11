@@ -18,8 +18,10 @@ import retrofit2.Response;
 
 public class SharedViewModel extends ViewModel {
     private static final String TAG = "ShardViewModel";
+
     MutableLiveData<Boolean> taxError = new MutableLiveData<>();
     MutableLiveData<Boolean> cityError = new MutableLiveData<>();
+
     MutableLiveData<List<String>> mCities = new MutableLiveData<>();
     SingleLiveEvent<ApiDataModel> mApiData = new SingleLiveEvent<>();
 

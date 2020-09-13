@@ -1,15 +1,19 @@
 
-* Handel Erro messages (wrong plz)
+* Handel Erro messages (wrong plz) >>>>>>>>>>>>>>> implement 
 
 ___________________________________
     
 
-* progress bar appears only one time  (Bug)              ---------> working on Jaber
+* progress bar appears only one time  (Bug)              ---------> working on Jaber 50/50
 * some city the fuel price is null    (bug)
 
 * Retry (Button in result fragment) implemention*     >>>>>>>>>>>>>>>> Done
-* Edit (Button in result fragment) implemention      >>>>>>>>>>>>>>> Done
+
 * Erorr report to user                                >>>>>>>>>>>>> Done
+
+* Check internet connection with alert Dialog ____ Mohammad
+
+
 
 
 
@@ -20,10 +24,13 @@ ___________________________________
 15- Design the first home activity (Design)
 
 
+
 14- app depolyment to google play
 
 NICE TO HAVE:
 
+
 1 VPN 
 2- Update Project remotly from an repositoy / manually using bash 
 3- user input in a spearate layout, which could be called from fragment und main 
+4- Style for texts 

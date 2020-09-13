@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:padding="8dp"
-                    android:text="g/km" />
+                    android:text="@string/g_km" />
 
 
             </GridLayout>
@@ -152,7 +152,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="cm³" />
+                    android:text="@string/cm3" />
             </LinearLayout>
 
             <TextView

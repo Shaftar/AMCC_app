@@ -64,4 +64,7 @@ dependencies {
    // native_ad: ca-app-pub-4242963717208905/4856100698
     //interstitial_id: ca-app-pub-4242963717208905/7770856884
 
+    implementation 'com.rugovit.eventlivedata:eventlivedata:1.0'
+
+
 }

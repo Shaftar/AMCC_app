@@ -46,5 +46,7 @@
 
     <string name="try_later_msg">Sorry something went wrong! Please try again later.</string>
     <string name="_01_01_2020">01.01.2020</string>
+    <string name="cm3">cm³</string>
+    <string name="g_km">g/km</string>
 
 </resources>

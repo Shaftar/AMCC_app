@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -159,18 +158,19 @@ public class MainFragment extends Fragment {
             emissionEdtField = view.findViewById(R.id.edtNumEmissionID);
 
 
-            if (emissionGird.getVisibility() == View.GONE) {
-                emissionEdtField.setText("0");
-            }
+
 
             if (inputIsValid()) {
                 CarDetails car = new CarDetails(city.getText().toString(),
                         Integer.parseInt(engineSizeField.getText().toString()),
-                        Integer.parseInt(emissionEdtField.getText().toString()),
                         fuelType,
                         regDateField.getText().toString(),
                         Double.parseDouble(avgConField.getText().toString()),
                         Integer.parseInt(milePerYField.getText().toString()));
+
+                if (emissionGird.getVisibility() == View.VISIBLE) {
+                    car.setEmission(Integer.parseInt(emissionEdtField.getText().toString()));
+                }
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("carInformation", car);
                 mInterstitialAd.show();
@@ -193,14 +193,15 @@ public class MainFragment extends Fragment {
 
         validation.addValidation(city, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
         validation.addValidation(regDateField, RegexTemplate.NOT_EMPTY, errorMsg);
-        validation.addValidation(emissionEdtField, "([1-9]\\d\\d?)|0", getString(R.string.error_field_required));
+        if (emissionGird.getVisibility() == View.VISIBLE)
+            validation.addValidation(emissionEdtField, "([1-9]\\d\\d?)", getString(R.string.error_field_required));
         validation.addValidation(engineSizeField, "([1-9]\\d{2}\\d?)", errorMsg);
 
         validation.addValidation(milePerYField, "([1-9]\\d?\\d?)", errorMsg);
 
         validation.addValidation(avgConField, "(^[1-9]\\d?(\\.[0-9]\\d?)?$)", errorMsg);
         View error = city;
-        if(!cityFromApi.contains(city.getText().toString())) {
+        if (!cityFromApi.contains(city.getText().toString())) {
 
             error.requestFocus();
             city.setError("city not found!");

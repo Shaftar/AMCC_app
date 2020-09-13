@@ -1,15 +1,7 @@
 
-* date validation doesnt go away after entering a right formated date (Bug)
-* Handel Erro messages (wrong plz/ wrong city name / space after city name......)
-* Add city validation if empty (bug)   ........... working on Shaftar
-___________________________________
+* Handel Erro messages (wrong plz)
 
-* When click on calender icon: 
-      if no date select -> date of today
-       else show selected date from EditText
-       
-* Select date without change (onOKclick)                    ---------> working on Jaber
-_________   
+___________________________________
     
 
 * progress bar appears only one time  (Bug)              ---------> working on Jaber
@@ -24,7 +16,6 @@ _________
 12- Create Grid for emissionklasse( will be shown before 11.2009) >>>>>>>>>>>>>>>>>>>>> Done
    * grid and label are missing (Design)
 
-13- preventing screen from turning off when app is opend  >>>>>>>>>>>>>> Done
 
 15- Design the first home activity (Design)
 

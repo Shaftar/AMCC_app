@@ -195,7 +195,9 @@ public class MainFragment extends Fragment {
         validation.addValidation(regDateField, RegexTemplate.NOT_EMPTY, errorMsg);
         validation.addValidation(emissionEdtField, "([1-9]\\d\\d?)|0", getString(R.string.error_field_required));
         validation.addValidation(engineSizeField, "([1-9]\\d{2}\\d?)", errorMsg);
+
         validation.addValidation(milePerYField, "([1-9]\\d?\\d?)", errorMsg);
+
         validation.addValidation(avgConField, "(^[1-9]\\d?(\\.[0-9]\\d?)?$)", errorMsg);
         View error = city;
         if(!cityFromApi.contains(city.getText().toString())) {

@@ -1,30 +1,32 @@
 
+API:
+____
 * Handel Erro messages (wrong plz) >>>>>>>>>>>>>>> implement 
-
-___________________________________
-    
-
-* progress bar appears only one time  (Bug)              ---------> working on Jaber 50/50
 * some city the fuel price is null    (bug)
+___________________________________________________________
 
+
+APP:
+____
+* progress bar appears only one time  (Bug)              ---------> working on Jaber 50/50
 
 * Check internet connection with alert Dialog ____ Mohammad
 
 
-
-
-
-12- Create Grid for emissionklasse( will be shown before 11.2009) >>>>>>>>>>>>>>>>>>>>> Done
+-- Create Grid for emissionklasse( will be shown before 11.2009) >>>>>>>>>>>>>>>>>>>>> Done
    * grid and label are missing (Design)
+   
+* some style for resaut fragmet
 
+* Design the first home activity (Design)
 
-15- Design the first home activity (Design)
+* was this helpful??- > is not clickable (bug)
+* app depolyment to google play
+____________________________________________________________
 
-
-
-14- app depolyment to google play
 
 NICE TO HAVE:
+_____________
 
 
 1 VPN 

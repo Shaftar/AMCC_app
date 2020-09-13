@@ -32,14 +32,15 @@ public class SharedViewModel extends ViewModel {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
-                    Log.d("country", response.body().toString());
                     mCities.setValue(response.body());
-                    taxError.setValue(false);
+                    cityError.setValue(false);
                 }
             }
+
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
-                taxError.setValue(true);
+                Log.d(TAG, "onFailure: " + t.getMessage());
+                cityError.setValue(true);
             }
         });
 
@@ -57,16 +58,15 @@ public class SharedViewModel extends ViewModel {
             @Override
             public void onResponse(Call<ApiDataModel> call, Response<ApiDataModel> response) {
                 if (response.code() == 200) {
-                    Log.d(TAG, "setApiData: received response" + response.body().toString());
                     mApiData.setValue(response.body());
-                    cityError.setValue(false);
+                    taxError.setValue(false);
                 }
             }
 
             @Override
             public void onFailure(Call<ApiDataModel> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
-                cityError.setValue(true);
+                taxError.setValue(true);
             }
         });
     }

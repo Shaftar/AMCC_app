@@ -47,7 +47,11 @@ public class ResultFragment extends Fragment {
         findViews(view);
 
         pgsBar.setVisibility(View.VISIBLE);
-        retryBtn.setOnClickListener(view1 -> fetchApiData());
+        retryBtn.setOnClickListener(view1 -> {
+            pgsBar.setVisibility(View.VISIBLE);
+            viewModel.setApiData(car);
+            retryBtn.setVisibility(View.GONE);
+        });
         retryBtn.setVisibility(View.GONE);
 
         Button editBtn = view.findViewById(R.id.edit_btn_id);
@@ -114,10 +118,10 @@ public class ResultFragment extends Fragment {
         viewModel.getTaxError().observe(getViewLifecycleOwner(), error -> {
             if (error) {
                 retryBtn.setVisibility(View.VISIBLE);
+                pgsBar.setVisibility(View.GONE);
                 rateAppDialog.setText(R.string.try_later_msg);
                 rateAppDialog.setTextColor(Color.RED);
             }
-
         });
     }
 }

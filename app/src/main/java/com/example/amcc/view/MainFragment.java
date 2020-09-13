@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import androidx.navigation.Navigation;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.amcc.R;
 import com.example.amcc.model.CarDetails;
 import com.example.amcc.viewModel.SharedViewModel;
@@ -38,8 +40,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MainFragment extends Fragment {
@@ -58,6 +62,7 @@ public class MainFragment extends Fragment {
     SharedViewModel viewModel;
     public InterstitialAd mInterstitialAd;
 
+    List<String> cityFromApi = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,6 +83,11 @@ public class MainFragment extends Fragment {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
             try {
                 SimpleDateFormat geFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
                 Date regDateOfCar = geFormat.parse(regDateField.getText().toString());
@@ -103,14 +113,10 @@ public class MainFragment extends Fragment {
                 emissionKlasse.setVisibility(View.GONE);
                 emissionGird.setVisibility(View.VISIBLE);
 
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-
         }
     };
 
@@ -118,15 +124,17 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mInterstitialAd = new InterstitialAd(getActivity());
+        mInterstitialAd = new InterstitialAd(requireActivity());
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_id));
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
         emissionKlasse = view.findViewById(R.id.txtView_euro3);
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
         emissionGird = view.findViewById(R.id.emission_layout);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
         viewModel.getCities().observe(getViewLifecycleOwner(), cities -> {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+            cityFromApi.addAll(cities);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(),
                     android.R.layout.simple_dropdown_item_1line, cities);
             city = view.findViewById(R.id.city_list);
             city.setAdapter(adapter);
@@ -143,6 +151,7 @@ public class MainFragment extends Fragment {
 
             String fuelType = getFuelType(view);
 
+            city = view.findViewById(R.id.city_list);
             engineSizeField = view.findViewById(R.id.edtNumEngSizeID);
             avgConField = view.findViewById(R.id.edtNumConsumeID);
             milePerYField = view.findViewById(R.id.edtNumMileAgeYearID);
@@ -183,17 +192,29 @@ public class MainFragment extends Fragment {
         String errorMsg = "field should not be empty";
 
         validation.addValidation(city, RegexTemplate.NOT_EMPTY, getString(R.string.error_field_required));
-        validation.addValidation(regDateField, "(0?[1-9]|[1-2]\\d|30|31).(0?[1-9]|1[0-2]).(\\d{4})", "Empty or invalid");
-        validation.addValidation(emissionEdtField, "([1-9]\\d\\d?)", getString(R.string.error_field_required));
+        validation.addValidation(regDateField, RegexTemplate.NOT_EMPTY, errorMsg);
+        validation.addValidation(emissionEdtField, "([1-9]\\d\\d?)|0", getString(R.string.error_field_required));
         validation.addValidation(engineSizeField, "([1-9]\\d{2}\\d?)", errorMsg);
-        validation.addValidation(milePerYField, "([1-9]\\d?\\d?})", errorMsg);
+
+        validation.addValidation(milePerYField, "([1-9]\\d?\\d?)", errorMsg);
+
         validation.addValidation(avgConField, "(^[1-9]\\d?(\\.[0-9]\\d?)?$)", errorMsg);
+        View error = city;
+        if(!cityFromApi.contains(city.getText().toString())) {
+
+            error.requestFocus();
+            city.setError("city not found!");
+            validation.validate();
+            return false;
+        }
+        error.clearFocus();
+        city.setError(null);
         return validation.validate();
     }
 
     private void onClickRegDate(View view) {
         regDateField.setOnClickListener(v -> {
-            Dialog dialog = new Dialog(getActivity());
+            Dialog dialog = new Dialog(requireActivity());
             dialog.setContentView(R.layout.calender_view);
             calendarView = dialog.findViewById(R.id.calendarViewID);
             Button okBtn = dialog.findViewById(R.id.okCalenderBtnID);
@@ -214,6 +235,7 @@ public class MainFragment extends Fragment {
                         String date = now.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
                         regDateField.setText(date);
                     }
+                    regDateField.setError(null);
                     dialog.dismiss();
                 });
 
@@ -224,18 +246,12 @@ public class MainFragment extends Fragment {
                 }
 
                 calendarView.setMaxDate(System.currentTimeMillis());
-                calendarView.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
-                    @Override
-                    public void onDateChanged(DatePicker view13, int year, int month, int dayOfMonth) {
+                calendarView.setOnDateChangedListener((view13, year, month, dayOfMonth) -> okBtn.setOnClickListener(view14 -> {
 
-                        okBtn.setOnClickListener(view14 -> {
-
-                            formatDate(year, month, dayOfMonth);
-                            regDateField.setText(dateFormUser);
-                            dialog.dismiss();
-                        });
-                    }
-                });
+                    formatDate(year, month, dayOfMonth);
+                    regDateField.setText(dateFormUser);
+                    dialog.dismiss();
+                }));
                 dialog.show();
                 dialog.setCancelable(true);
             } else {
@@ -251,13 +267,10 @@ public class MainFragment extends Fragment {
                     day = date[2];
                 }
 
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view13, int year, int month, int dayOfMonth) {
-                        formatDate(year, month, dayOfMonth);
-                        regDateField.setText(dateFormUser);
-                    }
+                DatePickerDialog datePickerDialog = new DatePickerDialog(requireActivity(), (view13, year1, month1, dayOfMonth) -> {
+                    formatDate(year1, month1, dayOfMonth);
+                    regDateField.setText(dateFormUser);
+                    regDateField.setError(null);
                 }, year, month, day);
                 datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();

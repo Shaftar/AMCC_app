@@ -27,8 +27,8 @@ public class ResultFragment extends Fragment {
     TextView tax, fuelCosts, fuelPrice, regDate, fuelType, avgConsume, yearlyKilometer, city, emission, engineSize, rateAppDialog;
     private ProgressBar pgsBar;
     CarDetails car;
-    NavController navController;
-    private Button retryBtn, editBtn;
+
+    private Button retryBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +43,24 @@ public class ResultFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null)
             car = bundle.getParcelable("carInformation");
+
+        findViews(view);
+
+        pgsBar.setVisibility(View.VISIBLE);
+        retryBtn.setOnClickListener(view1 -> fetchApiData());
+        retryBtn.setVisibility(View.GONE);
+
+        Button editBtn = view.findViewById(R.id.edit_btn_id);
+        editBtn.setOnClickListener(view12 -> requireActivity().onBackPressed());
+
+        setValues(car);
+        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+        fetchApiData();
+
+    }
+
+    private void findViews(@NonNull View view) {
         regDate = view.findViewById(R.id.resultRegDateValueID);
         fuelType = view.findViewById(R.id.resultFuelTypeValueID);
         avgConsume = view.findViewById(R.id.resultAvgConValueID);
@@ -51,27 +69,11 @@ public class ResultFragment extends Fragment {
         city = view.findViewById(R.id.resultCityValueID);
         engineSize = view.findViewById(R.id.resultEngSizeValueID);
         rateAppDialog = view.findViewById(R.id.rate_app_dialog_id);
-        navController = Navigation.findNavController(view);
-        pgsBar = view.findViewById(R.id.progressBarResultInfoID);
-        pgsBar.setVisibility(View.VISIBLE);
-        retryBtn = view.findViewById(R.id.retry_btn_id);
-        retryBtn.setOnClickListener(view1 -> fetchApiData());
-        retryBtn.setVisibility(View.GONE);
-        editBtn = view.findViewById(R.id.edit_btn_id);
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.mainFragment);
-            }
-        });
         tax = view.findViewById(R.id.resultAnnualValueID);
         fuelCosts = view.findViewById(R.id.resultFuelCostValueID);
         fuelPrice = view.findViewById(R.id.resultFuelPriceValueID);
-        setValues(car);
-        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-
-        fetchApiData();
-
+        pgsBar = view.findViewById(R.id.progressBarResultInfoID);
+        retryBtn = view.findViewById(R.id.retry_btn_id);
     }
 
     @Override
@@ -85,6 +87,10 @@ public class ResultFragment extends Fragment {
         fuelType.setText(String.valueOf(car.getFuelType()));
         avgConsume.setText(String.valueOf(car.getAvgConsume()));
         yearlyKilometer.setText(String.valueOf(car.getYearlyMileage()));
+        if(car.getEmission()==0){
+            getView().findViewById(R.id.emission_label).setVisibility(View.GONE);
+            emission.setVisibility(View.GONE);
+        }
         emission.setText(String.valueOf(car.getEmission()));
         city.setText(car.getCity());
         engineSize.setText(String.valueOf(car.getEngineSize()));

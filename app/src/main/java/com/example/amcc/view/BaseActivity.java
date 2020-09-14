@@ -106,7 +106,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public AlertDialog connectInternetDialog() {
-        String msg = "Please connect your phone to the internet" + '\n' +
+        String msg = "Please check your internet connection" + '\n' +
                 "Would you like to turn it on now?";
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle("Internet Connection");

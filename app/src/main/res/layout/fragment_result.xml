@@ -12,17 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/pullToRefreshResultID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp">
-
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
-            android:layout_marginBottom="15dp"
+            android:layout_height="match_parent"
             android:padding="15dp">
 
             <LinearLayout
@@ -117,18 +109,18 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/resultUniversalTxtView"
+                    android:id="@+id/rate_app_dialog_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="10dp"
                     android:drawable="@android:drawable/dialog_holo_light_frame"
                     android:padding="10dp"
-                    android:text="@string/help_ques"
+                    android:text="@string/dialog_rate_app"
                     android:textSize="18sp" />
 
                 <Button
-                    android:id="@+id/retryBtnID"
+                    android:id="@+id/retry_btn_id"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -294,10 +286,10 @@
                     android:background="?android:attr/listDivider" />
 
                 <Button
-                    android:id="@+id/btnResultNewID"
+                    android:id="@+id/edit_btn_id"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:padding="10dp"
@@ -305,5 +297,4 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </ScrollView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

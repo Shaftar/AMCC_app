@@ -18,6 +18,10 @@ import retrofit2.Response;
 
 public class SharedViewModel extends ViewModel {
     private static final String TAG = "ShardViewModel";
+
+    MutableLiveData<Boolean> taxError = new MutableLiveData<>();
+    MutableLiveData<Boolean> cityError = new MutableLiveData<>();
+
     MutableLiveData<List<String>> mCities = new MutableLiveData<>();
     SingleLiveEvent<ApiDataModel> mApiData = new SingleLiveEvent<>();
 
@@ -28,14 +32,15 @@ public class SharedViewModel extends ViewModel {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
-                    Log.d("country", response.body().toString());
                     mCities.setValue(response.body());
+                    cityError.setValue(false);
                 }
             }
 
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
-
+                Log.d(TAG, "onFailure: " + t.getMessage());
+                cityError.setValue(true);
             }
         });
 
@@ -53,16 +58,24 @@ public class SharedViewModel extends ViewModel {
             @Override
             public void onResponse(Call<ApiDataModel> call, Response<ApiDataModel> response) {
                 if (response.code() == 200) {
-                    Log.d(TAG, "setApiData: received response" + response.body().toString());
                     mApiData.setValue(response.body());
+                    taxError.setValue(false);
                 }
             }
 
             @Override
             public void onFailure(Call<ApiDataModel> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage());
+                taxError.setValue(true);
             }
         });
     }
 
+    public MutableLiveData<Boolean> getTaxError() {
+        return taxError;
+    }
+
+    public MutableLiveData<Boolean> getCityError() {
+        return cityError;
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.amcc.view;
 
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import com.example.amcc.R;
 import com.google.android.gms.ads.AdRequest;
@@ -12,7 +13,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         AdView adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);

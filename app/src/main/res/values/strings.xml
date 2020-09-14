@@ -30,10 +30,10 @@
     <string name="fuel_type">Fuel Type</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
-    <string name="euro4_higher">For Cars with Euro 3 or higher</string>
+    <string name="euro4_higher">Emission class: Euro 3 or higher</string>
     <string name="new_request">Edit</string>
     <string name="car_specification">Car Specification</string>
-    <string name="help_ques">Was this helpful?</string>
+    <string name="dialog_rate_app">Was this helpful?</string>
     <string name="fuel_cost_annual">Annual Fuel Cost:</string>
     <string name="fuel_price_label">Fuel Price:</string>
     <string name="annual_tax_result">Annual Tax:</string>
@@ -43,6 +43,10 @@
     <string name="banner_id_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="interstitial_id">ca-app-pub-4242963717208905/7770856884</string>
     <string name="admob_app_id">ca-app-pub-4242963717208905~4145654251</string>
+
+    <string name="try_later_msg">Sorry something went wrong! Please try again later.</string>
     <string name="_01_01_2020">01.01.2020</string>
+    <string name="cm3">cm³</string>
+    <string name="g_km">g/km</string>
 
 </resources>

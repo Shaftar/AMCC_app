@@ -44,7 +44,6 @@ public class SharedViewModel extends ViewModel {
             }
         });
 
-
         return mCities;
     }
 

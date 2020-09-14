@@ -54,5 +54,10 @@ public class HomeActivity extends BaseActivity {
         super.onStart();
         // Set List Adapter
         setListHomeAdapter();
+        if (!isOnline()) {
+            connectInternetDialog();
+        } else {
+            connectInternetDialog().dismiss();
+        }
     }
 }

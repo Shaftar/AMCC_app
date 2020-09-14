@@ -1,7 +1,6 @@
 
 API:
 ____
-* Handel Erro messages (wrong plz) >>>>>>>>>>>>>>> implement (Done)
 * some city the fuel price is null    (bug)
 ___________________________________________________________
 
@@ -12,12 +11,11 @@ ____
 
 * Check internet connection with alert Dialog ____ Mohammad
 
-
-
-*Create grid and label for emission class are missing (Design)
    
 * some style for result fragmet
+
 * switch button for monthly/yearly costs
+
 * Add total costs (tax + fuel)
 
 * Design the first home activity (Design)

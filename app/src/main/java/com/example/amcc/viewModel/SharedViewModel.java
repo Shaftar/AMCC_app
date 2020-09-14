@@ -46,6 +46,7 @@ public class SharedViewModel extends ViewModel {
         });
 
 
+
         client.getPostCodes().enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
@@ -58,6 +59,7 @@ public class SharedViewModel extends ViewModel {
             public void onFailure(Call<List<String>> call, Throwable t) {
             }
         });
+
 
         return mCities;
     }

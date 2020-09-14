@@ -294,5 +294,4 @@ public class MainFragment extends Fragment {
 
         return new int[]{year, month - 1, day};
     }
-
 }

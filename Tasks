@@ -31,7 +31,7 @@ NICE TO HAVE:
 _____________
 
 
-1 VPN 
+1- VPN 
 2- Update Project remotly from an repositoy / manually using bash 
-3- user input in a spearate layout, which could be called from fragment und main 
-4- Style for texts 
+3- User input in a spearate layout, which could be called from main and result fragment 
+4- Create Style for texts 

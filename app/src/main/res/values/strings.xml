@@ -30,7 +30,7 @@
     <string name="fuel_type">Fuel Type</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
-    <string name="euro3_higher">Euro 3 or higher</string>
+    <string name="euro3_higher">Only for Euro 3 and higher</string>
     <string name="new_request">Edit</string>
     <string name="car_specification">Car Specification</string>
     <string name="dialog_rate_app">Was this helpful?</string>

@@ -21,6 +21,7 @@
 
         <activity
             android:name=".view.HomeActivity"
+            android:label="MainFunction"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -37,12 +38,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".view.MainActivity"
-            android:label="MainFunction"
-            android:screenOrientation="portrait">
-
         </activity>
     </application>
 

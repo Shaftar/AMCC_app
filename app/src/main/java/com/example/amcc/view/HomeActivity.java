@@ -20,5 +20,4 @@ public class HomeActivity extends BaseActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
-
 }

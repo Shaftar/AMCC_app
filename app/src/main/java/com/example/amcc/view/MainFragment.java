@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,9 +50,8 @@ public class MainFragment extends Fragment {
     String dateFormUser;
     RadioGroup radioGroup;
     RadioButton radioButton;
-    GridLayout emissionGird;
+    GridLayout emissionGird, emissionKlasse;
     AutoCompleteTextView city;
-    TextView emissionKlasse;
     private DatePicker calendarView;
     AwesomeValidation validation;
     NavController navController;
@@ -62,6 +60,7 @@ public class MainFragment extends Fragment {
     public InterstitialAd mInterstitialAd;
 
     List<String> cityFromApi = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -126,7 +125,7 @@ public class MainFragment extends Fragment {
         mInterstitialAd = new InterstitialAd(requireActivity());
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_id));
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        emissionKlasse = view.findViewById(R.id.txtView_euro3);
+        emissionKlasse = view.findViewById(R.id.emission_class_layout);
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
         emissionGird = view.findViewById(R.id.emission_layout);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
@@ -294,5 +293,4 @@ public class MainFragment extends Fragment {
 
         return new int[]{year, month - 1, day};
     }
-
 }

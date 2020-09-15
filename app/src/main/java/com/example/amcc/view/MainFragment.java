@@ -73,50 +73,6 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    private TextWatcher showHideEmission = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            try {
-                SimpleDateFormat geFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-                Date regDateOfCar = geFormat.parse(regDateField.getText().toString());
-                Date oldRegulation = geFormat.parse("5.11.2008");
-                Date newRegulation = geFormat.parse("01.07.2009");
-
-                if (regDateOfCar.after(oldRegulation) && regDateOfCar.before(newRegulation)) {
-                    emissionGird.setVisibility(View.VISIBLE);
-                    emissionKlasse.setVisibility(View.VISIBLE);
-                    return;
-                }
-
-                if (regDateOfCar.before(oldRegulation)) {
-                    emissionGird.setVisibility(View.GONE);
-                    emissionKlasse.setVisibility(View.VISIBLE);
-                    return;
-                }
-
-                if (regDateOfCar.before(newRegulation)) {
-                    emissionKlasse.setVisibility(View.VISIBLE);
-                    return;
-                }
-                emissionKlasse.setVisibility(View.GONE);
-                emissionGird.setVisibility(View.VISIBLE);
-
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-    };
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -187,6 +143,52 @@ public class MainFragment extends Fragment {
         return radioButton.getText().toString();
     }
 
+    private TextWatcher showHideEmission = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            try {
+                SimpleDateFormat geFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+                Date regDateOfCar = geFormat.parse(regDateField.getText().toString());
+                Date oldRegulation = geFormat.parse("5.11.2008");
+                Date newRegulation = geFormat.parse("01.07.2009");
+
+                assert regDateOfCar != null;
+                if (regDateOfCar.after(oldRegulation) && regDateOfCar.before(newRegulation)) {
+                    emissionGird.setVisibility(View.VISIBLE);
+                    emissionKlasse.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                if (regDateOfCar.before(oldRegulation)) {
+                    emissionGird.setVisibility(View.GONE);
+                    emissionKlasse.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                if (regDateOfCar.before(newRegulation)) {
+                    emissionKlasse.setVisibility(View.VISIBLE);
+                    return;
+                }
+                emissionKlasse.setVisibility(View.GONE);
+                emissionGird.setVisibility(View.VISIBLE);
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
     private boolean inputIsValid() {
         String errorMsg = "field should not be empty";
 
@@ -200,10 +202,10 @@ public class MainFragment extends Fragment {
 
         validation.addValidation(avgConField, "(^[1-9]\\d?(\\.[0-9]\\d?)?$)", errorMsg);
         View error = city;
-        if (!cityFromApi.contains(city.getText().toString())) {
-
+        String location = city.getText().toString();
+        if (!cityFromApi.contains(location) && !viewModel.mPostCodes.contains(location)) {
             error.requestFocus();
-            city.setError("city not found!");
+            city.setError("city/postcode not found!");
             validation.validate();
             return false;
         }
@@ -211,6 +213,7 @@ public class MainFragment extends Fragment {
         city.setError(null);
         return validation.validate();
     }
+
 
     private void onClickRegDate(View view) {
         regDateField.setOnClickListener(v -> {

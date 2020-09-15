@@ -46,4 +46,9 @@ public class RetrofitClient {
         return amccApi.GetAllCities();
 
     }
+
+    public Call<List<String>> getPostCodes() {
+        return amccApi.GetAllPostCodes();
+
+    }
 }

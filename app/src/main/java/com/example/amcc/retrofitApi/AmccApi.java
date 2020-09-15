@@ -22,4 +22,7 @@ public interface AmccApi {
 
     @GET("api/city/read.php")
     Call<List<String>> GetAllCities();
+
+    @GET("api/city/read_zip.php")
+    Call<List<String>> GetAllPostCodes();
 }

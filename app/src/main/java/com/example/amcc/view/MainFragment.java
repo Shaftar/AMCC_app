@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,9 +50,8 @@ public class MainFragment extends Fragment {
     String dateFormUser;
     RadioGroup radioGroup;
     RadioButton radioButton;
-    GridLayout emissionGird;
+    GridLayout emissionGird, emissionKlasse;
     AutoCompleteTextView city;
-    TextView emissionKlasse;
     private DatePicker calendarView;
     AwesomeValidation validation;
     NavController navController;
@@ -62,6 +60,7 @@ public class MainFragment extends Fragment {
     public InterstitialAd mInterstitialAd;
 
     List<String> cityFromApi = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,50 +73,6 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    private TextWatcher showHideEmission = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            try {
-                SimpleDateFormat geFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-                Date regDateOfCar = geFormat.parse(regDateField.getText().toString());
-                Date oldRegulation = geFormat.parse("5.11.2008");
-                Date newRegulation = geFormat.parse("01.07.2009");
-
-                if (regDateOfCar.after(oldRegulation) && regDateOfCar.before(newRegulation)) {
-                    emissionGird.setVisibility(View.VISIBLE);
-                    emissionKlasse.setVisibility(View.VISIBLE);
-                    return;
-                }
-
-                if (regDateOfCar.before(oldRegulation)) {
-                    emissionGird.setVisibility(View.GONE);
-                    emissionKlasse.setVisibility(View.VISIBLE);
-                    return;
-                }
-
-                if (regDateOfCar.before(newRegulation)) {
-                    emissionKlasse.setVisibility(View.VISIBLE);
-                    return;
-                }
-                emissionKlasse.setVisibility(View.GONE);
-                emissionGird.setVisibility(View.VISIBLE);
-
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-    };
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -126,7 +81,7 @@ public class MainFragment extends Fragment {
         mInterstitialAd = new InterstitialAd(requireActivity());
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_id));
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        emissionKlasse = view.findViewById(R.id.txtView_euro3);
+        emissionKlasse = view.findViewById(R.id.emission_class_layout);
         regDateField = view.findViewById(R.id.edtFirst_reg_year);
         emissionGird = view.findViewById(R.id.emission_layout);
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
@@ -188,6 +143,52 @@ public class MainFragment extends Fragment {
         return radioButton.getText().toString();
     }
 
+    private TextWatcher showHideEmission = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            try {
+                SimpleDateFormat geFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+                Date regDateOfCar = geFormat.parse(regDateField.getText().toString());
+                Date oldRegulation = geFormat.parse("5.11.2008");
+                Date newRegulation = geFormat.parse("01.07.2009");
+
+                assert regDateOfCar != null;
+                if (regDateOfCar.after(oldRegulation) && regDateOfCar.before(newRegulation)) {
+                    emissionGird.setVisibility(View.VISIBLE);
+                    emissionKlasse.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                if (regDateOfCar.before(oldRegulation)) {
+                    emissionGird.setVisibility(View.GONE);
+                    emissionKlasse.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                if (regDateOfCar.before(newRegulation)) {
+                    emissionKlasse.setVisibility(View.VISIBLE);
+                    return;
+                }
+                emissionKlasse.setVisibility(View.GONE);
+                emissionGird.setVisibility(View.VISIBLE);
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
     private boolean inputIsValid() {
         String errorMsg = "field should not be empty";
 
@@ -201,10 +202,10 @@ public class MainFragment extends Fragment {
 
         validation.addValidation(avgConField, "(^[1-9]\\d?(\\.[0-9]\\d?)?$)", errorMsg);
         View error = city;
-        if (!cityFromApi.contains(city.getText().toString())) {
-
+        String location = city.getText().toString();
+        if (!cityFromApi.contains(location) && !viewModel.mPostCodes.contains(location)) {
             error.requestFocus();
-            city.setError("city not found!");
+            city.setError("city/postcode not found!");
             validation.validate();
             return false;
         }
@@ -212,6 +213,7 @@ public class MainFragment extends Fragment {
         city.setError(null);
         return validation.validate();
     }
+
 
     private void onClickRegDate(View view) {
         regDateField.setOnClickListener(v -> {
@@ -294,5 +296,4 @@ public class MainFragment extends Fragment {
 
         return new int[]{year, month - 1, day};
     }
-
 }

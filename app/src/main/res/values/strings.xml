@@ -30,7 +30,7 @@
     <string name="fuel_type">Fuel Type</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
-    <string name="euro4_higher">Emission class: Euro 3 or higher</string>
+    <string name="euro3_higher">Only for Euro 3 and higher</string>
     <string name="new_request">Edit</string>
     <string name="car_specification">Car Specification</string>
     <string name="dialog_rate_app">Was this helpful?</string>
@@ -48,5 +48,6 @@
     <string name="_01_01_2020">01.01.2020</string>
     <string name="cm3">cm³</string>
     <string name="g_km">g/km</string>
+    <string name="emission_class">Emission class</string>
 
 </resources>

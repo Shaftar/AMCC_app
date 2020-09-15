@@ -20,7 +20,6 @@ import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -44,7 +43,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends BaseFragment {
 
     private EditText emissionEdtField, engineSizeField, avgConField, milePerYField, regDateField;
     String dateFormUser;
@@ -102,38 +101,37 @@ public class MainFragment extends Fragment {
         onClickRegDate(view);
 
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
+            if (!isOnline()) {
+                connectInternetDialog();
+            } else {
+                String fuelType = getFuelType(view);
 
-            String fuelType = getFuelType(view);
+                city = view.findViewById(R.id.city_list);
+                engineSizeField = view.findViewById(R.id.edtNumEngSizeID);
+                avgConField = view.findViewById(R.id.edtNumConsumeID);
+                milePerYField = view.findViewById(R.id.edtNumMileAgeYearID);
+                regDateField = view.findViewById(R.id.edtFirst_reg_year);
+                emissionEdtField = view.findViewById(R.id.edtNumEmissionID);
+                if (inputIsValid()) {
+                    CarDetails car = new CarDetails(city.getText().toString(),
+                            Integer.parseInt(engineSizeField.getText().toString()),
+                            fuelType,
+                            regDateField.getText().toString(),
+                            Double.parseDouble(avgConField.getText().toString()),
+                            Integer.parseInt(milePerYField.getText().toString()));
 
-            city = view.findViewById(R.id.city_list);
-            engineSizeField = view.findViewById(R.id.edtNumEngSizeID);
-            avgConField = view.findViewById(R.id.edtNumConsumeID);
-            milePerYField = view.findViewById(R.id.edtNumMileAgeYearID);
-            regDateField = view.findViewById(R.id.edtFirst_reg_year);
-            emissionEdtField = view.findViewById(R.id.edtNumEmissionID);
-
-
-
-
-            if (inputIsValid()) {
-                CarDetails car = new CarDetails(city.getText().toString(),
-                        Integer.parseInt(engineSizeField.getText().toString()),
-                        fuelType,
-                        regDateField.getText().toString(),
-                        Double.parseDouble(avgConField.getText().toString()),
-                        Integer.parseInt(milePerYField.getText().toString()));
-
-                if (emissionGird.getVisibility() == View.VISIBLE) {
-                    car.setEmission(Integer.parseInt(emissionEdtField.getText().toString()));
+                    if (emissionGird.getVisibility() == View.VISIBLE) {
+                        car.setEmission(Integer.parseInt(emissionEdtField.getText().toString()));
+                    }
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("carInformation", car);
+                    mInterstitialAd.show();
+                    viewModel.setApiData(car);
+                    navController.navigate(R.id.resultFragment, bundle);
                 }
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("carInformation", car);
-                mInterstitialAd.show();
-                viewModel.setApiData(car);
-                navController.navigate(R.id.resultFragment, bundle);
             }
         });
-    }
+        }
 
 
     private String getFuelType(@NonNull View view) {

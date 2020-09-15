@@ -1,5 +1,7 @@
 package com.example.amcc.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,7 @@ import com.example.amcc.R;
 import com.example.amcc.adapter.CustomListAdapter;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment{
 
     String[] nameListArray = {"First Function", "Second Function"};
     String[] infoListArray = {"info about first function.", "info about second function."};
@@ -36,9 +38,7 @@ public class HomeFragment extends Fragment {
         setListHomeAdapter(view);
         navController = Navigation.findNavController(view);
     }
-
     private void setListHomeAdapter(View view) {
-
         // Create Custom Adapter here
         CustomListAdapter homeListAdapter = new CustomListAdapter(requireActivity(), nameListArray, infoListArray, imgListArrayID);
         // Link listView to our CustomListAdapter
@@ -49,12 +49,16 @@ public class HomeFragment extends Fragment {
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             switch (position) {
                 case 0:
-                    navController.navigate(R.id.mainFragment);
+                    if (!isOnline()) {
+                        connectInternetDialog();
+                    } else {
+                        navController.navigate(R.id.mainFragment);
+                    }
+
                     break;
                 case 1:
                     break;
             }
         });
     }
-
 }

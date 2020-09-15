@@ -26,10 +26,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:textSize="18sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/city" />
+                android:text="@string/city"
+                android:textSize="24sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,15 +81,37 @@
                     android:layout_weight="1" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/txtView_euro3"
+            <GridLayout
+                android:id="@+id/emission_class_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="@string/euro4_higher"
-                android:textColor="#4CAF50"
-                android:textSize="18sp"
-                android:visibility="gone" />
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:columnCount="2"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_columnSpan="2"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/emission_class"
+                    android:textSize="24sp" />
+
+                <EditText
+                    android:id="@+id/txtView_euro3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_columnWeight="1"
+                    android:focusable="false"
+                    android:text="@string/euro3_higher" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1" />
+
+            </GridLayout>
+
 
             <GridLayout
                 android:id="@+id/emission_layout"
@@ -102,9 +124,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_columnSpan="2"
-                    android:textSize="18sp"
                     android:layout_marginBottom="16dp"
-                    android:text="@string/emission" />
+                    android:text="@string/emission"
+                    android:textSize="24sp" />
 
 
                 <EditText

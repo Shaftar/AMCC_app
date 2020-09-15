@@ -13,8 +13,7 @@ public class BaseFragment extends Fragment{
     public BaseFragment() {}
 
     public AlertDialog connectInternetDialog() {
-        String msg = "Please check your internet connection" + '\n' +
-                "Would you like to turn it on now?";
+        String msg = "Please check your internet connection and try again.";
         AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
         alertDialog.setTitle("Internet Connection");
         alertDialog.setMessage(msg);

@@ -8,6 +8,8 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.amcc.R;
 import com.google.android.gms.ads.AdRequest;
@@ -55,7 +57,8 @@ public class HomeActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.iHome:
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        NavController navController = Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment);
+                        navController.navigate(R.id.homeFragment);
                         return true;
                     case R.id.iShare:
                         shareIt();

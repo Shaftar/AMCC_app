@@ -4,8 +4,8 @@
     <string name="home">Home</string>
     <string name="share">Share</string>
 
-    <string name="the_first_function_name">The first function</string>
-    <string name="the_second_function_name">Info about this function</string>
+    <string name="the_first_function_name">Find out what is the annual tax for a car</string>
+    <string name="get_tax_btnTxt">Get Tax Now</string>
     <string name="city">City or Postcode</string>
     <string name="first_register_date">First Register Date</string>
     <string name="emission">Co2 Emission</string>
@@ -32,12 +32,12 @@
     <string name="ok">OK</string>
     <string name="euro3_higher">Only for Euro 3 and higher</string>
     <string name="new_request">Edit</string>
-    <string name="car_specification">Car Specification</string>
+    <string name="car_specification">Car Specification:</string>
     <string name="dialog_rate_app">Was this helpful?</string>
     <string name="fuel_cost_annual">Annual Fuel Cost:</string>
     <string name="fuel_price_label">Fuel Price:</string>
     <string name="annual_tax_result">Annual Tax:</string>
-    <string name="resutl_txt">Costs</string>
+    <string name="resutl_txt">Costs:</string>
     <string name="enter_city_name_or_zip">Enter city or ZIP</string>
     <string name="banner_id">ca-app-pub-4242963717208905/1233368693</string>
     <string name="banner_id_test">ca-app-pub-3940256099942544/6300978111</string>
@@ -49,5 +49,6 @@
     <string name="cm3">cm³</string>
     <string name="g_km">g/km</string>
     <string name="emission_class">Emission class</string>
+    <string name="car_image">Car Image</string>
 
 </resources>

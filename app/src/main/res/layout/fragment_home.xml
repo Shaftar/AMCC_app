@@ -6,17 +6,38 @@
     android:background="@color/colorBackground"
     android:fitsSystemWindows="true">
 
-    <ListView
-        android:id="@+id/homelistViewID"
+    <LinearLayout
+        android:id="@+id/home_linearLayout_id"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="20dp"
-        android:padding="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/adView"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/car_image"
+            android:src="@drawable/car_go" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/the_first_function_name" />
+
+        <Button
+            android:id="@+id/home_getTax_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/get_tax_btnTxt"
+            style="@style/Widget.AppCompat.Button.Colored" />
+    </LinearLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

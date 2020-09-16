@@ -20,7 +20,6 @@ import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -44,7 +43,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends BaseFragment {
 
     private EditText emissionEdtField, engineSizeField, avgConField, milePerYField, regDateField;
     String dateFormUser;
@@ -102,7 +101,10 @@ public class MainFragment extends Fragment {
         onClickRegDate(view);
 
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
-
+            if (!isOnline()) {
+                showInternetDialog();
+                return;
+            }
             String fuelType = getFuelType(view);
 
             city = view.findViewById(R.id.city_list);
@@ -111,10 +113,6 @@ public class MainFragment extends Fragment {
             milePerYField = view.findViewById(R.id.edtNumMileAgeYearID);
             regDateField = view.findViewById(R.id.edtFirst_reg_year);
             emissionEdtField = view.findViewById(R.id.edtNumEmissionID);
-
-
-
-
             if (inputIsValid()) {
                 CarDetails car = new CarDetails(city.getText().toString(),
                         Integer.parseInt(engineSizeField.getText().toString()),
@@ -132,8 +130,8 @@ public class MainFragment extends Fragment {
                 viewModel.setApiData(car);
                 navController.navigate(R.id.resultFragment, bundle);
             }
-        });
-    }
+    });
+}
 
 
     private String getFuelType(@NonNull View view) {

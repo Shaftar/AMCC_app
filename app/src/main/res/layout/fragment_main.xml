@@ -87,7 +87,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="16dp"
                 android:columnCount="2"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"

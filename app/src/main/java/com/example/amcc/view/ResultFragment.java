@@ -62,11 +62,11 @@ public class ResultFragment extends Fragment {
 
         fetchApiData();
         rateAppDialog.setOnClickListener(view13 -> {
-            RatingDialog ratingDialog = new RatingDialog.Builder(getActivity())
+            RatingDialog ratingDialog = new RatingDialog.Builder(requireActivity())
                     .threshold(3)
                     .onRatingBarFormSumbit(feedback -> Toast.makeText(getActivity(),
                             "Thank you for your feedback", Toast.LENGTH_LONG).show()).onRatingChanged((rating, thresholdCleared) -> {
-                            })
+                    })
                     .build();
             ratingDialog.show();
         });
@@ -101,7 +101,7 @@ public class ResultFragment extends Fragment {
         avgConsume.setText(String.valueOf(car.getAvgConsume()));
         yearlyKilometer.setText(String.valueOf(car.getYearlyMileage()));
         if(car.getEmission()==0){
-            getView().findViewById(R.id.emission_label).setVisibility(View.GONE);
+            requireView().findViewById(R.id.emission_label).setVisibility(View.GONE);
             emission.setVisibility(View.GONE);
         }
         emission.setText(String.valueOf(car.getEmission()));
@@ -134,7 +134,4 @@ public class ResultFragment extends Fragment {
         });
     }
 
-    public void rateAppDialog(View view) {
-
-    }
 }

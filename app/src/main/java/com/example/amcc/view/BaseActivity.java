@@ -61,7 +61,7 @@ public class BaseActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.iHome:
-                        NavController navController = Navigation.findNavController(BaseActivity.this, R.id.nav_controller_view_tag);
+                        NavController navController = Navigation.findNavController(BaseActivity.this, R.id.nav_host_fragment);
                         navController.navigate(R.id.homeFragment);
                         return true;
                     case R.id.iShare:
@@ -82,7 +82,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onStart();
         createToolBar();
     }
-    
+
     public boolean isOnline() {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);

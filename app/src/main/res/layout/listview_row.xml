@@ -35,7 +35,6 @@
             android:id="@+id/infoListTxtViewRowID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/the_second_function_name"
             android:textColor="@android:color/black" />
     </LinearLayout>
 

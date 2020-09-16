@@ -13,6 +13,8 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.amcc.R;
 
@@ -59,7 +61,8 @@ public class BaseActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.iHome:
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        NavController navController = Navigation.findNavController(BaseActivity.this, R.id.nav_controller_view_tag);
+                        navController.navigate(R.id.homeFragment);
                         return true;
                     case R.id.iShare:
                         shareIt();
@@ -74,29 +77,12 @@ public class BaseActivity extends AppCompatActivity {
         });
     }
 
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
         createToolBar();
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
+    
     public boolean isOnline() {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);

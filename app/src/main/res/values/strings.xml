@@ -32,12 +32,12 @@
     <string name="ok">OK</string>
     <string name="euro3_higher">Only for Euro 3 and higher</string>
     <string name="new_request">Edit</string>
-    <string name="car_specification">Car Specification</string>
+    <string name="car_specification">Car Specification:</string>
     <string name="dialog_rate_app">Was this helpful?</string>
     <string name="fuel_cost_annual">Annual Fuel Cost:</string>
     <string name="fuel_price_label">Fuel Price:</string>
     <string name="annual_tax_result">Annual Tax:</string>
-    <string name="resutl_txt">Costs</string>
+    <string name="resutl_txt">Costs:</string>
     <string name="enter_city_name_or_zip">Enter city or ZIP</string>
     <string name="banner_id">ca-app-pub-4242963717208905/1233368693</string>
     <string name="banner_id_test">ca-app-pub-3940256099942544/6300978111</string>

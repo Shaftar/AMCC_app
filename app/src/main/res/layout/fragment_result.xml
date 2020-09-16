@@ -31,7 +31,7 @@
                     android:drawable="@android:color/secondary_text_dark"
                     android:padding="10dp"
                     android:text="@string/resutl_txt"
-                    android:textSize="18sp" />
+                    android:textSize="24sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -117,7 +117,7 @@
                     android:drawable="@android:drawable/dialog_holo_light_frame"
                     android:padding="10dp"
                     android:text="@string/dialog_rate_app"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"/>
 
                 <Button
                     android:id="@+id/retry_btn_id"
@@ -144,7 +144,7 @@
                     android:drawable="@android:color/secondary_text_dark"
                     android:padding="10dp"
                     android:text="@string/car_specification"
-                    android:textSize="18sp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/city_label"

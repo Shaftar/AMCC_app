@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.codemybrainsout.ratingdialog.RatingDialog;
 import com.example.amcc.R;
 import com.example.amcc.model.CarDetails;
 import com.example.amcc.viewModel.SharedViewModel;
@@ -59,6 +61,15 @@ public class ResultFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         fetchApiData();
+        rateAppDialog.setOnClickListener(view13 -> {
+            RatingDialog ratingDialog = new RatingDialog.Builder(getActivity())
+                    .threshold(3)
+                    .onRatingBarFormSumbit(feedback -> Toast.makeText(getActivity(),
+                            "Thank you for your feedback", Toast.LENGTH_LONG).show()).onRatingChanged((rating, thresholdCleared) -> {
+                            })
+                    .build();
+            ratingDialog.show();
+        });
 
     }
 
@@ -121,5 +132,9 @@ public class ResultFragment extends Fragment {
                 rateAppDialog.setTextColor(Color.RED);
             }
         });
+    }
+
+    public void rateAppDialog(View view) {
+
     }
 }

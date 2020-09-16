@@ -10,9 +10,8 @@ import androidx.fragment.app.Fragment;
 
 public class BaseFragment extends Fragment{
 
-    public BaseFragment() {}
 
-    public AlertDialog connectInternetDialog() {
+    public AlertDialog showInternetDialog() {
         String msg = "Please check your internet connection and try again.";
         AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
         alertDialog.setTitle("Internet Connection");
@@ -21,8 +20,11 @@ public class BaseFragment extends Fragment{
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if(!isOnline())
+                            showInternetDialog();
                     }
                 });
+        alertDialog.setCancelable(false);
         alertDialog.show();
         return alertDialog;
     }

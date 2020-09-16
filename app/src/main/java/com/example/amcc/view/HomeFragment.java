@@ -17,7 +17,7 @@ import androidx.navigation.Navigation;
 import com.example.amcc.R;
 
 
-public class HomeFragment extends BaseFragment{
+public class HomeFragment extends BaseFragment {
 
 
     @Override
@@ -36,6 +36,10 @@ public class HomeFragment extends BaseFragment{
         taxBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isOnline()) {
+                    showInternetDialog();
+                    return;
+                }
                 navController.navigate(R.id.mainFragment);
             }
         });

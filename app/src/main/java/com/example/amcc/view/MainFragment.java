@@ -102,36 +102,36 @@ public class MainFragment extends BaseFragment {
 
         view.findViewById(R.id.btnResultID).setOnClickListener(v -> {
             if (!isOnline()) {
-                connectInternetDialog();
-            } else {
-                String fuelType = getFuelType(view);
-
-                city = view.findViewById(R.id.city_list);
-                engineSizeField = view.findViewById(R.id.edtNumEngSizeID);
-                avgConField = view.findViewById(R.id.edtNumConsumeID);
-                milePerYField = view.findViewById(R.id.edtNumMileAgeYearID);
-                regDateField = view.findViewById(R.id.edtFirst_reg_year);
-                emissionEdtField = view.findViewById(R.id.edtNumEmissionID);
-                if (inputIsValid()) {
-                    CarDetails car = new CarDetails(city.getText().toString(),
-                            Integer.parseInt(engineSizeField.getText().toString()),
-                            fuelType,
-                            regDateField.getText().toString(),
-                            Double.parseDouble(avgConField.getText().toString()),
-                            Integer.parseInt(milePerYField.getText().toString()));
-
-                    if (emissionGird.getVisibility() == View.VISIBLE) {
-                        car.setEmission(Integer.parseInt(emissionEdtField.getText().toString()));
-                    }
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("carInformation", car);
-                    mInterstitialAd.show();
-                    viewModel.setApiData(car);
-                    navController.navigate(R.id.resultFragment, bundle);
-                }
+                showInternetDialog();
+                return;
             }
-        });
-        }
+            String fuelType = getFuelType(view);
+
+            city = view.findViewById(R.id.city_list);
+            engineSizeField = view.findViewById(R.id.edtNumEngSizeID);
+            avgConField = view.findViewById(R.id.edtNumConsumeID);
+            milePerYField = view.findViewById(R.id.edtNumMileAgeYearID);
+            regDateField = view.findViewById(R.id.edtFirst_reg_year);
+            emissionEdtField = view.findViewById(R.id.edtNumEmissionID);
+            if (inputIsValid()) {
+                CarDetails car = new CarDetails(city.getText().toString(),
+                        Integer.parseInt(engineSizeField.getText().toString()),
+                        fuelType,
+                        regDateField.getText().toString(),
+                        Double.parseDouble(avgConField.getText().toString()),
+                        Integer.parseInt(milePerYField.getText().toString()));
+
+                if (emissionGird.getVisibility() == View.VISIBLE) {
+                    car.setEmission(Integer.parseInt(emissionEdtField.getText().toString()));
+                }
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("carInformation", car);
+                mInterstitialAd.show();
+                viewModel.setApiData(car);
+                navController.navigate(R.id.resultFragment, bundle);
+            }
+    });
+}
 
 
     private String getFuelType(@NonNull View view) {

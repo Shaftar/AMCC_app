@@ -30,15 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.SettingsActivity"
-            android:label="Settings"
-            android:parentActivityName=".view.HomeActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.HomeActivity" />
-        </activity>
     </application>
 
 </manifest>

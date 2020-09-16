@@ -19,6 +19,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+    
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         AdView adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -41,11 +42,6 @@ public class HomeActivity extends AppCompatActivity {
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, null));
     }
-    private void setupSetting() {
-        // set up Settings activity
-        Intent settingsIntent = new Intent(this, SettingsActivity.class);
-        startActivity(settingsIntent);
-    }
     public void createToolBar() {
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = findViewById(R.id.app_toolbar);
@@ -63,9 +59,6 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
                     case R.id.iShare:
                         shareIt();
-                        return true;
-                    case R.id.iSet:
-                        setupSetting();
                         return true;
                     default:
                         return onOptionsItemSelected(item);

@@ -8,10 +8,15 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.amcc.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -25,6 +30,9 @@ public class HomeActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
         createToolBar();
+
+        AppCenter.start(getApplication(), "184856bb-7027-4998-9cda-81d48b4f74e8",
+                Analytics.class, Crashes.class);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,7 +63,8 @@ public class HomeActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.iHome:
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        NavController navController = Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment);
+                        navController.navigate(R.id.homeFragment);
                         return true;
                     case R.id.iShare:
                         shareIt();

@@ -21,7 +21,7 @@
 
         <activity
             android:name=".view.HomeActivity"
-            android:label="MainFunction"
+            android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>

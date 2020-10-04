@@ -50,5 +50,6 @@
     <string name="g_km">g/km</string>
     <string name="emission_class">Emission class</string>
     <string name="car_image">Car Image</string>
+    <string name="currency">Euro</string>
 
 </resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AMCC</string>
+    <string name="setting">Einstellungen</string>
+    <string name="home">Home</string>
+    <string name="share">Teilen</string>
+
+    <string name="the_first_function_name">Wie teuer ist mein Auto im Unterhalt?</string>
+    <string name="get_tax_btnTxt">Steuer und Unterhalt berechenen</string>
+    <string name="city">Stadt oder PLZ</string>
+    <string name="first_register_date">Erstzulassung</string>
+    <string name="emission">CO₂-Emissionen</string>
+    <string name="enter_emission_number">z.B. 140</string>
+    <string name="engine_size">Hubraum</string>
+    <string name="enter_the_size_of_engine">z.B. 1398</string>
+
+    <string name="average_consume">Durchschnittsverbrauch</string>
+    <string name="enter_average_consume">z.B. 7.5</string>
+    <string name="average_consume_per_100_km">liter/100km</string>
+
+    <string name="mileage_per_year">Jährliche Fahrleistung</string>
+    <string name="_000_km">.000 km pro Jahr</string>
+    <string name="enter_from_1_20">z.B. 20</string>
+
+    <string name="get_result">Berechnen</string>
+    <string name="error_field_required">Dies Pflichtfeld wurde nicht ausgefüllt.</string>
+    <string name="diesel">Diesel</string>
+    <string name="e5">Super</string>
+    <string name="e10">E10</string>
+    <string name="fuel_type">Kraftstoffart</string>
+    <string name="cancel">abbrechen</string>
+    <string name="ok">ok</string>
+    <string name="euro3_higher">Euro 3 bis 6</string>
+    <string name="new_request">Bearbeiten</string>
+    <string name="car_specification">Fahrzeugspezifikation:</string>
+    <string name="dialog_rate_app">War dies hilfreich?</string>
+    <string name="fuel_cost_annual">Jährliche Kraftstoffkosten:</string>
+    <string name="fuel_price_label">Kraftstoffkosten pro Liter:</string>
+    <string name="annual_tax_result">Kfz-Steuer:</string>
+    <string name="resutl_txt">Kosten:</string>
+    <string name="enter_city_name_or_zip">Stadt oder PLZ</string>
+    <string name="try_later_msg">Etwas ist schief gelaufen. Bitte versuche es erneut.</string>
+    <string name="_01_01_2020">01.01.2020</string>
+    <string name="cm3">cm³</string>
+    <string name="g_km">g/km</string>
+    <string name="emission_class">Emissionklass</string>
+    <string name="currency">Euro</string>
+    <string name="car_image">Autobild</string>
+
+    <string name="banner_id">ca-app-pub-4242963717208905/1233368693</string>
+    <string name="banner_id_test">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial_id">ca-app-pub-4242963717208905/7770856884</string>
+    <string name="admob_app_id">ca-app-pub-4242963717208905~4145654251</string>
+</resources>

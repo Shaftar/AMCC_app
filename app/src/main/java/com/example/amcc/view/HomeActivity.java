@@ -33,7 +33,6 @@ public class HomeActivity extends AppCompatActivity {
 
         AppCenter.start(getApplication(), "abe64d09-d522-4ff8-9319-ac89d351c79a",
                 Analytics.class, Crashes.class);
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -31,8 +31,9 @@ public class HomeActivity extends AppCompatActivity {
         adView.loadAd(adRequest);
         createToolBar();
 
-        AppCenter.start(getApplication(), "184856bb-7027-4998-9cda-81d48b4f74e8",
+        AppCenter.start(getApplication(), "abe64d09-d522-4ff8-9319-ac89d351c79a",
                 Analytics.class, Crashes.class);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -57,21 +58,18 @@ public class HomeActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         // Trigger a menu item by setting item clickListener
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
+        toolbar.setOnMenuItemClickListener(item -> {
 
-                switch (item.getItemId()) {
-                    case R.id.iHome:
-                        NavController navController = Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment);
-                        navController.navigate(R.id.homeFragment);
-                        return true;
-                    case R.id.iShare:
-                        shareIt();
-                        return true;
-                    default:
-                        return onOptionsItemSelected(item);
-                }
+            switch (item.getItemId()) {
+                case R.id.iHome:
+                    NavController navController = Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment);
+                    navController.navigate(R.id.homeFragment);
+                    return true;
+                case R.id.iShare:
+                    shareIt();
+                    return true;
+                default:
+                    return onOptionsItemSelected(item);
             }
         });
     }
